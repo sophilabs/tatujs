@@ -17,8 +17,8 @@ CLOSURE_COMPILER_JAR="$CLOSURE_COMPILER_PATH/compiler.jar"
 
 # Deps writer settings
 CLOSURE_DEPS_WRITER="$CLOSURE_LIBRARY_PATH/closure/bin/build/depswriter.py"
-CLOSURE_DEPS_ROOT_WITH_PREFIX="tatu ../../tatu"
-CLOSURE_DEPS_OUTPUT="src/deps.js"
+CLOSURE_DEPS_ROOT_WITH_PREFIX="src/tatu ../../../../src/tatu"
+CLOSURE_DEPS_OUTPUT="src/tatu/deps.js"
 
 # Build settings
 CLOSURE_BUILDER="$CLOSURE_LIBRARY_PATH/closure/bin/build/closurebuilder.py"
@@ -65,8 +65,7 @@ configure() {
     command="python $CLOSURE_DEPS_WRITER"
     command="$command --root_with_prefix=\"$CLOSURE_DEPS_ROOT_WITH_PREFIX\""
     command="$command > $CLOSURE_DEPS_OUTPUT"
-
-    echo $command
+    eval $command
 }
 
 build() {
@@ -90,6 +89,10 @@ build() {
     echo $command
 }
 
+run() {
+    http-server #or python -m SimpleHTTPServer
+}
+
 if [ "$1" = "get" ]; then
     get
 elif [ "$1" = "configure" ]; then
@@ -97,6 +100,8 @@ elif [ "$1" = "configure" ]; then
 elif [ "$1" = "build" ]; then
     build
     build "min"
+elif [ "$1" = "run" ]; then
+    run
 else
     get
     configure
