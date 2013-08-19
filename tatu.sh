@@ -86,11 +86,15 @@ build() {
         command="$command > $CLOSURE_JS_OUTPUT"
     fi
 
-    echo $command
+    eval $command
 }
 
 run() {
-    http-server #or python -m SimpleHTTPServer
+    if hash http-server 2> /dev/null; then
+        http-server
+    else
+        python -m SimpleHTTPServer
+    fi
 }
 
 if [ "$1" = "get" ]; then
