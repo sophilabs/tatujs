@@ -2,13 +2,14 @@ goog.provide('tatu.Manager');
 
 goog.require('tatu.Inspector');
 
+
 /**
- *
+ * Entry point.
  * @constructor
  */
-tatu.Manager = function(){
+tatu.Manager = function() {
     /**
-     *
+     * Main inspector.
      * @type {tatu.Inspector}
      * @private
      */
@@ -16,11 +17,12 @@ tatu.Manager = function(){
 
     //TODO: add on ready -> init_
 };
+
 goog.addSingletonGetter(tatu.Manager);
 
 
 /**
- *
+ * Initialize the library.
  * @private
  */
 tatu.Manager.prototype.init_ = function() {
@@ -28,6 +30,9 @@ tatu.Manager.prototype.init_ = function() {
 };
 
 
+/**
+ * Default configuration.
+ */
 tatu.configuration = {
     'loaders': {
         'a': 'plain',
