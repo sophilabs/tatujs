@@ -3,20 +3,14 @@ goog.provide('tatu.queue.Entry');
 
 /**
  * Queue entry.
- * @param loader Loader.
- * @param id Resource ID.
- * @param priority Entry priority.
- * @param timeout Timeout.
+ * @param {tatu.loaders.ILoader} loader Loader.
+ * @param {Element} element Element.
  * @constructor
  */
-tatu.queue.Entry = function(loader, id, priority, timeout) {
-    // Loader
+tatu.queue.Entry = function(loader, element) {
     this.loader = loader;
-
-    // Resource
-    this.id = id;
-    this.priority = priority;
-    this.timeout = timeout;
+    this.settings = tatu.Settings(loader, element);
+    this.id = loader.setup(element, this.settings);
 };
 
 
@@ -25,7 +19,7 @@ tatu.queue.Entry = function(loader, id, priority, timeout) {
  * @param resolve Resolution callback.
  */
 tatu.queue.Entry.prototype.load = function(resolve) {
-    this.loader.load(this.id, resolve, this.timeout);
+    this.loader.load(this.id, resolve);
 };
 
 

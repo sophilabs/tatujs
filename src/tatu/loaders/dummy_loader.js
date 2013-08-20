@@ -8,8 +8,19 @@ goog.require('tatu.loaders.ILoader');
  * @constructor
  * @implements {tatu.loaders.ILoader}
  */
-tatu.loaders.DummyLoader = function() {
+tatu.loaders.DummyLoader = function(settings) {
+    this.settings_ = settings;
     this.resources_ = {};
+};
+
+
+tatu.loaders.DummyLoader.prototype.getSetting = function(name) {
+    return this.settings_[name];
+};
+
+
+tatu.loaders.DummyLoader.prototype.setSetting = function(name, value) {
+    this.settings_[name] = value;
 };
 
 
@@ -18,7 +29,7 @@ tatu.loaders.DummyLoader.prototype.identify = function(element) {
 };
 
 
-tatu.loaders.DummyLoader.prototype.setup = function(element) {
+tatu.loaders.DummyLoader.prototype.setup = function(element, settings) {
     var id = this.identify(element);
     var resource = this.resources_[id];
     if (resource == undefined) {
@@ -39,5 +50,3 @@ tatu.loaders.DummyLoader.prototype.load = function(id, resolve, timeout) {
 tatu.loaders.DummyLoader.prototype.abort = function(id) {
 };
 
-
-goog.inherits(tatu.loaders.DummyLoader, tatu.loaders.BaseLoader);
