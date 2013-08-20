@@ -1,4 +1,4 @@
-goog.provide('tatu.queue.Entry');
+goog.provide('tatu.Entry');
 
 
 /**
@@ -7,10 +7,12 @@ goog.provide('tatu.queue.Entry');
  * @param {Element} element Element.
  * @constructor
  */
-tatu.queue.Entry = function(loader, element) {
+tatu.Entry = function(loader, element) {
     this.loader = loader;
     this.settings = tatu.Settings(loader, element);
+
     this.id = loader.setup(element, this.settings);
+    this.priority = this.settings.get('priority');
 };
 
 
@@ -18,7 +20,7 @@ tatu.queue.Entry = function(loader, element) {
  * Load the associated resource.
  * @param resolve Resolution callback.
  */
-tatu.queue.Entry.prototype.load = function(resolve) {
+tatu.Entry.prototype.load = function(resolve) {
     this.loader.load(this.id, resolve);
 };
 
@@ -26,6 +28,6 @@ tatu.queue.Entry.prototype.load = function(resolve) {
 /**
  * Abort the associated resource.
  */
-tatu.queue.Entry.prototype.abort = function() {
+tatu.Entry.prototype.abort = function() {
     this.loader.abort(this.id);
 };

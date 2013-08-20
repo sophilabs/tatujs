@@ -23,10 +23,9 @@ tatu.Settings.prototype.DATA_PREFIX = 'data-tatu-';
 /**
  * Get a setting value.
  * @param {string} setting Setting name.
- * @param {*} none None value.
  * @returns {*}
  */
-tatu.Settings.prototype.get = function(setting, none) {
+tatu.Settings.prototype.get = function(setting) {
     // Value from attribute
     var value = this.element[setting];
     if (value != undefined) {
@@ -51,5 +50,5 @@ tatu.Settings.prototype.get = function(setting, none) {
         return value;
     }
 
-    return none;
+    return arguments[1];
 };

@@ -4,8 +4,6 @@ goog.require('goog.dom');
 
 goog.require('tatu.Inspector');
 goog.require('tatu.loaders.DummyLoader');
-goog.require('tatu.loaders.PlainLoader');
-goog.require('tatu.loaders.ImageLoader');
 
 
 /**
