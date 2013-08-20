@@ -5,14 +5,16 @@ goog.provide('tatu.Entry');
  * Queue entry.
  * @param {tatu.loaders.ILoader} loader Loader.
  * @param {Element} element Element.
+ * @param {number} priority Priority.
+ * @param {number} timeout Timeout.
  * @constructor
  */
-tatu.Entry = function(loader, element) {
+tatu.Entry = function(loader, element, priority, timeout) {
     this.loader = loader;
-    this.settings = tatu.Settings(loader, element);
+    this.id = loader.setup(element);
 
-    this.id = loader.setup(element, this.settings);
-    this.priority = this.settings.get('priority');
+    this.priority = priority;
+    this.timeout = timeout;
 };
 
 

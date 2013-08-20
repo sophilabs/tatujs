@@ -4,6 +4,7 @@ goog.require('goog.dom.query');
 
 goog.require('tatu.Registry');
 goog.require('tatu.Entry');
+goog.require('tatu.Settings');
 
 
 /**
@@ -24,9 +25,14 @@ tatu.Inspector.prototype.inspect = function(loaders, node) {
     var loaders = loaders.all();
     for (var query in loaders) {
         var loader = loaders[query];
+        var nodes = goog.dom.query(query, node);
 
-        for (var node in goog.dom.query(query, node)) {
-            entries.push(new tatu.Entry(loader, node));
+        for (var i = 0; i < nodes['length']; i++) {
+            var node = nodes[i];
+            var settings = new tatu.Settings(loader, node);
+            entries.push(new tatu.Entry(loader, node,
+                                        settings.get('priority'),
+                                        settings.get('timeout')));
         }
     }
     return entries;

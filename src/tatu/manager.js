@@ -3,6 +3,7 @@ goog.provide('tatu.Manager');
 goog.require('goog.dom');
 
 goog.require('tatu.Inspector');
+goog.require('tatu.Queue');
 goog.require('tatu.loaders.DummyLoader');
 
 
@@ -30,11 +31,19 @@ tatu.Manager = function() {
      */
     this.loaders = new tatu.Registry();
 
+    /**
+     * Queue.
+     * @type {tatu.Queue}
+     * @private
+     */
+    this.queue_ = new tatu.Queue();
+
     /*
      * Initialize.
      */
+    var this_ = this;
     window.onload = function() {
-        tatu.Manager.init_();
+        this_.init_();
     };
 };
 
@@ -63,9 +72,9 @@ tatu.Manager.prototype.configure_ = function(configuration) {
         var settings = loaders[query];
         var instance;
         if (typeof(settings) == 'string') {
-            instance = new this.classes.get(settings)();
+            instance = new (this.classes.get(settings))();
         } else {
-            instance = new this.classes.get(settings['name'])(settings);
+            instance = new (this.classes.get(settings['name']))(settings);
         }
         this.loaders.register(query, instance);
     }
@@ -73,11 +82,11 @@ tatu.Manager.prototype.configure_ = function(configuration) {
 
 
 /**
- * Perform inspection using the registered loaders.
+ * Perform inspection using the registered loaders and enqueue.
  * @param {Node} node Node to inspect.
  */
 tatu.Manager.prototype.inspect = function(node) {
-    this.inspector_.inspect(this.loaders, node);
+    this.queue_.enqueue(this.inspector_.inspect(this.loaders, node));
 };
 
 
@@ -107,9 +116,9 @@ tatu.configuration = {
     'loaders': {
         'div': {
             'name': 'dummy'
-        },
-        'a': 'plain',
-        'img': 'image'
+        }//,
+        //'a': 'plain',
+        //'img': 'image'
     },
 
     // Concurrent requests
@@ -124,3 +133,4 @@ tatu.configuration = {
 
 
 goog.exportSymbol('tatu.configuration', tatu.configuration);
+goog.exportSymbol('tatu.manager', new tatu.Manager());

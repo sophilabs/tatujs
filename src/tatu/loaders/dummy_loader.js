@@ -1,6 +1,8 @@
 goog.provide('tatu.loaders.DummyLoader');
 
+goog.require('tatu.loaders.DummyResource');
 goog.require('tatu.loaders.ILoader');
+goog.require('tatu.Settings');
 
 
 /**
@@ -25,17 +27,20 @@ tatu.loaders.DummyLoader.prototype.setSetting = function(name, value) {
 
 
 tatu.loaders.DummyLoader.prototype.identify = function(element) {
-    return 'dummy' + element.id;
+    return 'dummy';
 };
 
 
-tatu.loaders.DummyLoader.prototype.setup = function(element, settings) {
+tatu.loaders.DummyLoader.prototype.setup = function(element) {
     var id = this.identify(element);
+    // var settings = new tatu.Settings(this, element);
+    // Get additional settings using settings.get(<setting name>)
     var resource = this.resources_[id];
     if (resource == undefined) {
         resource = new tatu.loaders.DummyResource();
         this.resources_[id] = resource;
     }
+    return id;
 };
 
 

@@ -2,12 +2,13 @@ goog.provide('tatu.Queue');
 
 goog.require('tatu.Entry');
 
+// TODO: Use Google Closure array.
 
 /**
- * Entry queue.
+ * Queue.
  * @constructor
  */
-tatu.queue.Queue = function() {
+tatu.Queue = function() {
     /**
      * Array of entries.
      * @type {Array}
@@ -22,7 +23,7 @@ tatu.queue.Queue = function() {
  * @param {Object} properties
  * @returns {number|null}
  */
-tatu.queue.Queue.prototype.find = function(properties) {
+tatu.Queue.prototype.find = function(properties) {
     for (var i = this.queue_.length - 1; i >= 0; i--) {
         var complies = true;
         for (var name in properties) {
@@ -41,11 +42,13 @@ tatu.queue.Queue.prototype.find = function(properties) {
  * @param {tatu.Entry} entry Queue entry.
  * @private
  */
-tatu.queue.Queue.prototype.enqueue_ = function(entry) {
-    if (this.find({'id': entry.id})) {
+tatu.Queue.prototype.enqueue_ = function(entry) {
+    var index = this.find({'id': entry.id});
+    console.info(index);
+    if (index) {
         return;
     } else {
-        this.queue_.splice(this.find({'priority': entry.priority}), 0, entry);
+        this.queue_.push(entry);
     }
 };
 
@@ -55,7 +58,7 @@ tatu.queue.Queue.prototype.enqueue_ = function(entry) {
  *
  * This method can take queue entries as arguments, an array of entries as single argument, an entry as single argument.
  */
-tatu.queue.Queue.prototype.enqueue = function() {
+tatu.Queue.prototype.enqueue = function() {
     var entries;
     if (arguments.length == 1 && typeof(arguments[0]) == 'array') {
         entries = arguments[0];

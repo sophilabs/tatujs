@@ -35,10 +35,9 @@ tatu.loaders.ILoader.prototype.identify = function(element) {};
 /**
  * Setup a resource for the specified element.
  * @param {Element} element DOM element.
- * @param {tatu.Settings} settings Settings.
  * @return {string} Resource ID.
  */
-tatu.loaders.ILoader.prototype.setup = function(element, settings) {};
+tatu.loaders.ILoader.prototype.setup = function(element) {};
 
 
 /**
