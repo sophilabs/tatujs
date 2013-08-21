@@ -3,12 +3,12 @@ goog.provide('tatu.Settings');
 
 /**
  * Settings manager.
- * @param {object} settings Base settings.
+ * @param {object} options Base options.
  * @param {tatu.Settings=} parent Parent settings.
  * @constructor
  */
-tatu.Settings = function(settings, parent) {
-    this.settings_ = settings;
+tatu.Settings = function(options, parent) {
+    this.options_ = options;
     this.parent_ = parent;
 };
 
@@ -21,7 +21,7 @@ tatu.Settings = function(settings, parent) {
  */
 tatu.Settings.prototype.get = function(name, def) {
     var value = undefined;
-    if (goog.isDef(value = this.settings_[name])) {
+    if (goog.isDef(value = this.options_[name])) {
         return value;
     } else if (this.parent_ && goog.isDef(value = this.parent_.get(name, def))) {
         return value;

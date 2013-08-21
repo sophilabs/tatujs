@@ -50,3 +50,6 @@ tatu.Entry.prototype.getPriority = function() {
 tatu.Entry.prototype.getTimeout = function() {
     return this.timeout_;
 };
+
+
+//TODO: add again load and abort

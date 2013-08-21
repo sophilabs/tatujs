@@ -10,6 +10,14 @@ tatu.loaders.ILoader = function(settings) {};
 
 
 /**
+ * Get a Resource ID for the specified element.
+ * @param {Element} element DOM element.
+ * @return {string} Resource ID
+ */
+tatu.loaders.ILoader.prototype.identify;
+
+
+/**
  * Setup a resource for the specified element.
  * @param {Element} element DOM element.
  * @return {tatu.Entry} Queue entry.

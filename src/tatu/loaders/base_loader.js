@@ -20,6 +20,16 @@ tatu.loaders.BaseLoader = function(settings) {
 
 
 /**
+ * Get a Resource ID for the specified element.
+ * @param {Element} element DOM element.
+ * @return {string} Resource ID
+ */
+tatu.loaders.BaseLoader.prototype.identify = function(element) {
+    throw Error('Not Implemented');
+};
+
+
+/**
  * Setup a resource for the specified element.
  * @param {Element} element DOM element.
  * @return {tatu.Entry} Queue Entry.
