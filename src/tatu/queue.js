@@ -1,39 +1,15 @@
 goog.provide('tatu.Queue');
 
 goog.require('tatu.Entry');
+goog.require('goog.array');
 
-// TODO: Use Google Closure array.
 
 /**
  * Queue.
  * @constructor
  */
 tatu.Queue = function() {
-    /**
-     * Array of entries.
-     * @type {Array}
-     * @private
-     */
     this.queue_ = [];
-};
-
-
-/**
- * Get the index of the last item matching the specified properties.
- * @param {Object} properties
- * @return {number|null}
- */
-tatu.Queue.prototype.find = function(properties) {
-    for (var i = this.queue_.length - 1; i >= 0; i--) {
-        var complies = true;
-        for (var name in properties) {
-            complies &= this.queue_[i][name] == properties[name];
-        }
-        if (complies) {
-            return i;
-        }
-    }
-    return null;
 };
 
 
@@ -43,13 +19,11 @@ tatu.Queue.prototype.find = function(properties) {
  * @private
  */
 tatu.Queue.prototype.enqueue_ = function(entry) {
-    var index = this.find({'id': entry.id});
-    console.info(index);
-    if (index) {
-        return;
-    } else {
-        this.queue_.push(entry);
-    }
+    goog.array.binaryInsert(this.queue_, entry, function(a, b) {
+        a = a.getPriority();
+        b = b.getPriority();
+        return a > b ? 1 : a < b ? -1 : 0;
+    });
 };
 
 
