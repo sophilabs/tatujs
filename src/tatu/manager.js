@@ -2,34 +2,39 @@ goog.provide('tatu.Manager');
 
 goog.require('goog.dom');
 
-goog.require('tatu.Inspector');
 goog.require('tatu.Queue');
+goog.require('tatu.Settings');
+goog.require('tatu.utils');
+
 goog.require('tatu.loaders.DummyLoader');
 
 
 /**
- * Entry point.
+ * Main entry point.
  * @constructor
  */
 tatu.Manager = function() {
+
     /**
-     * Main inspector.
-     * @type {tatu.Inspector}
+     * Global configuration
+     * @type {tatu.Settings}
      * @private
      */
-    this.inspector_ = new tatu.Inspector();
+    this.settings_ = null;
 
     /**
      * Loader classes registry.
-     * @type {tatu.Registry}
+     * @type {tatu.Registry.<Function>}
+     * @private
      */
-    this.classes = new tatu.Registry();
+    this.loaders_ = new tatu.Registry();
 
     /**
      * Loader instances registry.
-     * @type {tatu.Registry}
+     * @type {tatu.Registry.<tatu.loaders.ILoader>}
+     * @private
      */
-    this.loaders = new tatu.Registry();
+    this.sources_ = new tatu.Registry();
 
     /**
      * Queue.
@@ -38,68 +43,48 @@ tatu.Manager = function() {
      */
     this.queue_ = new tatu.Queue();
 
-    /*
-     * Initialize.
-     */
-    var this_ = this;
-    window.onload = function() {
-        this_.init_();
-    };
+    //TODO: add event?
+    goog.global['onload'] = goog.bind(this.init_, this);
 };
 
 goog.addSingletonGetter(tatu.Manager);
 
 
 /**
- * Setup loaders from a configuration object.
- * @param configuration Configuration.
- * @private
- */
-tatu.Manager.prototype.configure_ = function(configuration) {
-    /*
-     * Register classes.
-     */
-    var classes = configuration['classes'];
-    for (var name in classes) {
-        this.classes.register(name, classes[name]);
-    }
-
-    /*
-     * Register loaders.
-     */
-    var loaders = configuration['loaders'];
-    for (var query in loaders) {
-        var settings = loaders[query];
-        var instance;
-        if (typeof(settings) == 'string') {
-            instance = new (this.classes.get(settings))();
-        } else {
-            instance = new (this.classes.get(settings['name']))(settings);
-        }
-        this.loaders.register(query, instance);
-    }
-};
-
-
-/**
  * Perform inspection using the registered loaders and enqueue.
- * @param {Node} node Node to inspect.
+ * @param {Element} node Node to inspect.
  */
 tatu.Manager.prototype.inspect = function(node) {
-    this.queue_.enqueue(this.inspector_.inspect(this.loaders, node));
+    this.queue_.enqueue(tatu.utils.inspect(this.sources_, node));
 };
 
 
 /**
  * Initialize the manager.
+ * @return {void} Nothing.
  * @private
  */
 tatu.Manager.prototype.init_ = function() {
-    // Configure for the first time
-    this.configure_(tatu.configuration);
+
+    this.settings_ = new tatu.Settings(tatu.configuration);
+
+    var classes = this.settings_.get('loaders', []);
+    for (var name in classes) {
+        this.loaders_.register(name, classes[name]);
+    }
+
+    var sources = this.settings_.get('sources', []);
+    for (var source in sources) {
+        var options = sources[source];
+        if (typeof(options) == 'string') {
+            options = {'name': options};
+        }
+        var settings = new tatu.Settings(options, this.settings_);
+        this.sources_.register(source, new (this.loaders_.get(options['name']))(settings));
+    }
 
     // Perform first inspection
-    this.inspect(document.body);
+    this.inspect(goog.global['document']['body']);
 };
 
 
@@ -107,15 +92,15 @@ tatu.Manager.prototype.init_ = function() {
  * Default configuration.
  */
 tatu.configuration = {
-    // Classes
-    'classes': {
+    // Loaders
+    'loaders': {
         'dummy': tatu.loaders.DummyLoader
     },
 
-    // Loaders
-    'loaders': {
+    // Sources
+    'sources': {
         'div': {
-            'name': 'dummy'
+            'loader': 'dummy'
         }//,
         //'a': 'plain',
         //'img': 'image'
@@ -130,7 +115,7 @@ tatu.configuration = {
     // Default timeout
     'timeout': 10000
 };
-
-
 goog.exportSymbol('tatu.configuration', tatu.configuration);
-goog.exportSymbol('tatu.manager', new tatu.Manager());
+
+
+tatu.Manager.getInstance();

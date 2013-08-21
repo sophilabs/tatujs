@@ -10,34 +10,11 @@ tatu.loaders.ILoader = function(settings) {};
 
 
 /**
- * Get setting value.
- * @param {string} setting Setting name.
- */
-tatu.loaders.ILoader.prototype.getSetting = function(name) {};
-
-
-/**
- * Set setting value.
- * @param {string} setting Setting name.
- * @param {*} value Value.
- */
-tatu.loaders.ILoader.prototype.setSetting = function(name, value) {};
-
-
-/**
- * Get a resource ID for the specified element.
- * @param {Element} element DOM element.
- * @return {string} Resource ID.
- */
-tatu.loaders.ILoader.prototype.identify = function(element) {};
-
-
-/**
  * Setup a resource for the specified element.
  * @param {Element} element DOM element.
- * @return {string} Resource ID.
+ * @return {tatu.Entry} Queue entry.
  */
-tatu.loaders.ILoader.prototype.setup = function(element) {};
+tatu.loaders.ILoader.prototype.setup;
 
 
 /**
@@ -45,14 +22,14 @@ tatu.loaders.ILoader.prototype.setup = function(element) {};
  * @param {string} id Resource ID.
  * @param {function} resolve Resolution callback.
  */
-tatu.loaders.ILoader.prototype.load = function(id, resolve) {};
+tatu.loaders.ILoader.prototype.load;
 
 
 /**
  * Abort a resource.
  * @param {string} id Resource ID.
  */
-tatu.loaders.ILoader.prototype.abort = function(id) {};
+tatu.loaders.ILoader.prototype.abort;
 
 
 goog.exportSymbol('tatu.loaders.ILoader', tatu.loaders.ILoader);

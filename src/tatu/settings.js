@@ -3,52 +3,28 @@ goog.provide('tatu.Settings');
 
 /**
  * Settings manager.
- * @param {tatu.loaders.ILoader} loader Loader.
- * @param {Element} element Element.
+ * @param {object} settings Base settings.
+ * @param {tatu.Settings=} parent Parent settings.
  * @constructor
  */
-tatu.Settings = function(loader, element) {
-    this.loader = loader;
-    this.element = element;
+tatu.Settings = function(settings, parent) {
+    this.settings_ = settings;
+    this.parent_ = parent;
 };
 
 
 /**
- * Prefix for data attributes.
- * @type {string}
- */
-tatu.Settings.prototype.DATA_PREFIX = 'data-tatu-';
-
-
-/**
  * Get a setting value.
- * @param {string} setting Setting name.
- * @returns {*}
+ * @param {string} name Setting name.
+ * @param {*=} def Default value
+ * @return {*}
  */
-tatu.Settings.prototype.get = function(setting) {
-    // Value from attribute
-    var value = this.element[setting];
-    if (value != undefined) {
+tatu.Settings.prototype.get = function(name, def) {
+    var value = undefined;
+    if (goog.isDef(value = this.settings_[name])) {
+        return value;
+    } else if (this.parent_ && goog.isDef(value = this.parent_.get(name, def))) {
         return value;
     }
-
-    // Value from data attribute
-    value = this.element[tatu.Settings.DATA_PREFIX + setting];
-    if (value != undefined) {
-        return value;
-    }
-
-    // Value from loader
-    value = this.loader.getSetting(setting);
-    if (value != undefined) {
-        return value;
-    }
-
-    // Value from global configuration
-    value = tatu.configuration[setting];
-    if (value != undefined) {
-        return value;
-    }
-
-    return arguments[1];
+    return def;
 };

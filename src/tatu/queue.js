@@ -21,7 +21,7 @@ tatu.Queue = function() {
 /**
  * Get the index of the last item matching the specified properties.
  * @param {Object} properties
- * @returns {number|null}
+ * @return {number|null}
  */
 tatu.Queue.prototype.find = function(properties) {
     for (var i = this.queue_.length - 1; i >= 0; i--) {

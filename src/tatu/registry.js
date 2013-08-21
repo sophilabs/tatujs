@@ -4,16 +4,23 @@ goog.provide('tatu.Registry');
 /**
  * Generic registry.
  * @constructor
+ * @template T
  */
 tatu.Registry = function() {
+    /**
+     * Registry dictionary
+     * @type {Object.<string, T>}
+     * @private
+     */
     this.registry_ = {};
 };
 
 
 /**
  * Register an object.
- * @param key Key
- * @param {*} object Object
+ * @param {string} key Key
+ * @param {T} object Object
+ * @return {void} Nothing
  */
 tatu.Registry.prototype.register = function(key, object) {
     this.registry_[key] = object;
@@ -22,7 +29,8 @@ tatu.Registry.prototype.register = function(key, object) {
 
 /**
  * Unregister an object.
- * @param key Key
+ * @param {string} key Key
+ * @return {void} Nothing
  */
 tatu.Registry.prototype.unregister = function(key) {
     delete this.registry_[key];
@@ -31,8 +39,8 @@ tatu.Registry.prototype.unregister = function(key) {
 
 /**
  * Get an object by its key.
- * @param key Key
- * @return {*} Object.
+ * @param {string} key Key
+ * @return {T} Object.
  */
 tatu.Registry.prototype.get = function(key) {
     return this.registry_[key];
@@ -41,7 +49,7 @@ tatu.Registry.prototype.get = function(key) {
 
 /**
  * Get registry object.
- * @return {object} Registry object.
+ * @return {Object.<string, T>} Registry object.
  */
 tatu.Registry.prototype.all = function() {
     return this.registry_;

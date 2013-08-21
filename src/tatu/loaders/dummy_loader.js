@@ -1,38 +1,40 @@
 goog.provide('tatu.loaders.DummyLoader');
 
-goog.require('tatu.loaders.DummyResource');
-goog.require('tatu.loaders.ILoader');
 goog.require('tatu.Settings');
+goog.require('tatu.Entry');
+goog.require('tatu.utils');
+goog.require('tatu.loaders.BaseLoader');
+goog.require('tatu.loaders.DummyResource');
 
 
 /**
  * Dummy loader.
+ * @param {tatu.Settings} settings Loader Settings
  * @constructor
- * @implements {tatu.loaders.ILoader}
+ * @inherits {tatu.loaders.ILoader}
  */
 tatu.loaders.DummyLoader = function(settings) {
-    this.settings_ = settings;
+    tatu.loaders.DummyLoader.call(this, settings);
+
+    /**
+     * Resources
+     * @type {Object.<string, *>}
+     * @private
+     */
     this.resources_ = {};
 };
+goog.inherits(tatu.loaders.DummyLoader, tatu.loaders.BaseLoader);
 
 
-tatu.loaders.DummyLoader.prototype.getSetting = function(name) {
-    return this.settings_[name];
-};
-
-
-tatu.loaders.DummyLoader.prototype.setSetting = function(name, value) {
-    this.settings_[name] = value;
-};
-
-
-tatu.loaders.DummyLoader.prototype.identify = function(element) {
-    return 'dummy';
-};
-
-
+/**
+ * Setup a resource for the specified element.
+ * @param {Element} element
+ * @return {tatu.Entry} Queue entry
+ */
 tatu.loaders.DummyLoader.prototype.setup = function(element) {
-    var id = this.identify(element);
+
+    var id = 'dummy';
+
     // var settings = new tatu.Settings(this, element);
     // Get additional settings using settings.get(<setting name>)
     var resource = this.resources_[id];
@@ -40,7 +42,7 @@ tatu.loaders.DummyLoader.prototype.setup = function(element) {
         resource = new tatu.loaders.DummyResource();
         this.resources_[id] = resource;
     }
-    return id;
+    return new tatu.Entry();
 };
 
 
@@ -53,5 +55,5 @@ tatu.loaders.DummyLoader.prototype.load = function(id, resolve, timeout) {
 
 
 tatu.loaders.DummyLoader.prototype.abort = function(id) {
-};
 
+};

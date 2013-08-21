@@ -4,32 +4,49 @@ goog.provide('tatu.Entry');
 /**
  * Queue entry.
  * @param {tatu.loaders.ILoader} loader Loader.
- * @param {Element} element Element.
+ * @param {string} id Resource ID.
  * @param {number} priority Priority.
- * @param {number} timeout Timeout.
+ * @param {number} timeout Timeout
  * @constructor
  */
-tatu.Entry = function(loader, element, priority, timeout) {
-    this.loader = loader;
-    this.id = loader.setup(element);
-
-    this.priority = priority;
-    this.timeout = timeout;
+tatu.Entry = function(loader, id, priority, timeout) {
+    this.loader_ = loader;
+    this.id_ = id;
+    this.priority_ = priority;
+    this.timeout_ = timeout;
 };
 
 
 /**
- * Load the associated resource.
- * @param resolve Resolution callback.
+ * Get loader
+ * @return {tatu.loaders.ILoader}
  */
-tatu.Entry.prototype.load = function(resolve) {
-    this.loader.load(this.id, resolve);
+tatu.Entry.prototype.getLoader = function() {
+    return this.loader_;
 };
 
 
 /**
- * Abort the associated resource.
+ * Get id
+ * @return {string}
  */
-tatu.Entry.prototype.abort = function() {
-    this.loader.abort(this.id);
+tatu.Entry.prototype.getId = function() {
+    return this.id_;
+};
+
+/**
+ * Get priority
+ * @returns {number}
+ */
+tatu.Entry.prototype.getPriority = function() {
+    return this.priority_;
+};
+
+
+/**
+ * Get timeout
+ * @returns {number}
+ */
+tatu.Entry.prototype.getTimeout = function() {
+    return this.timeout_;
 };

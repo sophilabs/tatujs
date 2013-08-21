@@ -1,7 +1,5 @@
 #!/bin/bash
 
-TATU_JS_SRC="src/tatu/"
-
 # Closure library settings
 CLOSURE_LIBRARY_REVISION="4bbe2636012f81eafc3341539f25bcd3ae1ab09a"
 CLOSURE_LIBRARY_PATH="closure/library"
@@ -24,12 +22,11 @@ CLOSURE_DEPS_OUTPUT="src/tatu/deps.js"
 CLOSURE_BUILDER="$CLOSURE_LIBRARY_PATH/closure/bin/build/closurebuilder.py"
 CLOSURE_ROOT_LIST=("$CLOSURE_LIBRARY_PATH/closure/goog"
                    "$CLOSURE_LIBRARY_PATH/third_party/closure/goog"
-                   "$TATU_JS_SRC")
-CLOSURE_NAMESPACE_LIST=("tatu.package0"
-                        "tatu.package1")
+                   "src/tatu")
+CLOSURE_NAMESPACE_LIST=("tatu.Manager")
 CLOSURE_MIN_FLAG="--compilation_level=ADVANCED_OPTIMIZATIONS"
-CLOSURE_JS_OUTPUT="build/tatu.js"
-CLOSURE_JS_OUTPUT_MIN="build/tatu.min.js"
+CLOSURE_JS_OUTPUT="built/tatu.js"
+CLOSURE_JS_OUTPUT_MIN="built/tatu.min.js"
 
 
 get_closure_compiler() {
@@ -69,7 +66,7 @@ configure() {
 }
 
 build() {
-    command="python $CLOSURE_BUILDER"
+    command="python $CLOSURE_BUILDER --output_mode=compiled --compiler_jar=\"$CLOSURE_COMPILER_PATH/compiler.jar\""
 
     for root in ${CLOSURE_ROOT_LIST[*]}; do
         command="$command --root=\"$root\""
@@ -85,14 +82,15 @@ build() {
     else
         command="$command > $CLOSURE_JS_OUTPUT"
     fi
-
     eval $command
 }
 
 run() {
     if hash http-server 2> /dev/null; then
+        echo "http://127.0.0.1:8080/example/sample_01.html"
         http-server
     else
+        echo "http://127.0.0.1:8000/example/sample_01.html"
         python -m SimpleHTTPServer
     fi
 }
