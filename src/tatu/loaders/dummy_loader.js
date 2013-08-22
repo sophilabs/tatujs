@@ -6,6 +6,7 @@ goog.require('tatu.Entry');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.loaders.DummyResource');
+goog.require('goog.math');
 
 
 /**
@@ -33,7 +34,7 @@ goog.inherits(tatu.loaders.DummyLoader, tatu.loaders.BaseLoader);
  * @return {string} Resource ID
  */
 tatu.loaders.DummyLoader.prototype.identify = function(element) {
-    return 'dummy';
+    return 'dummy' + goog.math.randomInt(this.settings_.get('count'));
 };
 
 
@@ -47,22 +48,23 @@ tatu.loaders.DummyLoader.prototype.setup = function(element) {
     var id = this.identify(element);
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
 
-    // var settings = new tatu.conf.Settings(this, element);
-    // Get additional settings using settings.get(<setting name>)
-    //var resource = this.resources_[id];
-    //if (resource == undefined) {
-    //    resource = new tatu.loaders.DummyResource();
-    //    this.resources_[id] = resource;
-    //}
+    /*
+    var resource = this.resources_[id];
+    if (resource == undefined) {
+        resource = new tatu.loaders.DummyResource();
+        this.resources_[id] = resource;
+    }
+    */
 
-    return new tatu.Entry(this, id, settings.get('timeout'), settings.get('priority'));
+    return new tatu.Entry(this, id, goog.math.randomInt(settings.get('max_priority')),
+                          goog.math.randomInt(settings.get('max_timeout')));
 };
 
 
 tatu.loaders.DummyLoader.prototype.load = function(id, resolve, timeout) {
     var resource = this.resources_[id];
     setTimeout(function() {
-        resolve(resource);
+        resolve();
     }, timeout);
 };
 

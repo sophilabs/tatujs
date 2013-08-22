@@ -4,11 +4,11 @@ goog.addDependency('../../../../src/tatu/conf/element_settings.js', ['tatu.conf.
 goog.addDependency('../../../../src/tatu/conf/settings.js', ['tatu.conf.Settings'], []);
 goog.addDependency('../../../../src/tatu/entry.js', ['tatu.Entry'], []);
 goog.addDependency('../../../../src/tatu/loaders/base_loader.js', ['tatu.loaders.BaseLoader'], ['tatu.loaders.ILoader']);
-goog.addDependency('../../../../src/tatu/loaders/dummy_loader.js', ['tatu.loaders.DummyLoader'], ['tatu.Entry', 'tatu.conf.ElementSettings', 'tatu.conf.Settings', 'tatu.loaders.BaseLoader', 'tatu.loaders.DummyResource', 'tatu.utils']);
+goog.addDependency('../../../../src/tatu/loaders/dummy_loader.js', ['tatu.loaders.DummyLoader'], ['goog.math', 'tatu.Entry', 'tatu.conf.ElementSettings', 'tatu.conf.Settings', 'tatu.loaders.BaseLoader', 'tatu.loaders.DummyResource', 'tatu.utils']);
 goog.addDependency('../../../../src/tatu/loaders/dummy_resource.js', ['tatu.loaders.DummyResource'], ['tatu.loaders.IResource']);
 goog.addDependency('../../../../src/tatu/loaders/iloader.js', ['tatu.loaders.ILoader'], []);
 goog.addDependency('../../../../src/tatu/loaders/iresource.js', ['tatu.loaders.IResource'], []);
 goog.addDependency('../../../../src/tatu/manager.js', ['tatu.Manager'], ['goog.dom', 'goog.dom.query', 'tatu.Queue', 'tatu.Registry', 'tatu.conf.Settings', 'tatu.loaders.DummyLoader', 'tatu.utils']);
-goog.addDependency('../../../../src/tatu/queue.js', ['tatu.Queue'], ['goog.array', 'tatu.Entry']);
+goog.addDependency('../../../../src/tatu/queue.js', ['tatu.Queue'], ['goog.array', 'tatu.Entry', 'tatu.conf.Settings']);
 goog.addDependency('../../../../src/tatu/registry.js', ['tatu.Registry'], []);
 goog.addDependency('../../../../src/tatu/utils.js', ['tatu.utils'], ['goog.Uri']);

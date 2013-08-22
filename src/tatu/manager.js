@@ -7,7 +7,6 @@ goog.require('tatu.Queue');
 goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
-
 goog.require('tatu.loaders.DummyLoader');
 
 
@@ -58,14 +57,17 @@ goog.addSingletonGetter(tatu.Manager);
  * @private
  */
 tatu.Manager.prototype.init_ = function() {
-
+    // Init settings
     this.settings_ = new tatu.conf.Settings(tatu.configuration);
+    this.queue_.init(this.settings_);
 
-    var classes = this.settings_.get('loaders', {});
-    for (var name in classes) {
-        this.loaders_.register(name, classes[name]);
+    // Register loader classes
+    var loaders = this.settings_.get('loaders', {});
+    for (var name in loaders) {
+        this.loaders_.register(name, loaders[name]);
     }
 
+    // Register loader instances
     var sources = this.settings_.get('sources', []);
     for (var source in sources) {
         if (typeof(sources[source]) == 'string') {
@@ -95,7 +97,6 @@ tatu.Manager.prototype.inspect = function(container) {
 };
 
 
-
 /**
  * Default configuration.
  */
@@ -108,7 +109,10 @@ tatu.configuration = {
     // Sources
     'sources': {
         'div': {
-            'loader': 'dummy'
+            'loader': 'dummy',
+            'count': 2,
+            'max_priority': 10,
+            'max_timeout': 4000
         }//,
         //'a': 'plain',
         //'img': 'image'

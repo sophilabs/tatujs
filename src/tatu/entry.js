@@ -14,6 +14,13 @@ tatu.Entry = function(loader, id, priority, timeout) {
     this.id_ = id;
     this.priority_ = priority;
     this.timeout_ = timeout;
+
+    /**
+     * Whether the entry is loading.
+     * @type {boolean}
+     * @private
+     */
+    this.loading_ = false;
 };
 
 
@@ -58,6 +65,7 @@ tatu.Entry.prototype.getTimeout = function() {
  */
 tatu.Entry.prototype.load = function(resolve) {
     this.loader_.load(this.id_, resolve, this.timeout_);
+    this.loading_ = true;
 };
 
 
@@ -66,4 +74,14 @@ tatu.Entry.prototype.load = function(resolve) {
  */
 tatu.Entry.prototype.abort = function() {
     this.loader_.abort(this.id_);
+    this.loading_ = false;
+};
+
+
+/**
+ * Get whether the entry is loading.
+ * @return {bool} Whether the entry is loading.
+ */
+tatu.Entry.prototype.isLoading = function() {
+    return this.loading_;
 };
