@@ -31,8 +31,7 @@ tatu.Queue.prototype.enqueue = function(entry) {
 
 
 /**
- * Enqueue entries.
- * This method can take queue entries as arguments, an array of entries as single argument, an entry as single argument.
+ * Enqueue an array of entries.
  * @param {Array.<Entry>} entries Entries.
  * @return {void} Nothing.
  */

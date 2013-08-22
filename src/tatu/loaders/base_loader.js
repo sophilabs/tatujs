@@ -12,7 +12,7 @@ goog.require('tatu.loaders.ILoader');
 tatu.loaders.BaseLoader = function(settings) {
     /**
      * Settings
-     * @type {tatu.Settings}
+     * @type {tatu.conf.Settings}
      * @private
      */
     this.settings_ = settings;

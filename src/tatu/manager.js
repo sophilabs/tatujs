@@ -4,7 +4,7 @@ goog.require('goog.dom');
 goog.require('goog.dom.query');
 
 goog.require('tatu.Queue');
-goog.require('tatu.Settings');
+goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
 
@@ -19,7 +19,7 @@ tatu.Manager = function() {
 
     /**
      * Global configuration
-     * @type {tatu.Settings}
+     * @type {tatu.conf.Settings}
      * @private
      */
     this.settings_ = null;
@@ -59,7 +59,7 @@ goog.addSingletonGetter(tatu.Manager);
  */
 tatu.Manager.prototype.init_ = function() {
 
-    this.settings_ = new tatu.Settings(tatu.configuration);
+    this.settings_ = new tatu.conf.Settings(tatu.configuration);
 
     var classes = this.settings_.get('loaders', {});
     for (var name in classes) {
@@ -71,7 +71,7 @@ tatu.Manager.prototype.init_ = function() {
         if (typeof(sources[source]) == 'string') {
             sources[source] = {'loader': sources[source]};
         }
-        var settings = new tatu.Settings(sources[source], this.settings_);
+        var settings = new tatu.conf.Settings(sources[source], this.settings_);
         this.sources_.register(source, new (this.loaders_.get(sources[source]['loader']))(settings));
     }
 

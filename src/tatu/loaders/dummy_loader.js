@@ -1,7 +1,7 @@
 goog.provide('tatu.loaders.DummyLoader');
 
-goog.require('tatu.Settings');
-goog.require('tatu.ElementSettings');
+goog.require('tatu.conf.Settings');
+goog.require('tatu.conf.ElementSettings');
 goog.require('tatu.Entry');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.BaseLoader');
@@ -10,7 +10,7 @@ goog.require('tatu.loaders.DummyResource');
 
 /**
  * Dummy loader.
- * @param {tatu.Settings} settings Loader Settings
+ * @param {tatu.conf.Settings} settings Loader Settings
  * @constructor
  * @inherits {tatu.loaders.ILoader}
  */
@@ -45,9 +45,9 @@ tatu.loaders.DummyLoader.prototype.identify = function(element) {
 tatu.loaders.DummyLoader.prototype.setup = function(element) {
 
     var id = this.identify(element);
-    var settings = new tatu.ElementSettings(element, this.settings_);
+    var settings = new tatu.conf.ElementSettings(element, this.settings_);
 
-    // var settings = new tatu.Settings(this, element);
+    // var settings = new tatu.conf.Settings(this, element);
     // Get additional settings using settings.get(<setting name>)
     //var resource = this.resources_[id];
     //if (resource == undefined) {
