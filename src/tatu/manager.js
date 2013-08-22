@@ -118,7 +118,7 @@ tatu.configuration = {
             }
         },
 
-        'div2': {
+        'div': {
             'loader': 'dummy',
             'sources': {
                 '2nested1': 'dummy',

@@ -2,6 +2,7 @@ goog.provide('tatu.LoaderManager');
 
 goog.require('tatu.Registry');
 goog.require('tatu.conf.LoaderSettings');
+goog.require('goog.string');
 
 
 /**
@@ -44,12 +45,18 @@ tatu.LoaderManager = function(loaders, settings) {
         var settings = new tatu.conf.LoaderSettings(sources[source]);
 
         // Get loader name
-        var loader = settings.get('loader');
-        if (typeof(loader) != 'string') {
-            throw new Error('Must specify a loader.');
+        var loaderName = settings.get('loader');
+        if (typeof(loaderName) != 'string') {
+            throw new Error('Must specify a loader for "' + source + '".');
+        }
+
+        // Get loader class
+        var loaderClass = this.loaders_.get(loaderName);
+        if (loaderClass == undefined) {
+            throw new Error('Loader class for "' + loaderName + '" not found in registry.');
         }
 
         // Register
-        this.sources_.register(source, new (this.loaders_.get(loader))(this.loaders_, settings));
+        this.sources_.register(source, new loaderClass(this.loaders_, settings));
     }
 };
