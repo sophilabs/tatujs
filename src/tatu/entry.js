@@ -52,4 +52,18 @@ tatu.Entry.prototype.getTimeout = function() {
 };
 
 
-//TODO: add again load and abort
+/**
+ * Load the associated Resource ID.
+ * @param {function} resolve Resolution callback.
+ */
+tatu.Entry.prototype.load = function(resolve) {
+    this.loader_.load(this.id_, resolve, this.timeout_);
+};
+
+
+/**
+ * Abort the associated Resource ID.
+ */
+tatu.Entry.prototype.abort = function() {
+    this.loader_.abort(this.id_);
+};
