@@ -8,6 +8,7 @@ goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.DummyLoader');
+goog.require('tatu.LoaderManager');
 
 
 /**
@@ -15,7 +16,6 @@ goog.require('tatu.loaders.DummyLoader');
  * @constructor
  */
 tatu.Manager = function() {
-
     /**
      * Global configuration
      * @type {tatu.conf.Settings}
@@ -28,14 +28,21 @@ tatu.Manager = function() {
      * @type {tatu.Registry.<Function>}
      * @private
      */
-    this.loaders_ = new tatu.Registry();
+    this.loaders_ = null;
 
     /**
      * Queue.
      * @type {tatu.Queue}
      * @private
      */
-    this.queue_ = new tatu.Queue();
+    this.queue_ = null;
+
+    /**
+     * Loader manager;
+     * @type {tatu.LoaderManager}
+     * @private
+     */
+    this.loaderManager_ = null;
 
     //TODO: add event?
     goog.global['onload'] = goog.bind(this.init_, this);
@@ -50,17 +57,26 @@ goog.addSingletonGetter(tatu.Manager);
  * @private
  */
 tatu.Manager.prototype.init_ = function() {
-    // Init settings
+    // Create settings
     this.settings_ = new tatu.conf.Settings(tatu.configuration);
 
-    // Register loader classes
+    // Create loader class registry
+    this.loaders_ = new tatu.Registry();
     var loaders = this.settings_.get('loaders', {});
     for (var name in loaders) {
         this.loaders_.register(name, loaders[name]);
     }
 
-    // Perform first inspection
-    this.inspect(goog.global['document']['body']);
+    // Create queue
+    this.queue_ = new tatu.Queue();
+
+    /**
+     * Primary loader manager.
+     * @type {tatu.LoaderManager}
+     * @private
+     */
+    this.loaderManager_ = new tatu.LoaderManager(this.loaders_, this.settings_);
+    //this.loaderManager_.inspect(goog.global['document']['body']);
 };
 
 
@@ -94,10 +110,37 @@ tatu.configuration = {
             'loader': 'dummy',
             'count': 2,
             'max_priority': 10,
-            'max_timeout': 4000
-        }//,
-        //'a': 'plain',
-        //'img': 'image'
+            'max_timeout': 4000,
+
+            'sources': {
+                '1nested1': 'dummy',
+                '1nested2': 'dummy'
+            }
+        },
+
+        'div2': {
+            'loader': 'dummy',
+            'sources': {
+                '2nested1': 'dummy',
+                '2nested2': 'dummy'
+            }
+        }
+
+        /* Future
+        'a': {
+            'loader': 'plain',
+            'selectors': '.container',
+
+            'sources': {
+                'img': {
+                    'loader': 'image'
+                },
+                'video': {
+                    'loader': 'video'
+                }
+            }
+        }
+        */
     },
 
     // Concurrent requests

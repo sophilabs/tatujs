@@ -4,15 +4,23 @@ goog.require('tatu.loaders.ILoader');
 
 
 /**
- * Loader interface.
- * @param settings Settings taken from global configuration.
+ * Base loader..
+ * @param {tatu.Registry.<Function>} loaders Loader classes.
+ * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @implements {tatu.loaders.ILoader}
  * @constructor
  */
-tatu.loaders.BaseLoader = function(settings) {
+tatu.loaders.BaseLoader = function(loaders, settings) {
     /**
-     * Settings
-     * @type {tatu.conf.Settings}
+     * Loader classes registry.
+     * @type {tatu.Registry.<Function>}
+     * @private
+     */
+    this.loaders_ = loaders;
+
+    /**
+     * Settings.
+     * @type {tatu.conf.LoaderSettings}
      * @private
      */
     this.settings_ = settings;

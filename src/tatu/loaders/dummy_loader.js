@@ -11,12 +11,13 @@ goog.require('goog.math');
 
 /**
  * Dummy loader.
- * @param {tatu.conf.Settings} settings Loader Settings
+ * @param {tatu.Registry.<Function>} loaders Loader classes.
+ * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @constructor
  * @inherits {tatu.loaders.ILoader}
  */
-tatu.loaders.DummyLoader = function(settings) {
-    tatu.loaders.BaseLoader.call(this, settings);
+tatu.loaders.DummyLoader = function(loaders, settings) {
+    tatu.loaders.BaseLoader.call(this, loaders, settings);
 
     /**
      * Resources
@@ -24,6 +25,13 @@ tatu.loaders.DummyLoader = function(settings) {
      * @private
      */
     this.resources_ = {};
+
+    /**
+     * Nested loader manager.
+     * @type {tatu.LoaderManager}
+     * @private
+     */
+    this.loaderManager_ = new tatu.LoaderManager(this.loaders_, this.settings_);
 };
 goog.inherits(tatu.loaders.DummyLoader, tatu.loaders.BaseLoader);
 

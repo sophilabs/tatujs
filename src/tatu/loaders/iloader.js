@@ -3,10 +3,11 @@ goog.provide('tatu.loaders.ILoader');
 
 /**
  * Loader interface.
- * @param settings Settings taken from global configuration.
+ * @param {tatu.Registry.<Function>} loaders Loader classes.
+ * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @interface
  */
-tatu.loaders.ILoader = function(settings) {};
+tatu.loaders.ILoader = function(loaders, settings) {};
 
 
 /**
