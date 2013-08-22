@@ -25,8 +25,8 @@ CLOSURE_ROOT_LIST=("$CLOSURE_LIBRARY_PATH/closure/goog"
                    "src/tatu")
 CLOSURE_NAMESPACE_LIST=("tatu.Manager")
 CLOSURE_MIN_FLAG="--compilation_level=ADVANCED_OPTIMIZATIONS"
-CLOSURE_JS_OUTPUT="built/tatu.js"
-CLOSURE_JS_OUTPUT_MIN="built/tatu.min.js"
+CLOSURE_JS_OUTPUT="build/tatu.js"
+CLOSURE_JS_OUTPUT_MIN="build/tatu.min.js"
 
 
 get_closure_compiler() {
