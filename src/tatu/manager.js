@@ -31,13 +31,6 @@ tatu.Manager = function() {
     this.loaders_ = new tatu.Registry();
 
     /**
-     * Loader instances registry.
-     * @type {tatu.Registry.<tatu.loaders.ILoader>}
-     * @private
-     */
-    this.sources_ = new tatu.Registry();
-
-    /**
      * Queue.
      * @type {tatu.Queue}
      * @private
@@ -59,22 +52,11 @@ goog.addSingletonGetter(tatu.Manager);
 tatu.Manager.prototype.init_ = function() {
     // Init settings
     this.settings_ = new tatu.conf.Settings(tatu.configuration);
-    this.queue_.init(this.settings_);
 
     // Register loader classes
     var loaders = this.settings_.get('loaders', {});
     for (var name in loaders) {
         this.loaders_.register(name, loaders[name]);
-    }
-
-    // Register loader instances
-    var sources = this.settings_.get('sources', []);
-    for (var source in sources) {
-        if (typeof(sources[source]) == 'string') {
-            sources[source] = {'loader': sources[source]};
-        }
-        var settings = new tatu.conf.Settings(sources[source], this.settings_);
-        this.sources_.register(source, new (this.loaders_.get(sources[source]['loader']))(settings));
     }
 
     // Perform first inspection

@@ -1,7 +1,6 @@
 goog.provide('tatu.Queue');
 
 goog.require('tatu.Entry');
-goog.require('tatu.conf.Settings');
 goog.require('goog.array');
 
 
@@ -10,6 +9,11 @@ goog.require('goog.array');
  * @constructor
  */
 tatu.Queue = function(concurrency) {
+    /**
+     * Concurrency;
+     * @type {number}
+     * @private
+     */
     this.concurrency_ = concurrency;
 
     /**
@@ -18,22 +22,6 @@ tatu.Queue = function(concurrency) {
      * @private
      */
     this.queue_ = [];
-
-    /**
-     * Settings.
-     * @type {tatu.conf.Settings} Settings.
-     * @private
-     */
-    this.settings_ = null;
-};
-
-
-/**
- * Initialize queue.
- * @param {tatu.conf.Settings} settings Settings.
- */
-tatu.Queue.prototype.init = function(settings) {
-    this.settings_ = settings;
 };
 
 
