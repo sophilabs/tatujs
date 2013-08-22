@@ -15,7 +15,7 @@ goog.require('tatu.loaders.DummyResource');
  * @inherits {tatu.loaders.ILoader}
  */
 tatu.loaders.DummyLoader = function(settings) {
-    tatu.loaders.DummyLoader.call(this, settings);
+    tatu.loaders.BaseLoader.call(this, settings);
 
     /**
      * Resources
@@ -46,7 +46,6 @@ tatu.loaders.DummyLoader.prototype.setup = function(element) {
 
     var id = this.identify(element);
     var settings = new tatu.ElementSettings(element, this.settings_);
-
 
     // var settings = new tatu.Settings(this, element);
     // Get additional settings using settings.get(<setting name>)

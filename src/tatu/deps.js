@@ -2,13 +2,13 @@
 // Please do not edit.
 goog.addDependency('../../../../src/tatu/element_settings.js', ['tatu.ElementSettings'], ['tatu.Settings']);
 goog.addDependency('../../../../src/tatu/entry.js', ['tatu.Entry'], []);
-goog.addDependency('../../../../src/tatu/inspector.js', ['tatu.Inspector'], ['goog.dom.query', 'tatu.Entry', 'tatu.Registry', 'tatu.Settings']);
-goog.addDependency('../../../../src/tatu/loaders/dummy_loader.js', ['tatu.loaders.DummyLoader'], ['tatu.Settings', 'tatu.loaders.DummyResource', 'tatu.loaders.ILoader']);
-goog.addDependency('../../../../src/tatu/loaders/dummy_resource.js', ['tatu.loaders.DummyResource'], ['tatu.loaders.DummyLoader', 'tatu.loaders.IResource']);
+goog.addDependency('../../../../src/tatu/loaders/base_loader.js', ['tatu.loaders.BaseLoader'], ['tatu.loaders.ILoader']);
+goog.addDependency('../../../../src/tatu/loaders/dummy_loader.js', ['tatu.loaders.DummyLoader'], ['tatu.ElementSettings', 'tatu.Entry', 'tatu.Settings', 'tatu.loaders.BaseLoader', 'tatu.loaders.DummyResource', 'tatu.utils']);
+goog.addDependency('../../../../src/tatu/loaders/dummy_resource.js', ['tatu.loaders.DummyResource'], ['tatu.loaders.IResource']);
 goog.addDependency('../../../../src/tatu/loaders/iloader.js', ['tatu.loaders.ILoader'], []);
 goog.addDependency('../../../../src/tatu/loaders/iresource.js', ['tatu.loaders.IResource'], []);
-goog.addDependency('../../../../src/tatu/manager.js', ['tatu.Manager'], ['goog.dom', 'tatu.Inspector', 'tatu.Queue', 'tatu.loaders.DummyLoader']);
-goog.addDependency('../../../../src/tatu/queue.js', ['tatu.Queue'], ['tatu.Entry']);
+goog.addDependency('../../../../src/tatu/manager.js', ['tatu.Manager'], ['goog.dom', 'tatu.Queue', 'tatu.Registry', 'tatu.Settings', 'tatu.loaders.DummyLoader', 'tatu.utils']);
+goog.addDependency('../../../../src/tatu/queue.js', ['tatu.Queue'], ['goog.array', 'tatu.Entry']);
 goog.addDependency('../../../../src/tatu/registry.js', ['tatu.Registry'], []);
 goog.addDependency('../../../../src/tatu/settings.js', ['tatu.Settings'], []);
-goog.addDependency('../../../../src/tatu/utils.js', ['tatu.utils'], ['goog.Uri']);
+goog.addDependency('../../../../src/tatu/utils.js', ['tatu.utils'], ['goog.Uri', 'goog.dom.query']);

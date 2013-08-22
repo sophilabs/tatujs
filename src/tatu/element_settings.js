@@ -38,5 +38,5 @@ tatu.ElementSettings.prototype.get = function(name, def) {
     } else if (this.element_ && goog.isDef(value = this.element_[tatu.ElementSettings.DATA_PREFIX_ + name])) {
         return value;
     }
-    return tatu.Settings.superClass_.get.call(this, name, def);
+    return tatu.ElementSettings.superClass_.get.call(this, name, def);
 };
