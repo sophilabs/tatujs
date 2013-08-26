@@ -21,7 +21,7 @@ tatu.loaders.ILoader.prototype.identify;
 /**
  * Setup a resource for the specified element.
  * @param {Element} element DOM element.
- * @return {tatu.Entry} Queue entry.
+ * @return {tatu.queue.Entry} Queue entry.
  */
 tatu.loaders.ILoader.prototype.setup;
 

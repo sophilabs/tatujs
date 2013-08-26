@@ -2,11 +2,14 @@ goog.provide('tatu.loaders.DummyLoader');
 
 goog.require('tatu.conf.Settings');
 goog.require('tatu.conf.ElementSettings');
-goog.require('tatu.Entry');
+goog.require('tatu.queue.Entry');
+goog.require('tatu.queue.EntryEvent');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.loaders.DummyResource');
 goog.require('goog.math');
+goog.require('goog.style');
+goog.require('goog.events');
 
 
 /**
@@ -49,7 +52,7 @@ tatu.loaders.DummyLoader.prototype.identify = function(element) {
 /**
  * Setup a resource for the specified element.
  * @param {Element} element
- * @return {tatu.Entry} Queue entry
+ * @return {tatu.queue.Entry} Queue entry
  */
 tatu.loaders.DummyLoader.prototype.setup = function(element) {
 
@@ -64,13 +67,38 @@ tatu.loaders.DummyLoader.prototype.setup = function(element) {
     }
     */
 
-    return new tatu.Entry(this, id, goog.math.randomInt(settings.get('max_priority')),
-                          goog.math.randomInt(settings.get('max_timeout')));
+    // Create entry
+    var entry = new tatu.queue.Entry(this, id, goog.math.randomInt(settings.get('max_priority')),
+                                     goog.math.randomInt(settings.get('max_timeout')));
+
+    // Setup state visualization
+    goog.style.setStyle(element, {
+        'background-color': 'gray'
+    });
+    goog.events.listen(entry, tatu.queue.EntryEvent.LOAD, function(event) {
+        goog.style.setStyle(element, {
+            'background-color': 'yellow'
+        });
+    });
+    goog.events.listen(entry, tatu.queue.EntryEvent.ABORT, function(event) {
+        goog.style.setStyle(element, {
+            'background-color': 'red'
+        });
+    });
+    goog.events.listen(entry, tatu.queue.EntryEvent.RESOLVE, function(event) {
+        goog.style.setStyle(element, {
+            'background-color': 'green'
+        });
+    });
+
+    // Return entry
+    return entry;
 };
 
 
 tatu.loaders.DummyLoader.prototype.load = function(id, resolve, timeout) {
-    var resource = this.resources_[id];
+    // var resource = this.resources_[id];
+
     setTimeout(function() {
         resolve();
     }, timeout);

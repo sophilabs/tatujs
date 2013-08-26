@@ -40,7 +40,7 @@ tatu.loaders.BaseLoader.prototype.identify = function(element) {
 /**
  * Setup a resource for the specified element.
  * @param {Element} element DOM element.
- * @return {tatu.Entry} Queue Entry.
+ * @return {tatu.queue.Entry} Queue Entry.
  */
 tatu.loaders.BaseLoader.prototype.setup = function(element) {
     throw Error('Not Implemented');

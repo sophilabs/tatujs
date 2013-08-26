@@ -3,7 +3,7 @@ goog.provide('tatu.Manager');
 goog.require('goog.dom');
 goog.require('goog.dom.query');
 
-goog.require('tatu.Queue');
+goog.require('tatu.queue.Queue');
 goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
@@ -32,7 +32,7 @@ tatu.Manager = function() {
 
     /**
      * Queue.
-     * @type {tatu.Queue}
+     * @type {tatu.queue.Queue}
      * @private
      */
     this.queue_ = null;
@@ -68,7 +68,7 @@ tatu.Manager.prototype.init_ = function() {
     }
 
     // Create queue
-    this.queue_ = new tatu.Queue();
+    this.queue_ = new tatu.queue.Queue(this.settings_.get('concurrency'));
 
     /**
      * Primary loader manager.
@@ -76,7 +76,9 @@ tatu.Manager.prototype.init_ = function() {
      * @private
      */
     this.loaderManager_ = new tatu.LoaderManager(this.loaders_, this.settings_);
-    //this.loaderManager_.inspect(goog.global['document']['body']);
+
+    // Perform inspection
+    this.inspect(goog.global['document']['body']);
 };
 
 
@@ -86,8 +88,9 @@ tatu.Manager.prototype.init_ = function() {
  * @return {void} Nothing.
  */
 tatu.Manager.prototype.inspect = function(container) {
-    for (var query in this.sources_.all()) {
-        var loader = this.sources_.get(query);
+    var sources = this.loaderManager_.getSources();
+    for (var query in sources.all()) {
+        var loader = sources.get(query);
         goog.array.forEach(goog.dom.query(query, container), function(element) {
             this.queue_.enqueue(loader.setup(element));
         }, this);
@@ -108,16 +111,17 @@ tatu.configuration = {
     'sources': {
         'div': {
             'loader': 'dummy',
-            'count': 2,
-            'max_priority': 10,
-            'max_timeout': 4000,
+            'count': 10,
+            'max_priority': 1,
+            'max_timeout': 1000,
 
             'sources': {
                 '1nested1': 'dummy',
                 '1nested2': 'dummy'
             }
-        },
+        }
 
+        /*
         'div': {
             'loader': 'dummy',
             'sources': {
@@ -125,6 +129,7 @@ tatu.configuration = {
                 '2nested2': 'dummy'
             }
         }
+        */
 
         /* Future
         'a': {
@@ -144,7 +149,7 @@ tatu.configuration = {
     },
 
     // Concurrent requests
-    'concurrency': 4,
+    'concurrency': 1,
 
     // Default priority
     'priority': 1,

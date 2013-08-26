@@ -1,6 +1,6 @@
-goog.provide('tatu.Queue');
+goog.provide('tatu.queue.Queue');
 
-goog.require('tatu.Entry');
+goog.require('tatu.queue.Entry');
 goog.require('goog.array');
 
 
@@ -8,7 +8,7 @@ goog.require('goog.array');
  * Queue.
  * @constructor
  */
-tatu.Queue = function(concurrency) {
+tatu.queue.Queue = function(concurrency) {
     /**
      * Concurrency;
      * @type {number}
@@ -18,7 +18,7 @@ tatu.Queue = function(concurrency) {
 
     /**
      * Internal queue.
-     * @type {Array.<tatu.Entry>}
+     * @type {Array.<tatu.queue.Entry>}
      * @private
      */
     this.queue_ = [];
@@ -27,10 +27,10 @@ tatu.Queue = function(concurrency) {
 
 /**
  * Enqueue entry.
- * @param {tatu.Entry} entry Queue entry.
+ * @param {tatu.queue.Entry} entry Queue entry.
  * @private
  */
-tatu.Queue.prototype.enqueue = function(entry) {
+tatu.queue.Queue.prototype.enqueue = function(entry) {
     /*
      * Get insertion index.
      */
@@ -44,7 +44,7 @@ tatu.Queue.prototype.enqueue = function(entry) {
     index = -(index + 1);
     if (index < this.concurrency_) {
         var displaced = this.queue_[index];
-        if (displaced.isLoading()) {
+        if (displaced && displaced.isLoading()) {
             displaced.abort();
         }
     }
@@ -58,16 +58,16 @@ tatu.Queue.prototype.enqueue = function(entry) {
  * @param {Array.<Entry>} entries Entries.
  * @return {void} Nothing.
  */
-tatu.Queue.prototype.enqueueMany = function(entries) {
+tatu.queue.Queue.prototype.enqueueMany = function(entries) {
     goog.array.forEach(entries, goog.bind(this.enqueue, this));
 };
 
 
 /**
  * Get whether the queue is idle.
- * @returns {bool} Whether the queue is idle.
+ * @returns {boolean} Whether the queue is idle.
  */
-tatu.Queue.prototype.isIdle = function() {
+tatu.queue.Queue.prototype.isIdle = function() {
     return goog.array.slice(this.queue_, 0, this.concurrency_).some(function(entry) {
         return !entry.isLoading();
     });
@@ -75,17 +75,25 @@ tatu.Queue.prototype.isIdle = function() {
 
 
 /**
+ * Remove an entry from the queue.
+ * @param {number} index Index of the entry.
+ */
+tatu.queue.Queue.prototype.removeAt = function(index) {
+    goog.array.removeAt(this.queue_, index);
+};
+
+
+/**
  * Run queue.
  */
-tatu.Queue.prototype.run = function() {
+tatu.queue.Queue.prototype.run = function() {
     if (this.isIdle()) {
-        goog.array.forEach(this.queue_, function(entry, index, array) {
-            var queue = this;
+        goog.array.slice(this.queue_, 0, this.concurrency_).forEach(function(entry, index) {
             if (!entry.isLoading()) {
-                entry.load(function() {
-                    goog.array.removeAt(array, index);
-                    queue.run();
-                });
+                entry.load(goog.bind(function() {
+                    this.removeAt(index);
+                    this.run();
+                }, this));
             }
         }, this);
     }

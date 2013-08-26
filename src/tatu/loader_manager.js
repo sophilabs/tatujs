@@ -60,3 +60,12 @@ tatu.LoaderManager = function(loaders, settings) {
         this.sources_.register(source, new loaderClass(this.loaders_, settings));
     }
 };
+
+
+/**
+ * Get loader instances registry.
+ * @return {tatu.Registry.<tatu.loaders.ILoader>}
+ */
+tatu.LoaderManager.prototype.getSources = function() {
+    return this.sources_;
+};
