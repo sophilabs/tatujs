@@ -64,22 +64,22 @@ tatu.queue.Queue.prototype.enqueueMany = function(entries) {
 
 
 /**
- * Get whether the queue is idle.
- * @returns {boolean} Whether the queue is idle.
+ * Get the concurrent slice of the queue.
+ * @return {Array.<tatu.queue.Entry>} Concurrent slice.
  */
-tatu.queue.Queue.prototype.isIdle = function() {
-    return goog.array.slice(this.queue_, 0, this.concurrency_).some(function(entry) {
-        return !entry.isLoading();
-    });
+tatu.queue.Queue.prototype.getConcurrentSlice = function() {
+    return goog.array.slice(this.queue_, 0, this.concurrency_);
 };
 
 
 /**
- * Remove an entry from the queue.
- * @param {number} index Index of the entry.
+ * Get whether the queue is idle.
+ * @returns {boolean} Whether the queue is idle.
  */
-tatu.queue.Queue.prototype.removeAt = function(index) {
-    goog.array.removeAt(this.queue_, index);
+tatu.queue.Queue.prototype.isIdle = function() {
+    return this.getConcurrentSlice().some(function(entry) {
+        return !entry.isLoading();
+    });
 };
 
 
@@ -88,10 +88,10 @@ tatu.queue.Queue.prototype.removeAt = function(index) {
  */
 tatu.queue.Queue.prototype.run = function() {
     if (this.isIdle()) {
-        goog.array.slice(this.queue_, 0, this.concurrency_).forEach(function(entry, index) {
+        this.getConcurrentSlice().forEach(function(entry, index) {
             if (!entry.isLoading()) {
                 entry.load(goog.bind(function() {
-                    this.removeAt(index);
+                    goog.array.remove(this.queue_, entry);
                     this.run();
                 }, this));
             }

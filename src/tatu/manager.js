@@ -149,7 +149,7 @@ tatu.configuration = {
     },
 
     // Concurrent requests
-    'concurrency': 1,
+    'concurrency': 4,
 
     // Default priority
     'priority': 1,
