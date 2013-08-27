@@ -1,4 +1,4 @@
-goog.provide('tatu.loaders.DummyResource');
+goog.provide('tatu.loaders.dummy.DummyResource');
 
 goog.require('tatu.loaders.IResource');
 
@@ -8,6 +8,6 @@ goog.require('tatu.loaders.IResource');
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.DummyResource = function() {
+tatu.loaders.dummy.DummyResource = function() {
 
 };

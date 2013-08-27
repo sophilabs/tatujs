@@ -1,4 +1,4 @@
-goog.provide('tatu.loaders.DummyLoader');
+goog.provide('tatu.loaders.dummy.DummyLoader');
 
 goog.require('tatu.conf.Settings');
 goog.require('tatu.conf.ElementSettings');
@@ -6,7 +6,7 @@ goog.require('tatu.queue.Entry');
 goog.require('tatu.queue.EntryEvent');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.BaseLoader');
-goog.require('tatu.loaders.DummyResource');
+goog.require('tatu.loaders.dummy.DummyResource');
 goog.require('goog.math');
 goog.require('goog.style');
 goog.require('goog.events');
@@ -19,7 +19,7 @@ goog.require('goog.events');
  * @constructor
  * @inherits {tatu.loaders.ILoader}
  */
-tatu.loaders.DummyLoader = function(loaders, settings) {
+tatu.loaders.dummy.DummyLoader = function(loaders, settings) {
     tatu.loaders.BaseLoader.call(this, loaders, settings);
 
     /**
@@ -36,7 +36,7 @@ tatu.loaders.DummyLoader = function(loaders, settings) {
      */
     this.loaderManager_ = new tatu.LoaderManager(this.loaders_, this.settings_);
 };
-goog.inherits(tatu.loaders.DummyLoader, tatu.loaders.BaseLoader);
+goog.inherits(tatu.loaders.dummy.DummyLoader, tatu.loaders.BaseLoader);
 
 
 /**
@@ -44,7 +44,7 @@ goog.inherits(tatu.loaders.DummyLoader, tatu.loaders.BaseLoader);
  * @param {Element} element
  * @return {string} Resource ID
  */
-tatu.loaders.DummyLoader.prototype.identify = function(element) {
+tatu.loaders.dummy.DummyLoader.prototype.identify = function(element) {
     return 'dummy' + goog.math.randomInt(this.settings_.get('count'));
 };
 
@@ -54,7 +54,7 @@ tatu.loaders.DummyLoader.prototype.identify = function(element) {
  * @param {Element} element
  * @return {tatu.queue.Entry} Queue entry
  */
-tatu.loaders.DummyLoader.prototype.setup = function(element) {
+tatu.loaders.dummy.DummyLoader.prototype.setup = function(element) {
 
     var id = this.identify(element);
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
@@ -62,7 +62,7 @@ tatu.loaders.DummyLoader.prototype.setup = function(element) {
     /*
     var resource = this.resources_[id];
     if (resource == undefined) {
-        resource = new tatu.loaders.DummyResource();
+        resource = new tatu.loaders.dummy.DummyResource();
         this.resources_[id] = resource;
     }
     */
@@ -96,7 +96,7 @@ tatu.loaders.DummyLoader.prototype.setup = function(element) {
 };
 
 
-tatu.loaders.DummyLoader.prototype.load = function(id, resolve, timeout) {
+tatu.loaders.dummy.DummyLoader.prototype.load = function(id, resolve, timeout) {
     // var resource = this.resources_[id];
 
     setTimeout(function() {
@@ -105,6 +105,6 @@ tatu.loaders.DummyLoader.prototype.load = function(id, resolve, timeout) {
 };
 
 
-tatu.loaders.DummyLoader.prototype.abort = function(id) {
+tatu.loaders.dummy.DummyLoader.prototype.abort = function(id) {
 
 };
