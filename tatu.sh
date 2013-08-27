@@ -87,10 +87,10 @@ build() {
 
 run() {
     if hash http-server 2> /dev/null; then
-        echo "http://127.0.0.1:8080/example/sample_01.html"
+        echo "http://127.0.0.1:8080/example/"
         http-server
     else
-        echo "http://127.0.0.1:8000/example/sample_01.html"
+        echo "http://127.0.0.1:8000/example/"
         python -m SimpleHTTPServer
     fi
 }
@@ -108,4 +108,5 @@ else
     get
     configure
     build
+    build "min"
 fi

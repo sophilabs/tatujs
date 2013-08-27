@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Tatu Example - Page 2</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="static/bootstrap.css">
+</head>
+
+<body>
+  <div class="navbar navbar-inverse">
+    <a class="navbar-brand" href="index.html">TatuJS Example</a>
+
+    <ul class="nav navbar-nav">
+      <li><a href="page0.html">Page0</a></li>
+      <li><a href="page1.html">Page1</a></li>
+      <li class="active"><a href="page2.html">Page2</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <style type="text/css">
+      video {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        height: 100%;
+        z-index: -100;
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      .row, .footer {
+        color: white;
+      }
+
+      .content {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px 40px;
+      }
+    </style>
+
+    <video class="vjs-default-skin" autoplay loop preload="auto">
+      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type="video/mp4">
+      <source src="http://video-js.zencoder.com/oceans-clip.webm" type="video/webm">
+      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type="video/ogg">
+    </video>
+
+    <div class="row">
+      <div class="col-6 col-offset-3 content">
+        <h2>Page 2</h2>
+        <p>
+          Morbi pulvinar est sed eros suscipit pharetra tempor ac urna. Vivamus convallis auctor neque. Etiam condimentum orci nisi, in ultrices ligula pulvinar quis. Phasellus suscipit, mauris et hendrerit fermentum, sapien dolor sagittis arcu, tempor tincidunt tellus velit quis lacus. Suspendisse elit dui, interdum ullamcorper laoreet ut, volutpat et nulla. Nulla adipiscing consectetur tincidunt. Quisque auctor luctus quam interdum feugiat. In a nisl vitae odio cursus scelerisque. Mauris a tellus at elit ultrices volutpat quis sit amet mi. Nulla nec lectus libero.
+        </p>
+
+        <p>
+          Donec vitae lectus non nunc faucibus consequat nec ac dolor. Donec porttitor tellus in commodo ultricies. Etiam auctor metus eu ultricies hendrerit. Nullam ut mauris vel enim dignissim fermentum. Donec in lacinia dolor. Nulla eget commodo est. In aliquam nunc ac orci scelerisque pellentesque.
+        </p>
+      </div>
+    </div>
+
+    <hr/>
+    <p class="footer text-center">
+      <b>TatuJS</b> - Smart preloader.
+    </p>
+  </div>
+</body>
+</html>
