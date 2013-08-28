@@ -8,7 +8,7 @@ goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.dummy.DummyLoader');
-//goog.require('tatu.loaders.plain.PlainLoader');
+goog.require('tatu.loaders.plain.PlainLoader');
 goog.require('tatu.LoaderManager');
 
 
@@ -115,8 +115,8 @@ tatu.Manager.prototype.inspect = function(container) {
 tatu.configuration = {
     // Loaders
     'loaders': {
-        'dummy': tatu.loaders.dummy.DummyLoader
-        //'plain': tatu.loaders.plain.PlainLoader
+        'dummy': tatu.loaders.dummy.DummyLoader,
+        'plain': tatu.loaders.plain.PlainLoader
     },
 
     // Sources

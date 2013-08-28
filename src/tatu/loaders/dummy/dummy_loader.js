@@ -1,6 +1,5 @@
 goog.provide('tatu.loaders.dummy.DummyLoader');
 
-goog.require('tatu.conf.Settings');
 goog.require('tatu.conf.ElementSettings');
 goog.require('tatu.queue.Entry');
 goog.require('tatu.queue.EntryEvent');

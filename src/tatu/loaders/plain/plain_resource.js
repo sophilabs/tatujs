@@ -14,39 +14,23 @@ goog.require('goog.net.XhrIo');
  * @param {boolean} reload Whether to reload.
  * @param {Array.<string>} handlers Handlers to use.
  * @param {string} method HTTP method.
+ * @param {string} headerName Header name.
+ * @param {string} parameterName Parameter name.
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, method) {
+tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, method,
+                                            headerName, parameterName) {
     this.timeout_ = timeout;
 
     this.cache_ = cache;
-
-    this.headerName_ = null;
-    this.parameterName_ = null;
 
     this.href_ = href;
     this.selectors_ = selectors;
     this.reload_ = reload;
     this.handlers_ = handlers;
     this.method_ = method;
-};
-
-
-/**
- * Set the name of the HTTP header.
- * @param {string} headerName Header name.
- */
-tatu.loaders.plain.PlainResource.prototype.setHeaderName = function(headerName) {
     this.headerName_ = headerName;
-};
-
-
-/**
- * Set the HTTP parameter name.
- * @param {string} parameterName Parameter name.
- */
-tatu.loaders.plain.PlainResource.prototype.setParameterName = function(parameterName) {
     this.parameterName_ = parameterName;
 };
 
