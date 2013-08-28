@@ -1,5 +1,6 @@
 goog.provide('tatu.loaders.plain.PlainLoader');
 
+goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.conf.ElementSettings');
 goog.require('tatu.utils');
 
@@ -70,5 +71,5 @@ tatu.loaders.plain.PlainLoader.prototype.setup = function(element) {
         settings.get('timeout'), this.cache_, tatu.utils.buildAbsoluteUri(settings.get('href')),
         selectors, settings.get('reload'), handlers, settings.get('method'),
         settings.get('headerName'), settings.get('parameterName')));
-    var entry = new tatu.queue.Entry(this, id, goog.math.randomInt(settings.get('max_priority')));
+    var entry = new tatu.queue.Entry(this, id, settings.get('priority'));
 };

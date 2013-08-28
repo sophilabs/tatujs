@@ -150,23 +150,23 @@ tatu.configuration = {
                     }
                 }
             }
-        }
+        },
 
-        /*
-        'div': {
-            'loader': 'dummy',
-            'sources': {
-                '2nested1': 'dummy',
-                '2nested2': 'dummy'
-            }
-        }
-        */
-
-        /* Future
         'a': {
             'loader': 'plain',
-            'selectors': '.container',
 
+            'selectors': 'body',
+            'handlers': 'inner',
+            'timeout': 1000,
+            'reload': false,
+
+            'targetSymbol': '>>',
+
+            'method': 'GET',
+            'headerName': 'X-Source',
+            'parameterName': 'source'
+
+            /* Future
             'sources': {
                 'img': {
                     'loader': 'image'
@@ -175,8 +175,8 @@ tatu.configuration = {
                     'loader': 'video'
                 }
             }
+            */
         }
-        */
     },
 
     // Concurrent requests
