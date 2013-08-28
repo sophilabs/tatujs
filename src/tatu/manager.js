@@ -119,7 +119,13 @@ tatu.configuration = {
 
             'sources': {
                 '1nested1': 'dummy',
-                '1nested2': 'dummy'
+                '1nested2': {
+                    'loader': 'dummy',
+                    'sources': {
+                        '1nested2nested1': 'dummy',
+                        '1nested2nested2': 'dummy'
+                    }
+                }
             }
         }
 

@@ -14,6 +14,21 @@ tatu.conf.Settings = function(options, parent) {
 
 
 /**
+ * Get a setting value without parent lookup.
+ * @param {string} name Setting name.
+ * @param {*=} def Default value.
+ * @return {*}
+ */
+tatu.conf.Settings.prototype.getOwn = function(name, def) {
+    var value = undefined;
+    if (goog.isDef(value = this.options_[name])) {
+        return value;
+    }
+    return def;
+};
+
+
+/**
  * Get a setting value.
  * @param {string} name Setting name.
  * @param {*=} def Default value

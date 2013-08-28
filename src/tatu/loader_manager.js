@@ -36,16 +36,16 @@ tatu.LoaderManager = function(loaders, settings) {
     /*
      * Create loader instances.
      */
-    var sources = this.settings_.get('sources', {});
+    var sources = this.settings_.getOwn('sources');
     for (var source in sources) {
         // Get settings
         if (typeof(sources[source]) == 'string') {
             sources[source] = {'loader': sources[source]};
         }
-        var settings = new tatu.conf.LoaderSettings(sources[source]);
+        var loaderSettings = new tatu.conf.LoaderSettings(sources[source], this.settings_);
 
         // Get loader name
-        var loaderName = settings.get('loader');
+        var loaderName = loaderSettings.get('loader');
         if (typeof(loaderName) != 'string') {
             throw new Error('Must specify a loader for "' + source + '".');
         }
@@ -57,7 +57,7 @@ tatu.LoaderManager = function(loaders, settings) {
         }
 
         // Register
-        this.sources_.register(source, new loaderClass(this.loaders_, settings));
+        this.sources_.register(source, new loaderClass(this.loaders_, loaderSettings));
     }
 };
 

@@ -28,13 +28,6 @@ tatu.loaders.dummy.DummyLoader = function(loaders, settings) {
      * @private
      */
     this.resources_ = {};
-
-    /**
-     * Nested loader manager.
-     * @type {tatu.LoaderManager}
-     * @private
-     */
-    this.loaderManager_ = new tatu.LoaderManager(this.loaders_, this.settings_);
 };
 goog.inherits(tatu.loaders.dummy.DummyLoader, tatu.loaders.BaseLoader);
 
