@@ -8,13 +8,17 @@ goog.provide('tatu.loaders.IResource');
 tatu.loaders.IResource = function() {};
 
 
-goog.exportSymbol('tatu.loaders.IResource', tatu.loaders.IResource);
-
-
-
-
-
-/*
-tatu.loaders.IResource.load
-tatu.loaders.IResource.abort
+/**
+ * Perform requests related to the resource.
+ * @param {function} resolve Resolution callback.
  */
+tatu.loaders.IResource.prototype.load;
+
+
+/**
+ * Abort requests related to the resource.
+ */
+tatu.loaders.IResource.prototype.abort;
+
+
+goog.exportSymbol('tatu.loaders.IResource', tatu.loaders.IResource);

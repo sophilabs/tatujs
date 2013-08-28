@@ -30,7 +30,6 @@ tatu.loaders.ILoader.prototype.setup;
  * Load a resource.
  * @param {string} id Resource ID.
  * @param {function} resolve Resolution callback.
- * @param {number} timeout Timeout.
  */
 tatu.loaders.ILoader.prototype.load;
 

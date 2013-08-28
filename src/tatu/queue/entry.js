@@ -9,16 +9,14 @@ goog.require('goog.events.EventTarget');
  * @param {tatu.loaders.ILoader} loader Loader.
  * @param {string} id Resource ID.
  * @param {number} priority Priority.
- * @param {number} timeout Timeout
  * @constructor
  */
-tatu.queue.Entry = function(loader, id, priority, timeout) {
+tatu.queue.Entry = function(loader, id, priority) {
     goog.events.EventTarget.call(this);
 
     this.loader_ = loader;
     this.id_ = id;
     this.priority_ = priority;
-    this.timeout_ = timeout;
 
     /**
      * Whether the entry is loading.
@@ -47,21 +45,13 @@ tatu.queue.Entry.prototype.getId = function() {
     return this.id_;
 };
 
+
 /**
  * Get priority
  * @returns {number}
  */
 tatu.queue.Entry.prototype.getPriority = function() {
     return this.priority_;
-};
-
-
-/**
- * Get timeout
- * @returns {number}
- */
-tatu.queue.Entry.prototype.getTimeout = function() {
-    return this.timeout_;
 };
 
 
@@ -73,7 +63,8 @@ tatu.queue.Entry.prototype.load = function(resolve) {
     this.loader_.load(this.id_, goog.bind(function() {
         resolve();
         this.dispatchEvent(new tatu.queue.EntryEvent(this.id_, tatu.queue.EntryEvent.RESOLVE));
-    }, this), this.timeout_);
+    }, this));
+
     this.loading_ = true;
     this.dispatchEvent(new tatu.queue.EntryEvent(this.id_, tatu.queue.EntryEvent.LOAD));
 };

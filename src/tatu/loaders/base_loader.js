@@ -23,6 +23,13 @@ tatu.loaders.BaseLoader = function(settings) {
      * @private
      */
     this.loaderManager_ = new tatu.LoaderManager(this.settings_);
+
+    /**
+     * Resources
+     * @type {Object.<string, tatu.loaders.IResource>}
+     * @private
+     */
+    this.resources_ = {};
 };
 
 
@@ -50,10 +57,10 @@ tatu.loaders.BaseLoader.prototype.setup = function(element) {
  * Load a resource.
  * @param {string} id Resource ID.
  * @param {Function} resolve Resolution callback.
- * @param {number} timeout Timeout.
  */
-tatu.loaders.BaseLoader.prototype.load = function(id, resolve, timeout) {
-    throw Error('Not Implemented');
+tatu.loaders.BaseLoader.prototype.load = function(id, resolve) {
+    var resource = this.resources_[id];
+    resource.load(resolve);
 };
 
 
@@ -63,5 +70,6 @@ tatu.loaders.BaseLoader.prototype.load = function(id, resolve, timeout) {
  * @return {void} Nothing.
  */
 tatu.loaders.BaseLoader.prototype.abort = function(id) {
-    throw Error('Not Implemented');
+    var resource = this.resources_[id];
+    resource.abort();
 };

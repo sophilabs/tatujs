@@ -127,6 +127,19 @@ tatu.configuration = {
             'max_priority': 1,
             'max_timeout': 1000,
 
+            'style': {
+                'background-color': 'gray'
+            },
+            'onLoadStyle': {
+                'background-color': 'yellow'
+            },
+            'onAbortStyle': {
+                'background-color': 'red'
+            },
+            'onResolveStyle': {
+                'background-color': 'green'
+            },
+
             'sources': {
                 '1nested1': 'dummy',
                 '1nested2': {

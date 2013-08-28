@@ -6,17 +6,19 @@ goog.require('goog.net.XhrIo');
 
 /**
  * Plain resource.
+ * @param {number} timeout Timeout.
  * @param {object} cache Cache.
  * @param {string} href Anchor HREF.
  * @param {Array.<object>} selectors Selectors to handle.
  * @param {boolean} reload Whether to reload.
  * @param {Array.<function>} handlers Handlers to use.
- * @param {number} timeout AJAX timeout.
- * @param {string} method AJAX method.
+ * @param {string} method HTTP method.
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.plain.PlainResource = function(cache, href, selectors, reload, handlers, timeout, method) {
+tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, method) {
+    this.timeout_ = timeout;
+
     this.cache_ = cache;
 
     this.headerName_ = null;
@@ -26,7 +28,6 @@ tatu.loaders.plain.PlainResource = function(cache, href, selectors, reload, hand
     this.selectors_ = selectors;
     this.reload_ = reload;
     this.handlers_ = handlers;
-    this.timeout_ = timeout;
     this.method_ = method;
 };
 
@@ -133,6 +134,13 @@ tatu.loaders.plain.PlainResource.prototype.load = function(resolve) {
             resolve();
         });
     }
+};
+
+
+/**
+ * Abort AJAX request.
+ */
+tatu.loaders.plain.PlainResource.prototype.abort = function() {
 };
 
 

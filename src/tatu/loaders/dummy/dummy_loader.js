@@ -20,13 +20,6 @@ goog.require('goog.events');
  */
 tatu.loaders.dummy.DummyLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);
-
-    /**
-     * Resources
-     * @type {Object.<string, *>}
-     * @private
-     */
-    this.resources_ = {};
 };
 goog.inherits(tatu.loaders.dummy.DummyLoader, tatu.loaders.BaseLoader);
 
@@ -47,56 +40,35 @@ tatu.loaders.dummy.DummyLoader.prototype.identify = function(element) {
  * @return {tatu.queue.Entry} Queue entry
  */
 tatu.loaders.dummy.DummyLoader.prototype.setup = function(element) {
-
     var id = this.identify(element);
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
 
     /*
+     * Create resource and entry.
+     */
     var resource = this.resources_[id];
     if (resource == undefined) {
-        resource = new tatu.loaders.dummy.DummyResource();
+        resource = new tatu.loaders.dummy.DummyResource(goog.math.randomInt(settings.get('max_timeout')));
         this.resources_[id] = resource;
     }
-    */
+    var entry = new tatu.queue.Entry(this, id, goog.math.randomInt(settings.get('max_priority')));
 
-    // Create entry
-    var entry = new tatu.queue.Entry(this, id, goog.math.randomInt(settings.get('max_priority')),
-                                     goog.math.randomInt(settings.get('max_timeout')));
-
-    // Setup state visualization
-    goog.style.setStyle(element, {
-        'background-color': 'gray'
-    });
+    /*
+     * Setup styles.
+     */
+    goog.style.setStyle(element, settings.get('style'));
     goog.events.listen(entry, tatu.queue.EntryEvent.LOAD, function(event) {
-        goog.style.setStyle(element, {
-            'background-color': 'yellow'
-        });
+        goog.style.setStyle(element, settings.get('onLoadStyle'));
     });
     goog.events.listen(entry, tatu.queue.EntryEvent.ABORT, function(event) {
-        goog.style.setStyle(element, {
-            'background-color': 'red'
-        });
+        goog.style.setStyle(element, settings.get('onAbortStyle'));
     });
     goog.events.listen(entry, tatu.queue.EntryEvent.RESOLVE, function(event) {
-        goog.style.setStyle(element, {
-            'background-color': 'green'
-        });
+        goog.style.setStyle(element, settings.get('onResolveStyle'));
     });
 
-    // Return entry
+    /*
+     * Return entry.
+     */
     return entry;
-};
-
-
-tatu.loaders.dummy.DummyLoader.prototype.load = function(id, resolve, timeout) {
-    // var resource = this.resources_[id];
-
-    setTimeout(function() {
-        resolve();
-    }, timeout);
-};
-
-
-tatu.loaders.dummy.DummyLoader.prototype.abort = function(id) {
-
 };
