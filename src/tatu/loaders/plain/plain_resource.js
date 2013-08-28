@@ -1,6 +1,7 @@
 goog.provide('tatu.loaders.plain.PlainResource');
 
 goog.require('tatu.loaders.IResource');
+goog.require('tatu.loaders.plain.handlers.HandlerManager');
 goog.require('goog.net.XhrIo');
 
 
@@ -9,9 +10,9 @@ goog.require('goog.net.XhrIo');
  * @param {number} timeout Timeout.
  * @param {object} cache Cache.
  * @param {string} href Anchor HREF.
- * @param {Array.<object>} selectors Selectors to handle.
+ * @param {Array.<Object.<string, string>>} selectors Selectors to handle.
  * @param {boolean} reload Whether to reload.
- * @param {Array.<function>} handlers Handlers to use.
+ * @param {Array.<string>} handlers Handlers to use.
  * @param {string} method HTTP method.
  * @constructor
  * @implements {tatu.loaders.IResource}
@@ -67,8 +68,8 @@ tatu.loaders.plain.PlainResource.prototype.fetch_ = function(sources, callback) 
         content[this.parameterName_] = sources;
     }
 
-    var xhrio = goog.net.XhrIo();
-    xhrio.send(this.href_, callback, this.method_, content, headers, this.timeout_);
+    this.xhrio_ = goog.net.XhrIo();
+    this.xhrio_.send(this.href_, callback, this.method_, content, headers, this.timeout_);
 };
 
 
@@ -141,6 +142,7 @@ tatu.loaders.plain.PlainResource.prototype.load = function(resolve) {
  * Abort AJAX request.
  */
 tatu.loaders.plain.PlainResource.prototype.abort = function() {
+    this.xhrio_.abort();
 };
 
 
@@ -148,7 +150,11 @@ tatu.loaders.plain.PlainResource.prototype.abort = function() {
  * Call handlers.
  */
 tatu.loaders.plain.PlainResource.prototype.handle = function() {
+    var handlers = tatu.loaders.plain.handlers.HandlerManager.getInstance().getRegistry();
+
     this.load(function() {
-        // TODO: Call handlers
+        goog.array.forEach(this.handlers_, function(handler) {
+            handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_);
+        });
     });
 };

@@ -16,7 +16,7 @@ goog.require('goog.events');
  * Dummy loader.
  * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @constructor
- * @inherits {tatu.loaders.ILoader}
+ * @extends {tatu.loaders.ILoader}
  */
 tatu.loaders.dummy.DummyLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);
