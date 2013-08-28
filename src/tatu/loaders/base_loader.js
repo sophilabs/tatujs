@@ -1,6 +1,7 @@
 goog.provide('tatu.loaders.BaseLoader');
 
 goog.require('tatu.loaders.ILoader');
+goog.require('tatu.Registry');
 
 
 /**
@@ -26,10 +27,27 @@ tatu.loaders.BaseLoader = function(settings) {
 
     /**
      * Resources
-     * @type {Object.<string, tatu.loaders.IResource>}
+     * @type {tatu.Registry.<tatu.loaders.IResource>}
      * @private
      */
-    this.resources_ = {};
+    this.resources_ = new tatu.Registry();
+};
+
+
+/**
+ * Get or register a resource.
+ * @param {string} id Resource ID.
+ * @param {tatu.loaders.IResource} resource Resource instance.
+ * @return {tatu.loaders.IResource} Resource for that ID.
+ */
+tatu.loaders.BaseLoader.prototype.getOrRegister = function(id, resource) {
+    var resource_ = this.resources_.get(id);
+    if (resource_ == undefined) {
+        this.resources_.register(id, resource);
+        return resource;
+    } else {
+        return resource_;
+    }
 };
 
 
@@ -59,8 +77,7 @@ tatu.loaders.BaseLoader.prototype.setup = function(element) {
  * @param {Function} resolve Resolution callback.
  */
 tatu.loaders.BaseLoader.prototype.load = function(id, resolve) {
-    var resource = this.resources_[id];
-    resource.load(resolve);
+    this.resources_.get(id).load(resolve);
 };
 
 
@@ -70,6 +87,8 @@ tatu.loaders.BaseLoader.prototype.load = function(id, resolve) {
  * @return {void} Nothing.
  */
 tatu.loaders.BaseLoader.prototype.abort = function(id) {
-    var resource = this.resources_[id];
-    resource.abort();
+    this.resources_.get(id).abort();
 };
+
+
+goog.exportSymbol('tatu.loaders.BaseLoader', tatu.loaders.BaseLoader);

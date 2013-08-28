@@ -124,7 +124,7 @@ tatu.configuration = {
         'div': {
             'loader': 'dummy',
             'count': 10,
-            'max_priority': 1,
+            'max_priority': 2,
             'max_timeout': 1000,
 
             'style': {
@@ -180,7 +180,7 @@ tatu.configuration = {
     },
 
     // Concurrent requests
-    'concurrency': 4,
+    'concurrency': 2,
 
     // Default priority
     'priority': 1,
