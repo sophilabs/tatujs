@@ -14,13 +14,12 @@ goog.require('goog.events');
 
 /**
  * Dummy loader.
- * @param {tatu.Registry.<Function>} loaders Loader classes.
  * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @constructor
  * @inherits {tatu.loaders.ILoader}
  */
-tatu.loaders.dummy.DummyLoader = function(loaders, settings) {
-    tatu.loaders.BaseLoader.call(this, loaders, settings);
+tatu.loaders.dummy.DummyLoader = function(settings) {
+    tatu.loaders.BaseLoader.call(this, settings);
 
     /**
      * Resources

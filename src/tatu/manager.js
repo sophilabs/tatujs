@@ -76,10 +76,26 @@ tatu.Manager.prototype.init_ = function() {
      * @type {tatu.LoaderManager}
      * @private
      */
-    this.loaderManager_ = new tatu.LoaderManager(this.loaders_, this.settings_);
+    this.loaderManager_ = new tatu.LoaderManager(this.settings_);
 
     // Perform inspection
     this.inspect(goog.global['document']['body']);
+};
+
+
+/**
+ * Get loaders classes.
+ */
+tatu.Manager.prototype.getLoaders = function() {
+    return this.loaders_;
+};
+
+
+/**
+ * Get queue.
+ */
+tatu.Manager.prototype.getQueue = function() {
+    return this.queue_;
 };
 
 
@@ -89,13 +105,7 @@ tatu.Manager.prototype.init_ = function() {
  * @return {void} Nothing.
  */
 tatu.Manager.prototype.inspect = function(container) {
-    var sources = this.loaderManager_.getSources();
-    for (var query in sources.all()) {
-        var loader = sources.get(query);
-        goog.array.forEach(goog.dom.query(query, container), function(element) {
-            this.queue_.enqueue(loader.setup(element));
-        }, this);
-    }
+    this.loaderManager_.inspect(container);
 };
 
 

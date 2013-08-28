@@ -7,18 +7,10 @@ goog.require('goog.string');
 
 /**
  * Loader manager.
- * @param {tatu.Registry.<Function>} loaders Loader classes.
  * @param {tatu.conf.Settings} settings Settings containing sources.
  * @constructor
  */
-tatu.LoaderManager = function(loaders, settings) {
-    /**
-     * Loader classes.
-     * @type {tatu.Registry.<Function>}
-     * @private
-     */
-    this.loaders_ = loaders;
-
+tatu.LoaderManager = function(settings) {
     /**
      * Settings.
      * @type {tatu.conf.Settings}
@@ -51,13 +43,29 @@ tatu.LoaderManager = function(loaders, settings) {
         }
 
         // Get loader class
-        var loaderClass = this.loaders_.get(loaderName);
+        var loaderClass = tatu.Manager.getInstance().getLoaders().get(loaderName);
         if (loaderClass == undefined) {
             throw new Error('Loader class for "' + loaderName + '" not found in registry.');
         }
 
         // Register
-        this.sources_.register(source, new loaderClass(this.loaders_, loaderSettings));
+        this.sources_.register(source, new loaderClass(loaderSettings));
+    }
+};
+
+
+/**
+ * Perform inspection.
+ * @param {Element} container Element to inspect.
+ * @return {void} Nothing.
+ */
+tatu.LoaderManager.prototype.inspect = function(container) {
+    var queue = tatu.Manager.getInstance().getQueue();
+    for (var query in this.sources_.all()) {
+        var loader = this.sources_.get(query);
+        goog.array.forEach(goog.dom.query(query, container), function(element) {
+            queue.enqueue(loader.setup(element));
+        });
     }
 };
 
