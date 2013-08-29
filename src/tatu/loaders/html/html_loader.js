@@ -1,6 +1,6 @@
-goog.provide('tatu.loaders.plain.PlainLoader');
+goog.provide('tatu.loaders.html.HTMLLoader');
 
-goog.require('tatu.loaders.plain.PlainResource');
+goog.require('tatu.loaders.html.PlainResource');
 goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.conf.ElementSettings');
 goog.require('tatu.utils');
@@ -12,12 +12,12 @@ goog.require('tatu.utils');
  * @constructor
  * @extends {tatu.loaders.ILoader}
  */
-tatu.loaders.plain.PlainLoader = function(settings) {
+tatu.loaders.html.HTMLLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);
 
     this.cache_ = {};
 };
-goog.inherits(tatu.loaders.plain.PlainLoader, tatu.loaders.BaseLoader);
+goog.inherits(tatu.loaders.html.HTMLLoader, tatu.loaders.BaseLoader);
 
 
 /**
@@ -25,7 +25,7 @@ goog.inherits(tatu.loaders.plain.PlainLoader, tatu.loaders.BaseLoader);
  * @param {Element} element
  * @return {string} Resource ID
  */
-tatu.loaders.plain.PlainLoader.prototype.identify = function(element) {
+tatu.loaders.html.HTMLLoader.prototype.identify = function(element) {
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
     return tatu.utils.buildAbsoluteUri(settings.get('href')) + settings.get('selectors');
 };
@@ -36,7 +36,7 @@ tatu.loaders.plain.PlainLoader.prototype.identify = function(element) {
  * @param {Element} element
  * @return {tatu.queue.Entry} Queue entry
  */
-tatu.loaders.plain.PlainLoader.prototype.setup = function(element) {
+tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
     var id = this.identify(element);
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
 
@@ -68,7 +68,7 @@ tatu.loaders.plain.PlainLoader.prototype.setup = function(element) {
     /*
      * Create resource and entry.
      */
-    var resource = this.getOrRegister(id, new tatu.loaders.plain.PlainResource(
+    var resource = this.getOrRegister(id, new tatu.loaders.html.PlainResource(
         settings.get('timeout'), this.cache_, tatu.utils.buildAbsoluteUri(settings.get('href')),
         selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
         settings.get('headerName'), settings.get('parameterName'), this.loaderManager_));

@@ -1,8 +1,8 @@
-goog.provide('tatu.loaders.plain.PlainResource');
+goog.provide('tatu.loaders.html.PlainResource');
 
 goog.require('tatu.loaders.IResource');
-goog.require('tatu.loaders.plain.handlers.HandlerManager');
-goog.require('tatu.loaders.plain.extractors.ExtractorManager');
+goog.require('tatu.loaders.html.handlers.HandlerManager');
+goog.require('tatu.loaders.html.extractors.ExtractorManager');
 goog.require('goog.net.XhrIo');
 goog.require('goog.Uri');
 
@@ -23,7 +23,7 @@ goog.require('goog.Uri');
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
+tatu.loaders.html.PlainResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
                                             headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
@@ -45,7 +45,7 @@ tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, rel
  * @param {function} callback Callback for the XhrIo send.
  * @private
  */
-tatu.loaders.plain.PlainResource.prototype.fetch_ = function(sources, callback) {
+tatu.loaders.html.PlainResource.prototype.fetch_ = function(sources, callback) {
     var jsonSources = JSON.stringify(sources);
 
     var headers = {};
@@ -72,7 +72,7 @@ tatu.loaders.plain.PlainResource.prototype.fetch_ = function(sources, callback) 
  * @returns {*}
  * @private
  */
-tatu.loaders.plain.PlainResource.prototype.getContents_ = function() {
+tatu.loaders.html.PlainResource.prototype.getContents_ = function() {
     if (!goog.isDef(this.cache_[this.href_])) {
         this.cache_[this.href_] = {};
     }
@@ -84,7 +84,7 @@ tatu.loaders.plain.PlainResource.prototype.getContents_ = function() {
  * Load required contents.
  * @param {function} resolve Resolution callback.
  */
-tatu.loaders.plain.PlainResource.prototype.load = function(resolve) {
+tatu.loaders.html.PlainResource.prototype.load = function(resolve) {
     var toFetch;
     var contents = this.getContents_();
 
@@ -121,7 +121,7 @@ tatu.loaders.plain.PlainResource.prototype.load = function(resolve) {
             try {
                 fetchedContents = JSON.parse(response);
             } catch (e) {
-                var fetchedContents = tatu.loaders.plain.extractors.ExtractorManager.getInstance().getRegistry().get(
+                var fetchedContents = tatu.loaders.html.extractors.ExtractorManager.getInstance().getRegistry().get(
                     this.extractor_).extract(response, sources);
             }
 
@@ -135,7 +135,7 @@ tatu.loaders.plain.PlainResource.prototype.load = function(resolve) {
 /**
  * Abort AJAX request.
  */
-tatu.loaders.plain.PlainResource.prototype.abort = function() {
+tatu.loaders.html.PlainResource.prototype.abort = function() {
     this.xhrio_.abort();
 };
 
@@ -143,8 +143,8 @@ tatu.loaders.plain.PlainResource.prototype.abort = function() {
 /**
  * Call handlers.
  */
-tatu.loaders.plain.PlainResource.prototype.handle = function() {
-    var handlers = tatu.loaders.plain.handlers.HandlerManager.getInstance().getRegistry();
+tatu.loaders.html.PlainResource.prototype.handle = function() {
+    var handlers = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry();
 
     this.load(function() {
         goog.array.forEach(this.handlers_, function(handler) {

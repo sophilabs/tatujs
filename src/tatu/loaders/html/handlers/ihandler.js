@@ -1,11 +1,11 @@
-goog.provide('tatu.loaders.plain.handlers.IHandler');
+goog.provide('tatu.loaders.html.handlers.IHandler');
 
 
 /**
  * Handler.
  * @constructor
  */
-tatu.loaders.plain.handlers.IHandler = function() {};
+tatu.loaders.html.handlers.IHandler = function() {};
 
 
 /**
@@ -16,4 +16,4 @@ tatu.loaders.plain.handlers.IHandler = function() {};
  * @param {Array.<string>} handlers Handlers.
  * @param {tatu.loaders.LoaderManager} loaderManager Nested loaders.
  */
-tatu.loaders.plain.handlers.IHandler.prototype.handle;
+tatu.loaders.html.handlers.IHandler.prototype.handle;

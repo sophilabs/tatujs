@@ -9,18 +9,18 @@ goog.require('tatu.Registry');
 goog.require('tatu.utils');
 
 // Handlers
-goog.require('tatu.loaders.plain.handlers.HistoryHandler');
-goog.require('tatu.loaders.plain.handlers.InnerHTMLHandler');
-goog.require('tatu.loaders.plain.handlers.OuterHTMLHandler');
-goog.require('tatu.loaders.plain.handlers.TitleHandler');
-goog.require('tatu.loaders.plain.handlers.InspectionHandler');
+goog.require('tatu.loaders.html.handlers.HistoryHandler');
+goog.require('tatu.loaders.html.handlers.InnerHTMLHandler');
+goog.require('tatu.loaders.html.handlers.OuterHTMLHandler');
+goog.require('tatu.loaders.html.handlers.TitleHandler');
+goog.require('tatu.loaders.html.handlers.InspectionHandler');
 
 // Extractors
-goog.require('tatu.loaders.plain.extractors.DojoExtractor');
+goog.require('tatu.loaders.html.extractors.DojoExtractor');
 
 // Loaders
 goog.require('tatu.loaders.dummy.DummyLoader');
-goog.require('tatu.loaders.plain.PlainLoader');
+goog.require('tatu.loaders.html.HTMLLoader');
 
 goog.require('tatu.loaders.LoaderManager');
 
@@ -129,16 +129,16 @@ tatu.configuration = {
     // Loaders
     'loaders': {
         'dummy': tatu.loaders.dummy.DummyLoader,
-        'plain': tatu.loaders.plain.PlainLoader
+        'html': tatu.loaders.html.HTMLLoader
     },
 
     // Sources
     'sources': {
-        'div': {
+        'div.dummy': {
             'loader': 'dummy',
             'count': 10,
             'max_priority': 2,
-            'max_timeout': 100,
+            'max_timeout': 1000,
 
             'style': {
                 'background-color': 'gray'
@@ -166,9 +166,9 @@ tatu.configuration = {
         },
 
         'a': {
-            'loader': 'plain',
+            'loader': 'html',
 
-            'selectors': 'div',
+            'selectors': '.container',
             'handlers': 'inner',
             'extractor': 'dojo',
             'timeout': 1000,

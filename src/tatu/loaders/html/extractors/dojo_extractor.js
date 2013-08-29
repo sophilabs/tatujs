@@ -1,4 +1,4 @@
-goog.provide('tatu.loaders.plain.extractors.DojoExtractor');
+goog.provide('tatu.loaders.html.extractors.DojoExtractor');
 
 goog.require('goog.array');
 goog.require('goog.dom');
@@ -6,14 +6,14 @@ goog.require('goog.dom');
 
 /**
  * Extractor using Dojo implementation.
- * @implements {tatu.loaders.plain.extractors.IExtractor}
+ * @implements {tatu.loaders.html.extractors.IExtractor}
  * @constructor
  */
-tatu.loaders.plain.extractors.DojoExtractor = function() {
+tatu.loaders.html.extractors.DojoExtractor = function() {
 };
 
 
-tatu.loaders.plain.extractors.DojoExtractor.prototype.extract = function(document, sources) {
+tatu.loaders.html.extractors.DojoExtractor.prototype.extract = function(document, sources) {
     var contents = {};
     var fragment = goog.dom.htmlToDocumentFragment(document);
 
@@ -28,5 +28,5 @@ tatu.loaders.plain.extractors.DojoExtractor.prototype.extract = function(documen
 };
 
 
-tatu.loaders.plain.extractors.ExtractorManager.getInstance().getRegistry().register(
-    'dojo', new tatu.loaders.plain.extractors.DojoExtractor());
+tatu.loaders.html.extractors.ExtractorManager.getInstance().getRegistry().register(
+    'dojo', new tatu.loaders.html.extractors.DojoExtractor());
