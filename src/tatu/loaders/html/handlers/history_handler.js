@@ -3,7 +3,7 @@ goog.provide('tatu.loaders.html.handlers.HistoryHandler');
 
 /**
  * History handler.
- * @param {Window} window Window.
+ * @param window Window.
  * @implements {tatu.loaders.html.handlers.IHandler}
  * @constructor
  */

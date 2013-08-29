@@ -1,6 +1,5 @@
 goog.provide('tatu.loaders.html.handlers.InspectionHandler');
 
-goog.require('tatu.Manager');
 
 /**
  * Inspection handler.

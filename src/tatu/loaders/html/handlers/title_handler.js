@@ -3,7 +3,7 @@ goog.provide('tatu.loaders.html.handlers.TitleHandler');
 
 /**
  * Title handler.
- * @param {Window} window Window.
+ * @param window Window.
  * @implements {tatu.loaders.html.handlers.IHandler}
  * @constructor
  */
@@ -20,4 +20,4 @@ tatu.loaders.html.handlers.TitleHandler.prototype.handle = function(
 
 
 tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry().register(
-    'title', new tatu.loaders.html.handlers.TitleHandler(goog.global['window']));
+    'title', new tatu.loaders.html.handlers.TitleHandler(goog.global));
