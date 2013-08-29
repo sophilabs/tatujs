@@ -14,6 +14,8 @@ tatu.loaders.html.handlers.TitleHandler = function(window) {
 
 tatu.loaders.html.handlers.TitleHandler.prototype.handle = function(
     selectors, contents, href, handlers, loaderManager) {
+
+    document.title = contents['title'];
 };
 
 

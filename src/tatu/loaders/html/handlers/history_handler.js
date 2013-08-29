@@ -18,4 +18,4 @@ tatu.loaders.html.handlers.HistoryHandler.prototype.handle = function(
 
 
 tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry().register(
-    'history', new tatu.loaders.html.handlers.HistoryHandler(goog.global['window']));
+    'history', new tatu.loaders.html.handlers.HistoryHandler(goog.global));

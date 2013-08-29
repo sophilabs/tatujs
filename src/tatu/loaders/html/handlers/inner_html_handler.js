@@ -1,5 +1,7 @@
 goog.provide('tatu.loaders.html.handlers.InnerHTMLHandler');
 
+goog.require('goog.dom');
+
 
 /**
  * Inner content handler.
@@ -14,6 +16,13 @@ tatu.loaders.html.handlers.InnerHTMLHandler = function(container) {
 
 tatu.loaders.html.handlers.InnerHTMLHandler.prototype.handle = function(
     selectors, contents, href, handlers, loaderManager) {
+
+    for (var source in selectors) {
+        var replacement = goog.dom.htmlToDocumentFragment(contents[source]);
+        var original = goog.dom.query(selectors[source], this.container_)[0];
+
+        original.innerHTML = replacement.innerHTML;
+    }
 };
 
 

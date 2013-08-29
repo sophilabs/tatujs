@@ -12,11 +12,11 @@ goog.addDependency('../../../../src/tatu/loaders/html/extractors/iextractor.js',
 goog.addDependency('../../../../src/tatu/loaders/html/handlers/handler_manager.js', ['tatu.loaders.html.handlers.HandlerManager'], ['tatu.Registry']);
 goog.addDependency('../../../../src/tatu/loaders/html/handlers/history_handler.js', ['tatu.loaders.html.handlers.HistoryHandler'], []);
 goog.addDependency('../../../../src/tatu/loaders/html/handlers/ihandler.js', ['tatu.loaders.html.handlers.IHandler'], []);
-goog.addDependency('../../../../src/tatu/loaders/html/handlers/inner_html_handler.js', ['tatu.loaders.html.handlers.InnerHTMLHandler'], []);
-goog.addDependency('../../../../src/tatu/loaders/html/handlers/inspection_handler.js', ['tatu.loaders.html.handlers.InspectionHandler'], []);
+goog.addDependency('../../../../src/tatu/loaders/html/handlers/inner_html_handler.js', ['tatu.loaders.html.handlers.InnerHTMLHandler'], ['goog.dom']);
+goog.addDependency('../../../../src/tatu/loaders/html/handlers/inspection_handler.js', ['tatu.loaders.html.handlers.InspectionHandler'], ['tatu.Manager']);
 goog.addDependency('../../../../src/tatu/loaders/html/handlers/outer_html_handler.js', ['tatu.loaders.html.handlers.OuterHTMLHandler'], []);
 goog.addDependency('../../../../src/tatu/loaders/html/handlers/title_handler.js', ['tatu.loaders.html.handlers.TitleHandler'], []);
-goog.addDependency('../../../../src/tatu/loaders/html/html_loader.js', ['tatu.loaders.html.HTMLLoader'], ['tatu.conf.ElementSettings', 'tatu.loaders.BaseLoader', 'tatu.loaders.html.PlainResource', 'tatu.utils']);
+goog.addDependency('../../../../src/tatu/loaders/html/html_loader.js', ['tatu.loaders.html.HTMLLoader'], ['goog.events', 'tatu.conf.ElementSettings', 'tatu.loaders.BaseLoader', 'tatu.loaders.html.PlainResource', 'tatu.utils']);
 goog.addDependency('../../../../src/tatu/loaders/html/html_resource.js', ['tatu.loaders.html.PlainResource'], ['goog.Uri', 'goog.net.XhrIo', 'tatu.loaders.IResource', 'tatu.loaders.html.extractors.ExtractorManager', 'tatu.loaders.html.handlers.HandlerManager']);
 goog.addDependency('../../../../src/tatu/loaders/iloader.js', ['tatu.loaders.ILoader'], []);
 goog.addDependency('../../../../src/tatu/loaders/iresource.js', ['tatu.loaders.IResource'], []);

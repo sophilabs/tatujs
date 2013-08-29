@@ -14,6 +14,13 @@ tatu.loaders.html.handlers.OuterHTMLHandler = function(container) {
 
 tatu.loaders.html.handlers.OuterHTMLHandler.prototype.handle = function(
     selectors, contents, href, handlers, loaderManager) {
+
+    for (var source in selectors) {
+        var replacement = goog.dom.htmlToDocumentFragment(contents[source]);
+        var original = goog.dom.query(selectors[source], this.container_)[0];
+
+        goog.dom.replaceNode(replacement, original);
+    }
 };
 
 

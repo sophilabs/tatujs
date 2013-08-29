@@ -146,10 +146,10 @@ tatu.loaders.html.PlainResource.prototype.abort = function() {
 tatu.loaders.html.PlainResource.prototype.handle = function() {
     var handlers = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry();
 
-    this.load(function() {
+    this.load(goog.bind(function() {
         goog.array.forEach(this.handlers_, function(handler) {
             handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_,
                                          this.loaderManager_);
         }, this);
-    });
+    }, this));
 };

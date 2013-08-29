@@ -4,6 +4,7 @@ goog.require('tatu.loaders.html.PlainResource');
 goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.conf.ElementSettings');
 goog.require('tatu.utils');
+goog.require('goog.events');
 
 
 /**
@@ -72,5 +73,16 @@ tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
         settings.get('timeout'), this.cache_, tatu.utils.buildAbsoluteUri(settings.get('href')),
         selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
         settings.get('headerName'), settings.get('parameterName'), this.loaderManager_));
+
+    /*
+     * Setup element.
+     */
+    goog.events.listen(element, goog.events.EventType.CLICK, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        resource.handle();
+    });
+
     return new tatu.queue.Entry(this, id, settings.get('priority'));
 };

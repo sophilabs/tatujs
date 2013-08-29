@@ -168,8 +168,8 @@ tatu.configuration = {
         'a': {
             'loader': 'html',
 
-            'selectors': '.container',
-            'handlers': 'inner',
+            'selectors': '.container,.navbar,title',
+            'handlers': 'title,outer,inspection',
             'extractor': 'dojo',
             'timeout': 1000,
             'reload': false,
