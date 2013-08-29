@@ -169,7 +169,7 @@ tatu.configuration = {
             'loader': 'html',
 
             'selectors': '.container,.navbar,title',
-            'handlers': 'title,outer,inspection',
+            'handlers': 'title,outer,history,inspection',
             'extractor': 'dojo',
             'timeout': 1000,
             'reload': false,

@@ -125,6 +125,11 @@ tatu.loaders.html.PlainResource.prototype.load = function(resolve) {
                     this.extractor_).extract(response, sources);
             }
 
+            // Inspect content
+            for (var source in fetchedContents) {
+                this.loaderManager_.inspect(goog.dom.htmlToDocumentFragment(fetchedContents[source]));
+            }
+
             goog.object.extend(contents, fetchedContents);
             resolve();
         }, this));
@@ -148,8 +153,7 @@ tatu.loaders.html.PlainResource.prototype.handle = function() {
 
     this.load(goog.bind(function() {
         goog.array.forEach(this.handlers_, function(handler) {
-            handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_,
-                                         this.loaderManager_);
+            handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_);
         }, this);
     }, this));
 };
