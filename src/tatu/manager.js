@@ -22,7 +22,7 @@ goog.require('tatu.loaders.plain.extractors.DojoExtractor');
 goog.require('tatu.loaders.dummy.DummyLoader');
 goog.require('tatu.loaders.plain.PlainLoader');
 
-goog.require('tatu.LoaderManager');
+goog.require('tatu.loaders.LoaderManager');
 
 
 /**
@@ -53,7 +53,7 @@ tatu.Manager = function() {
 
     /**
      * Loader manager;
-     * @type {tatu.LoaderManager}
+     * @type {tatu.loaders.LoaderManager}
      * @private
      */
     this.loaderManager_ = null;
@@ -86,10 +86,10 @@ tatu.Manager.prototype.init_ = function() {
 
     /**
      * Primary loader manager.
-     * @type {tatu.LoaderManager}
+     * @type {tatu.loaders.LoaderManager}
      * @private
      */
-    this.loaderManager_ = new tatu.LoaderManager(this.settings_);
+    this.loaderManager_ = new tatu.loaders.LoaderManager(this.settings_);
 
     // Perform inspection
     this.inspect(goog.global['document']['body']);

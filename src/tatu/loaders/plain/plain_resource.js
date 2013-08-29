@@ -19,7 +19,7 @@ goog.require('goog.Uri');
  * @param {string} method HTTP method.
  * @param {string} headerName Header name.
  * @param {string} parameterName Parameter name.
- * @param {tatu.LoaderManager} loaderManager Nested loaders.
+ * @param {tatu.loaders.LoaderManager} loaderManager Nested loaders.
  * @constructor
  * @implements {tatu.loaders.IResource}
  */

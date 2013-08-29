@@ -14,6 +14,6 @@ tatu.loaders.plain.handlers.IHandler = function() {};
  * @param {Object.<string, string>} contents Contents.
  * @param {string} href HREF.
  * @param {Array.<string>} handlers Handlers.
- * @param {tatu.LoaderManager} loaderManager Nested loaders.
+ * @param {tatu.loaders.LoaderManager} loaderManager Nested loaders.
  */
 tatu.loaders.plain.handlers.IHandler.prototype.handle;

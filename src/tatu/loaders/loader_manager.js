@@ -1,4 +1,4 @@
-goog.provide('tatu.LoaderManager');
+goog.provide('tatu.loaders.LoaderManager');
 
 goog.require('tatu.Registry');
 goog.require('tatu.conf.LoaderSettings');
@@ -10,7 +10,7 @@ goog.require('goog.string');
  * @param {tatu.conf.Settings} settings Settings containing sources.
  * @constructor
  */
-tatu.LoaderManager = function(settings) {
+tatu.loaders.LoaderManager = function(settings) {
     /**
      * Settings.
      * @type {tatu.conf.Settings}
@@ -59,7 +59,7 @@ tatu.LoaderManager = function(settings) {
  * @param {Element} container Element to inspect.
  * @return {void} Nothing.
  */
-tatu.LoaderManager.prototype.inspect = function(container) {
+tatu.loaders.LoaderManager.prototype.inspect = function(container) {
     var queue = tatu.Manager.getInstance().getQueue();
     for (var query in this.sources_.all()) {
         var loader = this.sources_.get(query);
@@ -74,6 +74,6 @@ tatu.LoaderManager.prototype.inspect = function(container) {
  * Get loader instances registry.
  * @return {tatu.Registry.<tatu.loaders.ILoader>}
  */
-tatu.LoaderManager.prototype.getSources = function() {
+tatu.loaders.LoaderManager.prototype.getSources = function() {
     return this.sources_;
 };

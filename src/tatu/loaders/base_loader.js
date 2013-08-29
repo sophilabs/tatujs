@@ -20,10 +20,10 @@ tatu.loaders.BaseLoader = function(settings) {
 
     /**
      * Nested loader manager.
-     * @type {tatu.LoaderManager}
+     * @type {tatu.loaders.LoaderManager}
      * @private
      */
-    this.loaderManager_ = new tatu.LoaderManager(this.settings_);
+    this.loaderManager_ = new tatu.loaders.LoaderManager(this.settings_);
 
     /**
      * Resources
