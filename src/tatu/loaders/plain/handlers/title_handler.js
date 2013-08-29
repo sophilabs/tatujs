@@ -3,6 +3,7 @@ goog.provide('tatu.loaders.plain.handlers.TitleHandler');
 
 /**
  * Title handler.
+ * @param {Window} window Window.
  * @implements {tatu.loaders.plain.handlers.IHandler}
  * @constructor
  */
@@ -11,7 +12,8 @@ tatu.loaders.plain.handlers.TitleHandler = function(window) {
 };
 
 
-tatu.loaders.plain.handlers.TitleHandler.prototype.handle = function(selectors, contents, href, handlers) {
+tatu.loaders.plain.handlers.TitleHandler.prototype.handle = function(
+    selectors, contents, href, handlers, loaderManager) {
 };
 
 

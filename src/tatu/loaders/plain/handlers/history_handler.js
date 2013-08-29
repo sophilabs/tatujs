@@ -3,6 +3,7 @@ goog.provide('tatu.loaders.plain.handlers.HistoryHandler');
 
 /**
  * History handler.
+ * @param {Window} window Window.
  * @implements {tatu.loaders.plain.handlers.IHandler}
  * @constructor
  */
@@ -11,7 +12,8 @@ tatu.loaders.plain.handlers.HistoryHandler = function(window) {
 };
 
 
-tatu.loaders.plain.handlers.HistoryHandler.prototype.handle = function(selectors, contents, href, handlers) {
+tatu.loaders.plain.handlers.HistoryHandler.prototype.handle = function(
+    selectors, contents, href, handlers, loaderManager) {
 };
 
 

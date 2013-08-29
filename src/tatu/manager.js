@@ -7,8 +7,21 @@ goog.require('tatu.queue.Queue');
 goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
+
+// Handlers
+goog.require('tatu.loaders.plain.handlers.HistoryHandler');
+goog.require('tatu.loaders.plain.handlers.InnerHTMLHandler');
+goog.require('tatu.loaders.plain.handlers.OuterHTMLHandler');
+goog.require('tatu.loaders.plain.handlers.TitleHandler');
+goog.require('tatu.loaders.plain.handlers.InspectionHandler');
+
+// Extractors
+goog.require('tatu.loaders.plain.extractors.DojoExtractor');
+
+// Loaders
 goog.require('tatu.loaders.dummy.DummyLoader');
 goog.require('tatu.loaders.plain.PlainLoader');
+
 goog.require('tatu.LoaderManager');
 
 
@@ -125,7 +138,7 @@ tatu.configuration = {
             'loader': 'dummy',
             'count': 10,
             'max_priority': 2,
-            'max_timeout': 1000,
+            'max_timeout': 100,
 
             'style': {
                 'background-color': 'gray'
@@ -157,6 +170,7 @@ tatu.configuration = {
 
             'selectors': 'body',
             'handlers': 'inner',
+            'extractor': 'dojo',
             'timeout': 1000,
             'reload': false,
 

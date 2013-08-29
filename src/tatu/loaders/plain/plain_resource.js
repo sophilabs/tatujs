@@ -2,7 +2,9 @@ goog.provide('tatu.loaders.plain.PlainResource');
 
 goog.require('tatu.loaders.IResource');
 goog.require('tatu.loaders.plain.handlers.HandlerManager');
+goog.require('tatu.loaders.plain.extractors.ExtractorManager');
 goog.require('goog.net.XhrIo');
+goog.require('goog.Uri');
 
 
 /**
@@ -13,14 +15,16 @@ goog.require('goog.net.XhrIo');
  * @param {Array.<Object.<string, string>>} selectors Selectors to handle.
  * @param {boolean} reload Whether to reload.
  * @param {Array.<string>} handlers Handlers to use.
+ * @param {string} extractor Extractor to use for client-side extraction.
  * @param {string} method HTTP method.
  * @param {string} headerName Header name.
  * @param {string} parameterName Parameter name.
+ * @param {tatu.LoaderManager} loaderManager Nested loaders.
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, method,
-                                            headerName, parameterName) {
+tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
+                                            headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
 
     this.cache_ = cache;
@@ -29,9 +33,12 @@ tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, rel
     this.selectors_ = selectors;
     this.reload_ = reload;
     this.handlers_ = handlers;
+    this.extractor_ = extractor;
     this.method_ = method;
     this.headerName_ = headerName;
     this.parameterName_ = parameterName;
+
+    this.loaderManager_ = loaderManager;
 };
 
 
@@ -42,18 +49,24 @@ tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, rel
  * @private
  */
 tatu.loaders.plain.PlainResource.prototype.fetch_ = function(sources, callback) {
-    sources = JSON.stringify(sources);
+    var jsonSources = JSON.stringify(sources);
 
     var headers = {};
-    var content = {};
     if (this.headerName_) {
-        headers[this.headerName_] = sources;
-    } else if (this.parameterName_) {
-        content[this.parameterName_] = sources;
+        headers[this.headerName_] = jsonSources;
     }
 
-    this.xhrio_ = goog.net.XhrIo();
-    this.xhrio_.send(this.href_, callback, this.method_, content, headers, this.timeout_);
+    var uri = goog.Uri.parse(this.href_);
+    if (this.parameterName_) {
+        uri.setParameterValue(this.parameterName_, jsonSources);
+    }
+
+    this.xhrio_ = new goog.net.XhrIo();
+    goog.events.listen(this.xhrio_, goog.net.EventType.COMPLETE, function(e) {
+        callback(e, sources);
+    });
+    this.xhrio_.setTimeoutInterval(this.timeout_);
+    this.xhrio_.send(uri.toString(), this.method_, null, headers, this.timeout_);
 };
 
 
@@ -104,20 +117,21 @@ tatu.loaders.plain.PlainResource.prototype.load = function(resolve) {
      * Contents to fetch, make request.
      */
     } else {
-        this.fetch_(toFetch, function(e) {
+        this.fetch_(toFetch, goog.bind(function(e, sources) {
             var xhr = e.target;
+            var response = xhr.getResponseText();
+            var fetchedContents;
 
-            var responseObj = xhr.getResponseJson();
-            var responseRaw = xhr.getResponseText();
-
-            if (responseObj) {
-                for (var source in responseObj) {
-                    contents[source] = responseObj[source];
-                }
+            try {
+                fetchedContents = JSON.parse(response);
+            } catch (e) {
+                var fetchedContents = tatu.loaders.plain.extractors.ExtractorManager.getInstance().getRegistry().get(
+                    this.extractor_).extract(response, sources);
             }
 
+            goog.object.extend(contents, fetchedContents);
             resolve();
-        });
+        }, this));
     }
 };
 
@@ -138,7 +152,8 @@ tatu.loaders.plain.PlainResource.prototype.handle = function() {
 
     this.load(function() {
         goog.array.forEach(this.handlers_, function(handler) {
-            handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_);
-        });
+            handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_,
+                                         this.loaderManager_);
+        }, this);
     });
 };

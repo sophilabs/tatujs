@@ -3,6 +3,7 @@ goog.provide('tatu.loaders.plain.handlers.InnerHTMLHandler');
 
 /**
  * Inner content handler.
+ * @param {Element} container Container element.
  * @implements {tatu.loaders.plain.handlers.IHandler}
  * @constructor
  */
@@ -11,7 +12,8 @@ tatu.loaders.plain.handlers.InnerHTMLHandler = function(container) {
 };
 
 
-tatu.loaders.plain.handlers.InnerHTMLHandler.prototype.handle = function(selectors, contents, href, handlers) {
+tatu.loaders.plain.handlers.InnerHTMLHandler.prototype.handle = function(
+    selectors, contents, href, handlers, loaderManager) {
 };
 
 
