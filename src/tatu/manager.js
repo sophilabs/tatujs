@@ -168,7 +168,7 @@ tatu.configuration = {
         'a': {
             'loader': 'plain',
 
-            'selectors': 'body',
+            'selectors': 'div',
             'handlers': 'inner',
             'extractor': 'dojo',
             'timeout': 1000,

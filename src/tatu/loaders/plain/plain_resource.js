@@ -26,9 +26,7 @@ goog.require('goog.Uri');
 tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
                                             headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
-
     this.cache_ = cache;
-
     this.href_ = href;
     this.selectors_ = selectors;
     this.reload_ = reload;
@@ -37,7 +35,6 @@ tatu.loaders.plain.PlainResource = function(timeout, cache, href, selectors, rel
     this.method_ = method;
     this.headerName_ = headerName;
     this.parameterName_ = parameterName;
-
     this.loaderManager_ = loaderManager;
 };
 
@@ -76,11 +73,10 @@ tatu.loaders.plain.PlainResource.prototype.fetch_ = function(sources, callback) 
  * @private
  */
 tatu.loaders.plain.PlainResource.prototype.getContents_ = function() {
-    var contents = this.cache_[this.href_];
-    if (contents == undefined) {
-        contents = {};
+    if (!goog.isDef(this.cache_[this.href_])) {
+        this.cache_[this.href_] = {};
     }
-    return contents;
+    return this.cache_[this.href_];
 };
 
 
