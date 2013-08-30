@@ -1,6 +1,7 @@
 goog.provide('tatu.loaders.html.handlers.HistoryHandler');
 
 goog.require('tatu.loaders.html.handlers.HandlerManager');
+goog.require('tatu.utils');
 
 
 /**
@@ -18,8 +19,7 @@ tatu.loaders.html.handlers.HistoryHandler = function() {
             var handlers = state.handlers;
             for (var i = 0; i < handlers.length; i++) {
                 if (handlers[i] != 'history') {
-                    manager.get(handlers[i]).handle(state.selectors, state.contents, state.href, state.handlers,
-                                                    state.loaderManager);
+                    manager.get(handlers[i]).handle(state.selectors, state.contents, state.href, state.handlers);
                 }
             }
         }
@@ -29,17 +29,15 @@ tatu.loaders.html.handlers.HistoryHandler = function() {
         window.history.replaceState({
             tatu: true,
 
-            title: document.title,
-            content: {
-                'body': goog.global['document']['body'].innerHTML
+            contents: {
+                'body': '<body>' + goog.global['document']['body'].innerHTML + '</body>',
+                'title': '<title>' + document.title + '</title>'
             },
-            context: {
-                href: window.location.href,
-                selectors: {
-                    'body': 'body'
-                },
-                handlers: ['inner']
-            }
+            href: window.location.href,
+            selectors: {
+                'body': 'body'
+            },
+            handlers: ['inner']
         }, document.title, window.location.href);
     };
 };
@@ -53,7 +51,7 @@ tatu.loaders.html.handlers.HistoryHandler.prototype.handle = function(selectors,
         contents: contents,
         href: href,
         handlers: handlers
-    }, contents['title'], href);
+    }, tatu.utils.stripTags(contents['title']), href);
 };
 
 
