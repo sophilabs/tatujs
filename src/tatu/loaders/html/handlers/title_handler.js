@@ -1,6 +1,7 @@
 goog.provide('tatu.loaders.html.handlers.TitleHandler');
 
 goog.require('tatu.loaders.html.handlers.HandlerManager');
+goog.require('tatu.utils');
 
 
 /**
@@ -13,7 +14,7 @@ tatu.loaders.html.handlers.TitleHandler = function() {
 
 
 tatu.loaders.html.handlers.TitleHandler.prototype.handle = function(selectors, contents, href, handlers) {
-    document.title = contents['title'];
+    document.title = tatu.utils.stripTags(contents['title']);
 };
 
 
