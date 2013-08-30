@@ -1,5 +1,7 @@
 goog.provide('tatu.loaders.html.handlers.TitleHandler');
 
+goog.require('tatu.loaders.html.handlers.HandlerManager');
+
 
 /**
  * Title handler.

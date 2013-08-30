@@ -1,5 +1,6 @@
 goog.provide('tatu.loaders.html.handlers.InnerHTMLHandler');
 
+goog.require('tatu.loaders.html.handlers.HandlerManager');
 goog.require('goog.dom');
 
 

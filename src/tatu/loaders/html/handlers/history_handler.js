@@ -1,5 +1,7 @@
 goog.provide('tatu.loaders.html.handlers.HistoryHandler');
 
+goog.require('tatu.loaders.html.handlers.HandlerManager');
+
 
 /**
  * History handler.

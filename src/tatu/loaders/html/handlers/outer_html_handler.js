@@ -1,5 +1,7 @@
 goog.provide('tatu.loaders.html.handlers.OuterHTMLHandler');
 
+goog.require('tatu.loaders.html.handlers.HandlerManager');
+
 
 /**
  * Outer content handler.

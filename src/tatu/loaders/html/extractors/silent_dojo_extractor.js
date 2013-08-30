@@ -1,5 +1,7 @@
 goog.provide('tatu.loaders.html.extractors.SilentDojoExtractor');
 
+goog.require('tatu.loaders.html.extractors.ExtractorManager');
+
 
 /**
  * Dojo extractor with workaround to avoid transitory autoplay of video and audio tags.

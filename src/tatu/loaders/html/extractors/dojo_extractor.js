@@ -1,5 +1,6 @@
 goog.provide('tatu.loaders.html.extractors.DojoExtractor');
 
+goog.require('tatu.loaders.html.extractors.ExtractorManager');
 goog.require('goog.array');
 goog.require('goog.dom');
 
