@@ -17,6 +17,7 @@ goog.require('tatu.loaders.html.handlers.InspectionHandler');
 
 // Extractors
 goog.require('tatu.loaders.html.extractors.DojoExtractor');
+goog.require('tatu.loaders.html.extractors.SilentDojoExtractor');
 
 // Loaders
 goog.require('tatu.loaders.dummy.DummyLoader');
@@ -170,7 +171,7 @@ tatu.configuration = {
 
             'selectors': '.container,.navbar,title',
             'handlers': 'title,outer,history,inspection',
-            'extractor': 'dojo',
+            'extractor': 'silentdojo',
             'timeout': 1000,
             'reload': false,
 
