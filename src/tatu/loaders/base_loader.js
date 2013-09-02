@@ -35,23 +35,6 @@ tatu.loaders.BaseLoader = function(settings) {
 
 
 /**
- * Get or register a resource.
- * @param {string} id Resource ID.
- * @param {tatu.loaders.IResource} resource Resource instance.
- * @return {tatu.loaders.IResource} Resource for that ID.
- */
-tatu.loaders.BaseLoader.prototype.getOrRegister = function(id, resource) {
-    var resource_ = this.resources_.get(id);
-    if (resource_ == undefined) {
-        this.resources_.register(id, resource);
-        return resource;
-    } else {
-        return resource_;
-    }
-};
-
-
-/**
  * Get a Resource ID for the specified element.
  * @param {Element} element DOM element.
  * @return {string} Resource ID

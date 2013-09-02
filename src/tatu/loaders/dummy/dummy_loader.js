@@ -45,8 +45,12 @@ tatu.loaders.dummy.DummyLoader.prototype.setup = function(element) {
     /*
      * Create resource and entry.
      */
-    var resource = this.getOrRegister(
-        id, new tatu.loaders.dummy.DummyResource(goog.math.randomInt(settings.get('max_timeout'))));
+    var resource = this.resources_.get(id);
+    if (!goog.isDef(resource)) {
+        resource = new tatu.loaders.dummy.DummyResource(goog.math.randomInt(settings.get('max_timeout')));
+        this.resources_.register(id, resource);
+    }
+
     var entry = new tatu.queue.Entry(this, id, goog.math.randomInt(settings.get('max_priority')));
 
     /*

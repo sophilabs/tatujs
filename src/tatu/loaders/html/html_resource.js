@@ -27,7 +27,7 @@ tatu.loaders.html.PlainResource = function(timeout, cache, href, selectors, relo
                                             headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
-    this.href_ = href;
+    this.href_ = href.split('#')[0];
     this.selectors_ = selectors;
     this.reload_ = reload;
     this.handlers_ = handlers;

@@ -76,10 +76,14 @@ tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
      */
     var absoluteUri = tatu.utils.buildAbsoluteUri(settings.get('href'));
     if (goog.Uri.haveSameDomain(absoluteUri, window.location.href)) {
-        var resource = this.getOrRegister(id, new tatu.loaders.html.PlainResource(
-            settings.get('timeout'), this.cache_, absoluteUri,
-            selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
-            settings.get('headerName'), settings.get('parameterName'), this.loaderManager_));
+        var resource = this.resources_.get(id);
+        if (!goog.isDef(resource)) {
+            resource = new tatu.loaders.html.PlainResource(
+                settings.get('timeout'), this.cache_, absoluteUri,
+                selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
+                settings.get('headerName'), settings.get('parameterName'), this.loaderManager_);
+            this.resources_.register(id, resource);
+        }
 
         /*
          * Setup element.
