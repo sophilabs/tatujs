@@ -64,7 +64,10 @@ tatu.loaders.LoaderManager.prototype.inspect = function(container) {
     for (var query in this.sources_.all()) {
         var loader = this.sources_.get(query);
         goog.array.forEach(goog.dom.query(query, container), function(element) {
-            queue.enqueue(loader.setup(element));
+            var entry = loader.setup(element);
+            if (goog.isDef(entry)) {
+                queue.enqueue(entry);
+            }
         });
     }
 };

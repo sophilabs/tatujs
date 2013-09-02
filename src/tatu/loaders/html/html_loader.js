@@ -74,20 +74,23 @@ tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
     /*
      * Create resource and entry.
      */
-    var resource = this.getOrRegister(id, new tatu.loaders.html.PlainResource(
-        settings.get('timeout'), this.cache_, tatu.utils.buildAbsoluteUri(settings.get('href')),
-        selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
-        settings.get('headerName'), settings.get('parameterName'), this.loaderManager_));
+    var absoluteUri = tatu.utils.buildAbsoluteUri(settings.get('href'));
+    if (goog.Uri.haveSameDomain(absoluteUri, window.location.href)) {
+        var resource = this.getOrRegister(id, new tatu.loaders.html.PlainResource(
+            settings.get('timeout'), this.cache_, absoluteUri,
+            selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
+            settings.get('headerName'), settings.get('parameterName'), this.loaderManager_));
 
-    /*
-     * Setup element.
-     */
-    goog.events.listen(element, goog.events.EventType.CLICK, function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        /*
+         * Setup element.
+         */
+        goog.events.listen(element, goog.events.EventType.CLICK, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        resource.handle();
-    });
+            resource.handle();
+        });
 
-    return new tatu.queue.Entry(this, id, settings.get('priority'));
+        return new tatu.queue.Entry(this, id, settings.get('priority'));
+    }
 };
