@@ -11,7 +11,7 @@ goog.require('goog.events');
  * Plaintext loader.
  * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @constructor
- * @extends {tatu.loaders.ILoader}
+ * @extends {tatu.loaders.BaseLoader}
  */
 tatu.loaders.html.HTMLLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);

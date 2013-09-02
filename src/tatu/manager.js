@@ -25,6 +25,7 @@ goog.require('tatu.loaders.html.extractors.SilentDojoExtractor');
 goog.require('tatu.loaders.dummy.DummyLoader');
 goog.require('tatu.loaders.html.HTMLLoader');
 goog.require('tatu.loaders.image.ImageLoader');
+goog.require('tatu.loaders.video.VideoLoader');
 
 goog.require('tatu.loaders.LoaderManager');
 
@@ -158,7 +159,8 @@ tatu.configuration = {
     'loaders': {
         'dummy': tatu.loaders.dummy.DummyLoader,
         'html': tatu.loaders.html.HTMLLoader,
-        'image': tatu.loaders.image.ImageLoader
+        'image': tatu.loaders.image.ImageLoader,
+        'video': tatu.loaders.video.VideoLoader
     },
 
     // Sources
@@ -220,10 +222,10 @@ tatu.configuration = {
             'sources': {
                 'img': {
                     'loader': 'image'
-                }/*,
+                },
                 'video': {
                     'loader': 'video'
-                }*/
+                }
             }
         }
     },

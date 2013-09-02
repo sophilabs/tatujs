@@ -1,19 +1,22 @@
-goog.provide('tatu.loaders.image.ImageLoader');
+goog.provide('tatu.loaders.video.VideoLoader');
 
 goog.require('tatu.loaders.BaseLoader');
-goog.require('tatu.loaders.image.ImageResource');
+goog.require('tatu.loaders.video.VideoResource');
+goog.require('goog.dom');
+goog.require('goog.array');
 
 
 /**
- * Image loader.
+ * Video loader.
  * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @constructor
  * @extends {tatu.loaders.BaseLoader}
  */
-tatu.loaders.image.ImageLoader = function(settings) {
+tatu.loaders.video.VideoLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);
 };
-goog.inherits(tatu.loaders.image.ImageLoader, tatu.loaders.BaseLoader);
+
+goog.inherits(tatu.loaders.video.VideoLoader, tatu.loaders.BaseLoader);
 
 
 /**
@@ -21,9 +24,8 @@ goog.inherits(tatu.loaders.image.ImageLoader, tatu.loaders.BaseLoader);
  * @param {Element} element
  * @return {string} Resource ID
  */
-tatu.loaders.image.ImageLoader.prototype.identify = function(element) {
-    var settings = new tatu.conf.ElementSettings(element, this.settings_);
-    return settings.get('src');
+tatu.loaders.video.VideoLoader.prototype.identify = function(element) {
+    return goog.dom.query('source', element)[0]['src'];
 };
 
 
@@ -32,16 +34,22 @@ tatu.loaders.image.ImageLoader.prototype.identify = function(element) {
  * @param {Element} element
  * @return {tatu.queue.Entry} Queue entry
  */
-tatu.loaders.image.ImageLoader.prototype.setup = function(element) {
+tatu.loaders.video.VideoLoader.prototype.setup = function(element) {
     var id = this.identify(element);
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
+
+    var sources = {};
+
+    goog.array.forEach(goog.dom.query('source', element), function(element) {
+        sources[element['type']] = element['src'];
+    });
 
     /*
      * Create resource and entry.
      */
     var resource = this.resources_.get(id);
     if (!goog.isDef(resource)) {
-        resource = new tatu.loaders.image.ImageResource(settings.get('timeout'), settings.get('src'));
+        resource = new tatu.loaders.video.VideoResource(sources);
         this.resources_.register(id, resource);
     }
 

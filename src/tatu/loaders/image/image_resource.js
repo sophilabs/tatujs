@@ -18,6 +18,7 @@ tatu.loaders.image.ImageResource = function(timeout, source) {
  * @param {function} resolve Resolution callback.
  */
 tatu.loaders.image.ImageResource.prototype.load = function(resolve) {
+    // TODO: Check with timeout
     this.image_ = document.createElement('img');
     this.image_.setAttribute('src', this.source_);
     this.image_.onload = function() {
