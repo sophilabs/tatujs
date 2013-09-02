@@ -60,9 +60,6 @@ tatu.Manager = function() {
      * @private
      */
     this.loaderManager_ = null;
-
-    // TODO: Add event
-    goog.global['onload'] = goog.bind(this.init_, this);
 };
 
 goog.addSingletonGetter(tatu.Manager);
@@ -246,4 +243,13 @@ goog.exportSymbol('tatu.configuration', tatu.configuration);
 goog.exportSymbol('tatu.Manager', tatu.Manager);
 
 
-tatu.Manager.getInstance();
+/*
+ * Initialize
+ */
+if (document.readyState === "complete") {
+    tatu.Manager.getInstance().init_();
+} else {
+    goog.global['onload'] = function() {
+        tatu.Manager.getInstance().init_();
+    }
+}
