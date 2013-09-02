@@ -61,7 +61,7 @@ tatu.Manager = function() {
      */
     this.loaderManager_ = null;
 
-    //TODO: add event?
+    // TODO: Add event
     goog.global['onload'] = goog.bind(this.init_, this);
 };
 
