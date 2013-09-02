@@ -24,7 +24,7 @@ goog.require('goog.Uri');
  * @implements {tatu.loaders.IResource}
  */
 tatu.loaders.html.PlainResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
-                                            headerName, parameterName, loaderManager) {
+                                           headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
     this.href_ = href.split('#')[0];
