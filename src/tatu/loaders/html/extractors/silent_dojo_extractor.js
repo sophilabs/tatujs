@@ -1,5 +1,6 @@
 goog.provide('tatu.loaders.html.extractors.SilentDojoExtractor');
 
+goog.require('tatu.loaders.html.extractors.DojoExtractor');
 goog.require('tatu.loaders.html.extractors.ExtractorManager');
 
 
@@ -9,29 +10,27 @@ goog.require('tatu.loaders.html.extractors.ExtractorManager');
  * @constructor
  */
 tatu.loaders.html.extractors.SilentDojoExtractor = function() {
+    tatu.loaders.html.extractors.DojoExtractor.call(this);
 };
+
+goog.inherits(tatu.loaders.html.extractors.SilentDojoExtractor,
+              tatu.loaders.html.extractors.DojoExtractor);
 
 
 tatu.loaders.html.extractors.SilentDojoExtractor.prototype.extract = function(document, sources) {
-    var contents = {};
-
     var ORIGINAL = 'autoplay';
     var TRANSITORY = '__x__autoplay__';
 
     document = document.replace(ORIGINAL, TRANSITORY);
 
-    var fragment = goog.dom.htmlToDocumentFragment(document);
-
-    goog.array.forEach(sources, function(query) {
-        var element = goog.dom.query(query, fragment)[0];
-        if (goog.isDef(element)) {
-            contents[query] = goog.dom.getOuterHtml(element).replace(TRANSITORY, ORIGINAL);
-        }
-    }, this);
+    var contents = goog.base(this, 'extract', document, sources);
+    for (var query in contents) {
+        contents[query] = contents[query].replace(TRANSITORY, ORIGINAL);
+    }
 
     return contents;
 };
 
 
 tatu.loaders.html.extractors.ExtractorManager.getInstance().getRegistry().register(
-    'silentdojo', new tatu.loaders.html.extractors.SilentDojoExtractor());
+    'silent', new tatu.loaders.html.extractors.SilentDojoExtractor());
