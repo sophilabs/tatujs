@@ -1,6 +1,7 @@
 goog.provide('tatu.loaders.html.extractors.SilentDojoExtractor');
 
 goog.require('tatu.loaders.html.extractors.DojoExtractor');
+goog.require('tatu.utils');
 
 
 /**
@@ -17,15 +18,13 @@ goog.inherits(tatu.loaders.html.extractors.SilentDojoExtractor,
 
 
 tatu.loaders.html.extractors.SilentDojoExtractor.prototype.extract = function(document, sources) {
-    var ORIGINAL = 'autoplay';
-    var TRANSITORY = '__x__autoplay__';
+    var ORIGINAL = 'src';
+    var TRANSITORY = '__x__src__';
 
-    document = document.replace(ORIGINAL, TRANSITORY);
-
-    var contents = goog.base(this, 'extract', document, sources);
+    var contents = goog.base(this, 'extract', tatu.utils.replaceAll(ORIGINAL, TRANSITORY, document), sources);
 
     for (var query in contents) {
-        contents[query] = contents[query].replace(TRANSITORY, ORIGINAL);
+        contents[query] = tatu.utils.replaceAll(TRANSITORY, ORIGINAL, contents[query]);
     }
 
     return contents;

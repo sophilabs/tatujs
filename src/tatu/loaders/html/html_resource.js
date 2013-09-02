@@ -127,7 +127,7 @@ tatu.loaders.html.PlainResource.prototype.load = function(resolve) {
 
             // Inspect content
             for (var source in fetchedContents) {
-                this.loaderManager_.inspect(goog.dom.htmlToDocumentFragment(fetchedContents[source]));
+                this.loaderManager_.inspect(fetchedContents[source]);
             }
 
             goog.object.extend(contents, fetchedContents);

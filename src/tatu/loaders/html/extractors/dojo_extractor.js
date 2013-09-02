@@ -1,5 +1,6 @@
 goog.provide('tatu.loaders.html.extractors.DojoExtractor');
 
+goog.require('tatu.utils');
 goog.require('goog.array');
 goog.require('goog.dom');
 
@@ -16,8 +17,7 @@ tatu.loaders.html.extractors.DojoExtractor = function() {
 tatu.loaders.html.extractors.DojoExtractor.prototype.extract = function(document, sources) {
     var contents = {};
 
-    var fragment = goog.global['document']['implementation']['createHTMLDocument']('');
-    fragment['documentElement'].innerHTML = document;
+    var fragment = tatu.utils.createFragment(document);
 
     goog.array.forEach(sources, function(query) {
         var element = goog.dom.query(query, fragment)[0];

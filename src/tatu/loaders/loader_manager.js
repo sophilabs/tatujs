@@ -1,5 +1,6 @@
 goog.provide('tatu.loaders.LoaderManager');
 
+goog.require('tatu.utils');
 goog.require('tatu.Registry');
 goog.require('tatu.conf.LoaderSettings');
 goog.require('goog.string');
@@ -56,14 +57,23 @@ tatu.loaders.LoaderManager = function(settings) {
 
 /**
  * Perform inspection.
- * @param {Element} container Element to inspect.
+ * @param {Element|string} container Element or HTML string to inspect.
  * @return {void} Nothing.
  */
 tatu.loaders.LoaderManager.prototype.inspect = function(container) {
+    var fragment;
+
+    if (typeof(container) == 'string') {
+        fragment = tatu.utils.createFragment(container);
+    } else {
+        fragment = container;
+    }
+
     var queue = tatu.Manager.getInstance().getQueue();
+
     for (var query in this.sources_.all()) {
         var loader = this.sources_.get(query);
-        goog.array.forEach(goog.dom.query(query, container), function(element) {
+        goog.array.forEach(goog.dom.query(query, fragment), function(element) {
             var entry = loader.setup(element);
             if (goog.isDef(entry)) {
                 queue.enqueue(entry);
