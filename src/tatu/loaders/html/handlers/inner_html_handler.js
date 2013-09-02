@@ -1,6 +1,5 @@
 goog.provide('tatu.loaders.html.handlers.InnerHTMLHandler');
 
-goog.require('tatu.loaders.html.handlers.HandlerManager');
 goog.require('goog.dom');
 
 
@@ -15,13 +14,16 @@ tatu.loaders.html.handlers.InnerHTMLHandler = function() {
 
 tatu.loaders.html.handlers.InnerHTMLHandler.prototype.handle = function(selectors, contents, href, handlers) {
     for (var source in selectors) {
-        var replacement = goog.dom.htmlToDocumentFragment(contents[source]);
-        var original = goog.dom.query(selectors[source], goog.global['document']['body'])[0];
+        var target = selectors[source];
 
-        original.innerHTML = replacement.innerHTML;
+        if (target == 'body') {
+            goog.global['document']['body'].innerHTML = contents[source];
+
+        } else {
+            var replacement = goog.dom.htmlToDocumentFragment(contents[source]);
+            var original = goog.dom.query(target, goog.global['document']['body'])[0];
+
+            original.innerHTML = replacement.innerHTML;
+        }
     }
 };
-
-
-tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry().register(
-    'inner', new tatu.loaders.html.handlers.InnerHTMLHandler());

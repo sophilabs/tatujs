@@ -18,7 +18,7 @@ goog.inherits(tatu.queue.EntryEvent, goog.events.Event);
 
 /**
  * Get Resource ID.
- * @returns {string} Resource ID.
+ * @return {string} Resource ID.
  */
 tatu.queue.EntryEvent.prototype.getResourceId = function() {
     return this.resourceId_;

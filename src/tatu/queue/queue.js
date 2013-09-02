@@ -74,7 +74,7 @@ tatu.queue.Queue.prototype.getConcurrentSlice = function() {
 
 /**
  * Get whether the queue is idle.
- * @returns {boolean} Whether the queue is idle.
+ * @return {boolean} Whether the queue is idle.
  */
 tatu.queue.Queue.prototype.isIdle = function() {
     return this.getConcurrentSlice().some(function(entry) {

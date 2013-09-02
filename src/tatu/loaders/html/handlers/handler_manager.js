@@ -21,7 +21,7 @@ goog.addSingletonGetter(tatu.loaders.html.handlers.HandlerManager);
 
 /**
  * Get handler registry.
- * @returns {tatu.Registry.<tatu.loaders.html.handlers.IHandler>} Handler registry.
+ * @return {tatu.Registry.<tatu.loaders.html.handlers.IHandler>} Handler registry.
  */
 tatu.loaders.html.handlers.HandlerManager.prototype.getRegistry = function() {
     return this.registry_;

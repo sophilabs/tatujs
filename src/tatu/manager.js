@@ -9,13 +9,15 @@ goog.require('tatu.Registry');
 goog.require('tatu.utils');
 
 // Handlers
-goog.require('tatu.loaders.html.handlers.HistoryHandler');
+goog.require('tatu.loaders.html.handlers.HandlerManager');
 goog.require('tatu.loaders.html.handlers.InnerHTMLHandler');
 goog.require('tatu.loaders.html.handlers.OuterHTMLHandler');
 goog.require('tatu.loaders.html.handlers.TitleHandler');
-goog.require('tatu.loaders.html.handlers.InspectionHandler');
+goog.require('tatu.loaders.html.handlers.InspectHandler');
+goog.require('tatu.loaders.html.handlers.HistoryHandler');
 
 // Extractors
+goog.require('tatu.loaders.html.extractors.ExtractorManager');
 goog.require('tatu.loaders.html.extractors.DojoExtractor');
 goog.require('tatu.loaders.html.extractors.SilentDojoExtractor');
 
@@ -72,6 +74,33 @@ goog.addSingletonGetter(tatu.Manager);
  * @private
  */
 tatu.Manager.prototype.init_ = function() {
+    /*
+     * Register handlers.
+     */
+
+    var handlers = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry();
+
+    handlers.register('inner', new tatu.loaders.html.handlers.InnerHTMLHandler());
+    handlers.register('outer', new tatu.loaders.html.handlers.OuterHTMLHandler());
+    handlers.register('title', new tatu.loaders.html.handlers.TitleHandler());
+    handlers.register('inspect', new tatu.loaders.html.handlers.InspectHandler());
+    handlers.register('history', new tatu.loaders.html.handlers.HistoryHandler());
+
+
+    /*
+     * Register extractors.
+     */
+
+    var extractors = tatu.loaders.html.extractors.ExtractorManager.getInstance().getRegistry();
+
+    extractors.register('dojo', new tatu.loaders.html.extractors.DojoExtractor());
+    extractors.register('silent', new tatu.loaders.html.extractors.SilentDojoExtractor());
+
+
+    /*
+     * Initialize.
+     */
+
     // Create settings
     this.settings_ = new tatu.conf.Settings(tatu.configuration);
 
@@ -135,6 +164,9 @@ tatu.configuration = {
 
     // Sources
     'sources': {
+        /*
+         * Dummy loader for Sample 01
+         */
         'div.dummy': {
             'loader': 'dummy',
             'count': 10,
@@ -166,20 +198,25 @@ tatu.configuration = {
             }
         },
 
+        /*
+         * HTML loader for Sample 02
+         */
         'a': {
             'loader': 'html',
 
-            'selectors': '.container,.navbar,title',
-            'handlers': 'title,outer,history,inspection',
-            'extractor': 'silentdojo',
+            'selectors': 'body,title',
+            'handlers': 'title,outer,history,inspect',
+            'extractor': 'silent',
             'timeout': 1000,
             'reload': false,
 
-            'targetSymbol': '>>',
+            'targetSymbol': '>>'
 
+            /*
             'method': 'GET',
             'headerName': 'X-Source',
             'parameterName': 'source'
+            */
 
             /* Future
             'sources': {
@@ -203,7 +240,10 @@ tatu.configuration = {
     // Default timeout
     'timeout': 10000
 };
+
+
 goog.exportSymbol('tatu.configuration', tatu.configuration);
+goog.exportSymbol('tatu.Manager', tatu.Manager);
 
 
 tatu.Manager.getInstance();

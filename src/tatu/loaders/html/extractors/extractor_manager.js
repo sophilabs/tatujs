@@ -21,7 +21,7 @@ goog.addSingletonGetter(tatu.loaders.html.extractors.ExtractorManager);
 
 /**
  * Get extractor registry.
- * @returns {tatu.Registry.<tatu.loaders.html.handlers.IExtractor>} Extractor registry.
+ * @return {tatu.Registry.<tatu.loaders.html.handlers.IExtractor>} Extractor registry.
  */
 tatu.loaders.html.extractors.ExtractorManager.prototype.getRegistry = function() {
     return this.registry_;

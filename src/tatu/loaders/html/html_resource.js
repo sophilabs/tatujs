@@ -69,7 +69,7 @@ tatu.loaders.html.PlainResource.prototype.fetch_ = function(sources, callback) {
 
 /**
  * Get cache contents for this resource's HREF.
- * @returns {*}
+ * @return {*}
  * @private
  */
 tatu.loaders.html.PlainResource.prototype.getContents_ = function() {

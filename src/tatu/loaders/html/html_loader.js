@@ -16,6 +16,11 @@ goog.require('goog.events');
 tatu.loaders.html.HTMLLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);
 
+    /**
+     * HTML Cache
+     * @type {object.<string, object.<string, string>>}
+     * @private
+     */
     this.cache_ = {};
 };
 goog.inherits(tatu.loaders.html.HTMLLoader, tatu.loaders.BaseLoader);

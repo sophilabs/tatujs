@@ -48,7 +48,7 @@ tatu.queue.Entry.prototype.getId = function() {
 
 /**
  * Get priority
- * @returns {number}
+ * @return {number}
  */
 tatu.queue.Entry.prototype.getPriority = function() {
     return this.priority_;

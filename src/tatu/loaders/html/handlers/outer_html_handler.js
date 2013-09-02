@@ -1,7 +1,5 @@
 goog.provide('tatu.loaders.html.handlers.OuterHTMLHandler');
 
-goog.require('tatu.loaders.html.handlers.HandlerManager');
-
 
 /**
  * Outer content handler.
@@ -14,13 +12,16 @@ tatu.loaders.html.handlers.OuterHTMLHandler = function() {
 
 tatu.loaders.html.handlers.OuterHTMLHandler.prototype.handle = function(selectors, contents, href, handlers) {
     for (var source in selectors) {
-        var replacement = goog.dom.htmlToDocumentFragment(contents[source]);
-        var original = goog.dom.query(selectors[source])[0];
+        var target = selectors[source];
 
-        goog.dom.replaceNode(replacement, original);
+        if (target == 'body') {
+            goog.global['document']['body'].innerHTML = contents[source];
+
+        } else {
+            var replacement = goog.dom.htmlToDocumentFragment(contents[source]);
+            var original = goog.dom.query(target)[0];
+
+            goog.dom.replaceNode(replacement, original);
+        }
     }
 };
-
-
-tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry().register(
-    'outer', new tatu.loaders.html.handlers.OuterHTMLHandler());
