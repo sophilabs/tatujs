@@ -25,6 +25,7 @@ tatu.queue.Entry = function(loader, id, priority) {
      */
     this.loading_ = false;
 };
+
 goog.inherits(tatu.queue.Entry, goog.events.EventTarget);
 
 

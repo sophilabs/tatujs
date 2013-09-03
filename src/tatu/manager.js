@@ -4,6 +4,7 @@ goog.require('goog.dom');
 goog.require('goog.dom.query');
 
 goog.require('tatu.queue.Queue');
+goog.require('tatu.queue.QueueEvent');
 goog.require('tatu.conf.Settings');
 goog.require('tatu.Registry');
 goog.require('tatu.utils');
@@ -279,12 +280,32 @@ tatu.Manager.prototype.onHandle = function(callback) {
 };
 
 
+/**
+ * Add an enqueue event listener.
+ * @param {function} callback Event callback.
+ */
+tatu.Manager.prototype.onEnqueue = function(callback) {
+    goog.events.listen(tatu.Manager.getInstance().getQueue(), tatu.queue.QueueEvent.ENQUEUE, callback);
+};
+
+
+/**
+ * Add a dequeue event listener.
+ * @param {function} callback Event callback.
+ */
+tatu.Manager.prototype.onDequeue = function(callback) {
+    goog.events.listen(tatu.Manager.getInstance().getQueue(), tatu.queue.QueueEvent.DEQUEUE, callback);
+};
+
+
 goog.exportSymbol('tatu.configuration', tatu.configuration);
 goog.exportSymbol('tatu.Manager', tatu.Manager);
 
 
-// Export onHandle shortcut
+// Export event shortcuts
 goog.exportSymbol('tatu.onHandle', tatu.Manager.getInstance().onHandle);
+goog.exportSymbol('tatu.onEnqueue', tatu.Manager.getInstance().onEnqueue);
+goog.exportSymbol('tatu.onDequeue', tatu.Manager.getInstance().onDequeue);
 
 
 /*

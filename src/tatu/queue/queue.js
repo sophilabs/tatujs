@@ -2,6 +2,7 @@ goog.provide('tatu.queue.Queue');
 
 goog.require('tatu.queue.Entry');
 goog.require('goog.array');
+goog.require('goog.events.EventTarget');
 
 
 /**
@@ -9,6 +10,8 @@ goog.require('goog.array');
  * @constructor
  */
 tatu.queue.Queue = function(concurrency) {
+    goog.events.EventTarget.call(this);
+
     /**
      * Concurrency;
      * @type {number}
@@ -23,6 +26,8 @@ tatu.queue.Queue = function(concurrency) {
      */
     this.queue_ = [];
 };
+
+goog.inherits(tatu.queue.Queue, goog.events.EventTarget);
 
 
 /**
@@ -49,6 +54,15 @@ tatu.queue.Queue.prototype.enqueue = function(entry) {
         }
     }
     goog.array.insertAt(this.queue_, entry, index);
+
+    /*
+     * Dispatch event.
+     */
+    this.dispatchEvent(new tatu.queue.QueueEvent(tatu.queue.QueueEvent.ENQUEUE, entry));
+
+    /*
+     * Run queue.
+     */
     this.run();
 };
 
@@ -91,6 +105,7 @@ tatu.queue.Queue.prototype.run = function() {
         this.getConcurrentSlice().forEach(function(entry, index) {
             if (!entry.isLoading()) {
                 entry.load(goog.bind(function() {
+                    this.dispatchEvent(new tatu.queue.QueueEvent(tatu.queue.QueueEvent.DEQUEUE, entry));
                     goog.array.remove(this.queue_, entry);
                     this.run();
                 }, this));
