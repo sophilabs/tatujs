@@ -27,7 +27,11 @@ tatu.loaders.html.HTMLResource = function(timeout, cache, href, selectors, reloa
                                            headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
-    this.href_ = href.split('#')[0];
+
+    var href = href.split('#');
+    this.href_ = href[0];
+    this.goToId_ = href[1];
+
     this.selectors_ = selectors;
     this.reload_ = reload;
     this.handlers_ = handlers;
@@ -156,4 +160,8 @@ tatu.loaders.html.HTMLResource.prototype.handle = function() {
             handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_);
         }, this);
     }, this));
+
+    if (this.goToId_) {
+        location.href = '#' + this.goToId_;
+    }
 };

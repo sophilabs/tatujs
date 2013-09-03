@@ -33,7 +33,7 @@ goog.inherits(tatu.loaders.html.HTMLLoader, tatu.loaders.BaseLoader);
  */
 tatu.loaders.html.HTMLLoader.prototype.identify = function(element) {
     var settings = new tatu.conf.ElementSettings(element, this.settings_);
-    return tatu.utils.buildAbsoluteUri(settings.get('href')) + settings.get('selectors');
+    return tatu.utils.buildAbsoluteUri(settings.get('href')) + '(' + settings.get('selectors') + ')';
 };
 
 
