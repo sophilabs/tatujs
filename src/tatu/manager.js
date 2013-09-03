@@ -239,7 +239,7 @@ tatu.configuration = {
 
             'targetSymbol': '>>',
 
-            'cache': 'local',
+            'cache': 'object',
 
             /*
             'method': 'GET',
