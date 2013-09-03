@@ -15,6 +15,7 @@ goog.require('tatu.loaders.html.handlers.OuterHTMLHandler');
 goog.require('tatu.loaders.html.handlers.TitleHandler');
 goog.require('tatu.loaders.html.handlers.InspectHandler');
 goog.require('tatu.loaders.html.handlers.HistoryHandler');
+goog.require('tatu.loaders.html.handlers.EventHandler');
 
 // Extractors
 goog.require('tatu.loaders.html.extractors.ExtractorManager');
@@ -84,6 +85,7 @@ tatu.Manager.prototype.init_ = function() {
     handlers.register('title', new tatu.loaders.html.handlers.TitleHandler());
     handlers.register('inspect', new tatu.loaders.html.handlers.InspectHandler());
     handlers.register('history', new tatu.loaders.html.handlers.HistoryHandler());
+    handlers.register('event', new tatu.loaders.html.handlers.EventHandler())
 
 
     /*
@@ -206,7 +208,7 @@ tatu.configuration = {
             'loader': 'html',
 
             'selectors': 'body,title',
-            'handlers': 'title,outer,history,inspect',
+            'handlers': 'title,outer,history,inspect,event',
             'extractor': 'silent',
             'timeout': 1000,
             'reload': false,
@@ -241,8 +243,22 @@ tatu.configuration = {
 };
 
 
+/**
+ * Add a handle event listener.
+ * @param {function} callback Event callback.
+ */
+tatu.Manager.prototype.onHandle = function(callback) {
+    var handler = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry().get('event');
+    goog.events.listen(handler, tatu.loaders.html.handlers.HandleEvent.HANDLE, callback);
+};
+
+
 goog.exportSymbol('tatu.configuration', tatu.configuration);
 goog.exportSymbol('tatu.Manager', tatu.Manager);
+
+
+// Export onHandle shortcut
+goog.exportSymbol('tatu.onHandle', tatu.Manager.getInstance().onHandle);
 
 
 /*

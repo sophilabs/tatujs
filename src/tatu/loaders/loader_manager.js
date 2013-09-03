@@ -45,7 +45,7 @@ tatu.loaders.LoaderManager = function(settings) {
 
         // Get loader class
         var loaderClass = tatu.Manager.getInstance().getLoaders().get(loaderName);
-        if (loaderClass == undefined) {
+        if (!goog.isDef(loaderClass)) {
             throw new Error('Loader class for "' + loaderName + '" not found in registry.');
         }
 

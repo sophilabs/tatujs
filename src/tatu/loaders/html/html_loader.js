@@ -57,7 +57,7 @@ tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
 
             var source = pair[0];
             var target = pair[1];
-            if (target == undefined) {
+            if (!goog.isDef(target)) {
                 target = source;
             }
 
