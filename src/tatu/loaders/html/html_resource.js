@@ -1,4 +1,4 @@
-goog.provide('tatu.loaders.html.PlainResource');
+goog.provide('tatu.loaders.html.HTMLResource');
 
 goog.require('tatu.loaders.IResource');
 goog.require('tatu.loaders.html.handlers.HandlerManager');
@@ -8,7 +8,7 @@ goog.require('goog.Uri');
 
 
 /**
- * Plain resource.
+ * Plaintext resource.
  * @param {number} timeout Timeout.
  * @param {object} cache Cache.
  * @param {string} href Anchor HREF.
@@ -23,7 +23,7 @@ goog.require('goog.Uri');
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.html.PlainResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
+tatu.loaders.html.HTMLResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
                                            headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
@@ -45,7 +45,7 @@ tatu.loaders.html.PlainResource = function(timeout, cache, href, selectors, relo
  * @param {function} callback Callback for the XhrIo send.
  * @private
  */
-tatu.loaders.html.PlainResource.prototype.fetch_ = function(sources, callback) {
+tatu.loaders.html.HTMLResource.prototype.fetch_ = function(sources, callback) {
     var jsonSources = JSON.stringify(sources);
 
     var headers = {};
@@ -72,7 +72,7 @@ tatu.loaders.html.PlainResource.prototype.fetch_ = function(sources, callback) {
  * @return {*}
  * @private
  */
-tatu.loaders.html.PlainResource.prototype.getContents_ = function() {
+tatu.loaders.html.HTMLResource.prototype.getContents_ = function() {
     if (!goog.isDef(this.cache_[this.href_])) {
         this.cache_[this.href_] = {};
     }
@@ -84,7 +84,7 @@ tatu.loaders.html.PlainResource.prototype.getContents_ = function() {
  * Load required contents.
  * @param {function} resolve Resolution callback.
  */
-tatu.loaders.html.PlainResource.prototype.load = function(resolve) {
+tatu.loaders.html.HTMLResource.prototype.load = function(resolve) {
     var toFetch;
     var contents = this.getContents_();
 
@@ -140,7 +140,7 @@ tatu.loaders.html.PlainResource.prototype.load = function(resolve) {
 /**
  * Abort AJAX request.
  */
-tatu.loaders.html.PlainResource.prototype.abort = function() {
+tatu.loaders.html.HTMLResource.prototype.abort = function() {
     this.xhrio_.abort();
 };
 
@@ -148,7 +148,7 @@ tatu.loaders.html.PlainResource.prototype.abort = function() {
 /**
  * Call handlers.
  */
-tatu.loaders.html.PlainResource.prototype.handle = function() {
+tatu.loaders.html.HTMLResource.prototype.handle = function() {
     var handlers = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry();
 
     this.load(goog.bind(function() {

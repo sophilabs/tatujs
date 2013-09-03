@@ -1,6 +1,6 @@
 goog.provide('tatu.loaders.html.HTMLLoader');
 
-goog.require('tatu.loaders.html.PlainResource');
+goog.require('tatu.loaders.html.HTMLResource');
 goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.conf.ElementSettings');
 goog.require('tatu.utils');
@@ -78,7 +78,7 @@ tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
     if (goog.Uri.haveSameDomain(absoluteUri, window.location.href)) {
         var resource = this.resources_.get(id);
         if (!goog.isDef(resource)) {
-            resource = new tatu.loaders.html.PlainResource(
+            resource = new tatu.loaders.html.HTMLResource(
                 settings.get('timeout'), this.cache_, absoluteUri,
                 selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
                 settings.get('headerName'), settings.get('parameterName'), this.loaderManager_);
