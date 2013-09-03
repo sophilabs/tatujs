@@ -3,7 +3,7 @@ goog.provide('tatu.loaders.html.handlers.IHandler');
 
 /**
  * Handler.
- * @constructor
+ * @interface
  */
 tatu.loaders.html.handlers.IHandler = function() {};
 

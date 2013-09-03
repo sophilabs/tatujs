@@ -105,11 +105,20 @@ tatu.queue.Queue.prototype.run = function() {
         this.getConcurrentSlice().forEach(function(entry, index) {
             if (!entry.isLoading()) {
                 entry.load(goog.bind(function() {
-                    this.dispatchEvent(new tatu.queue.QueueEvent(tatu.queue.QueueEvent.DEQUEUE, entry));
                     goog.array.remove(this.queue_, entry);
+                    this.dispatchEvent(new tatu.queue.QueueEvent(tatu.queue.QueueEvent.DEQUEUE, entry));
                     this.run();
                 }, this));
             }
         }, this);
     }
+};
+
+
+/**
+ * Get entry count.
+ * @return {number} Entry count.
+ */
+tatu.queue.Queue.prototype.getEntryCount = function() {
+    return this.queue_.length;
 };

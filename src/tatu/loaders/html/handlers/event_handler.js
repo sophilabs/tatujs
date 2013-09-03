@@ -1,6 +1,6 @@
 goog.provide('tatu.loaders.html.handlers.EventHandler');
 
-goog.require('goog.events.Event');
+goog.require('goog.events');
 
 
 /**
@@ -21,15 +21,14 @@ tatu.loaders.html.handlers.HandleEvent = function(selectors, contents, href, han
     this['handlers'] = handlers;
 };
 
+goog.inherits(tatu.loaders.html.handlers.HandleEvent, goog.events.Event);
+
 
 /**
  * Handle event type.
  * @type {string}
  */
 tatu.loaders.html.handlers.HandleEvent.HANDLE = 'HANDLE';
-
-
-goog.inherits(tatu.loaders.html.handlers.HandleEvent, goog.events.Event);
 
 
 /**
@@ -40,7 +39,6 @@ goog.inherits(tatu.loaders.html.handlers.HandleEvent, goog.events.Event);
 tatu.loaders.html.handlers.EventHandler = function() {
     goog.events.EventTarget.call(this);
 };
-
 
 goog.inherits(tatu.loaders.html.handlers.EventHandler, goog.events.EventTarget);
 

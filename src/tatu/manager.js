@@ -2,6 +2,7 @@ goog.provide('tatu.Manager');
 
 goog.require('goog.dom');
 goog.require('goog.dom.query');
+goog.require('goog.events');
 
 goog.require('tatu.queue.Queue');
 goog.require('tatu.queue.QueueEvent');

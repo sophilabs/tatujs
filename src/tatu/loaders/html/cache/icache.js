@@ -3,7 +3,7 @@ goog.provide('tatu.loaders.html.cache.ICache');
 
 /**
  * Cache
- * @constructor
+ * @interface
  */
 tatu.loaders.html.cache.ICache = function() {};
 

@@ -3,7 +3,7 @@ goog.provide('tatu.loaders.html.extractors.IExtractor');
 
 /**
  * Content extractor.
- * @constructor
+ * @interface
  */
 tatu.loaders.html.extractors.IExtractor = function() {};
 
