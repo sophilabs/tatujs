@@ -1,9 +1,22 @@
-var SRC = 'http://localhost:8080/build/tatu.js';
-
-var SCRIPT = "var e = document.createElement('script');" +
-             "e['src'] = '" + SRC + "';" +
-             "document.body.appendChild(e);";
+var active = false;
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.tabs.executeScript(tab["id"], {"code": SCRIPT});
+    active = !active;
+    var tabId = tab["id"];
+
+    if (active) {
+        chrome.tabs.executeScript(tabId, {
+            "file": "tatu.js"
+        });
+        chrome.browserAction.setIcon({
+            "path": "icon_active.png"
+        });
+    } else {
+        chrome.tabs.executeScript(tabId, {
+            "code": "window.location.reload();"
+        });
+        chrome.browserAction.setIcon({
+            "path": "icon.png"
+        });
+    }
 });

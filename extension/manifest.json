@@ -12,6 +12,6 @@
       "scripts": ["plug.js"]
   },
   "permissions": [
-      "tabs", "http://*/*", "https://*/*"
+      "tabs", "http://*/*"
   ]
 }
