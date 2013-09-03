@@ -17,11 +17,11 @@ tatu.loaders.html.HTMLLoader = function(settings) {
     tatu.loaders.BaseLoader.call(this, settings);
 
     /**
-     * HTML Cache
-     * @type {object.<string, object.<string, string>>}
+     * Cache to use.
+     * @type {tatu.loaders.html.cache.ICache}
      * @private
      */
-    this.cache_ = {};
+    this.cache_ = tatu.loaders.html.cache.CacheManager.getInstance().getRegistry().get(settings.get('cache'));
 };
 goog.inherits(tatu.loaders.html.HTMLLoader, tatu.loaders.BaseLoader);
 

@@ -22,6 +22,11 @@ goog.require('tatu.loaders.html.extractors.ExtractorManager');
 goog.require('tatu.loaders.html.extractors.DojoExtractor');
 goog.require('tatu.loaders.html.extractors.SilentDojoExtractor');
 
+// Cache
+goog.require('tatu.loaders.html.cache.CacheManager');
+goog.require('tatu.loaders.html.cache.ObjectCache');
+goog.require('tatu.loaders.html.cache.LocalStorageCache');
+
 // Loaders
 goog.require('tatu.loaders.dummy.DummyLoader');
 goog.require('tatu.loaders.html.HTMLLoader');
@@ -75,30 +80,6 @@ goog.addSingletonGetter(tatu.Manager);
  */
 tatu.Manager.prototype.init_ = function() {
     /*
-     * Register handlers.
-     */
-
-    var handlers = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry();
-
-    handlers.register('inner', new tatu.loaders.html.handlers.InnerHTMLHandler());
-    handlers.register('outer', new tatu.loaders.html.handlers.OuterHTMLHandler());
-    handlers.register('title', new tatu.loaders.html.handlers.TitleHandler());
-    handlers.register('inspect', new tatu.loaders.html.handlers.InspectHandler());
-    handlers.register('history', new tatu.loaders.html.handlers.HistoryHandler());
-    handlers.register('event', new tatu.loaders.html.handlers.EventHandler())
-
-
-    /*
-     * Register extractors.
-     */
-
-    var extractors = tatu.loaders.html.extractors.ExtractorManager.getInstance().getRegistry();
-
-    extractors.register('dojo', new tatu.loaders.html.extractors.DojoExtractor());
-    extractors.register('silent', new tatu.loaders.html.extractors.SilentDojoExtractor());
-
-
-    /*
      * Initialize.
      */
 
@@ -110,6 +91,27 @@ tatu.Manager.prototype.init_ = function() {
     var loaders = this.settings_.get('loaders', {});
     for (var name in loaders) {
         this.loaders_.register(name, loaders[name]);
+    }
+
+    // Register handlers
+    var handlers_ = tatu.loaders.html.handlers.HandlerManager.getInstance().getRegistry();
+    var handlers = this.settings_.get('handlers', {});
+    for (var name in handlers) {
+        handlers_.register(name, handlers[name]);
+    }
+
+    // Register extractors
+    var extractors_ = tatu.loaders.html.extractors.ExtractorManager.getInstance().getRegistry();
+    var extractors = this.settings_.get('extractors', {});
+    for (var name in extractors) {
+        extractors_.register(name, extractors[name]);
+    }
+
+    // Register cache
+    var cache_ = tatu.loaders.html.cache.CacheManager.getInstance().getRegistry();
+    var cache = this.settings_.get('cache', {});
+    for (var name in cache) {
+        cache_.register(name, cache[name]);
     }
 
     // Create queue
@@ -165,6 +167,28 @@ tatu.configuration = {
         'video': tatu.loaders.video.VideoLoader
     },
 
+    // Handlers
+    'handlers': {
+        'inner': new tatu.loaders.html.handlers.InnerHTMLHandler(),
+        'outer': new tatu.loaders.html.handlers.OuterHTMLHandler(),
+        'title': new tatu.loaders.html.handlers.TitleHandler(),
+        'inspect': new tatu.loaders.html.handlers.InspectHandler(),
+        'history': new tatu.loaders.html.handlers.HistoryHandler(),
+        'event': new tatu.loaders.html.handlers.EventHandler()
+    },
+
+    // Extractors
+    'extractors': {
+        'dojo': new tatu.loaders.html.extractors.DojoExtractor(),
+        'silent': new tatu.loaders.html.extractors.SilentDojoExtractor()
+    },
+
+    // Cache
+    'cache': {
+        'object': new tatu.loaders.html.cache.ObjectCache(),
+        'storage': new tatu.loaders.html.cache.LocalStorageCache()
+    },
+
     // Sources
     'sources': {
         /*
@@ -215,6 +239,8 @@ tatu.configuration = {
 
             'targetSymbol': '>>',
 
+            'cache': 'object',
+
             /*
             'method': 'GET',
             'headerName': 'X-Source',
@@ -264,10 +290,10 @@ goog.exportSymbol('tatu.onHandle', tatu.Manager.getInstance().onHandle);
 /*
  * Initialize
  */
-if (document.readyState === "complete") {
+if (document.readyState == "complete") {
     tatu.Manager.getInstance().init_();
 } else {
-    goog.global['onload'] = function() {
+    tatu.utils.onDOMLoaded(function() {
         tatu.Manager.getInstance().init_();
-    }
+    });
 }

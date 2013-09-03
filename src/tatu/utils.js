@@ -41,3 +41,47 @@ tatu.utils.createFragment = function(html) {
 tatu.utils.replaceAll = function(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
 };
+
+
+/**
+ * Add listener to DOM load.
+ * @param {function} callback
+ */
+tatu.utils.onDOMLoaded = function(callback) {
+    /*
+     * Internet Explorer
+     */
+    /*@cc_on
+    @if (@_win32 || @_win64)
+        document.write('<script id="ieScriptLoad" defer src="//:"><\/script>');
+        document.getElementById('ieScriptLoad').onreadystatechange = function() {
+            if (this.readyState == 'complete') {
+                callback();
+            }
+        };
+    @end @*/
+
+    /*
+     * Mozilla, Chrome, Opera
+     */
+    if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', callback, false);
+    }
+
+    /*
+     * Safari, iCab, Konqueror
+     */
+    if (/KHTML|WebKit|iCab/i.test(navigator.userAgent)) {
+        var DOMLoadTimer = setInterval(function () {
+            if (/loaded|complete/i.test(document.readyState)) {
+                callback();
+                clearInterval(DOMLoadTimer);
+            }
+        }, 10);
+    }
+
+    /*
+     * Other
+     */
+    window.onload = callback;
+};

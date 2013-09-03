@@ -5,7 +5,7 @@ goog.require('tatu.Registry');
 
 
 /**
- * Base loader..
+ * Base loader.
  * @param {tatu.conf.LoaderSettings} settings Loader settings.
  * @implements {tatu.loaders.ILoader}
  * @constructor

@@ -24,19 +24,21 @@ tatu.loaders.html.handlers.HistoryHandler = function() {
         }
     };
 
-    window.history.replaceState({
-        tatu: true,
+    tatu.utils.onDOMLoaded(function() {
+        goog.global['history'].replaceState({
+            tatu: true,
 
-        selectors: {
-            'body': 'body'
-        },
-        contents: {
-            'body': goog.global['document']['body'].innerHTML,
-            'title': document.title
-        },
-        href: window.location.href,
-        handlers: ['inner', 'title']
-    }, document.title, window.location.href);
+            selectors: {
+                'body': 'body'
+            },
+            contents: {
+                'body': goog.global['document']['body'].innerHTML,
+                'title': document.title
+            },
+            href: window.location.href,
+            handlers: ['inner', 'title']
+        }, document.title, goog.global['location'].href);
+    });
 };
 
 

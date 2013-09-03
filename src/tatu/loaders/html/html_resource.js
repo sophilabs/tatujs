@@ -10,7 +10,7 @@ goog.require('goog.Uri');
 /**
  * Plaintext resource.
  * @param {number} timeout Timeout.
- * @param {object} cache Cache.
+ * @param {tatu.loaders.html.cache.ICache} cache Cache.
  * @param {string} href Anchor HREF.
  * @param {Array.<Object.<string, string>>} selectors Selectors to handle.
  * @param {boolean} reload Whether to reload.
@@ -24,7 +24,7 @@ goog.require('goog.Uri');
  * @implements {tatu.loaders.IResource}
  */
 tatu.loaders.html.HTMLResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
-                                           headerName, parameterName, loaderManager) {
+                                          headerName, parameterName, loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
 
@@ -72,38 +72,24 @@ tatu.loaders.html.HTMLResource.prototype.fetch_ = function(sources, callback) {
 
 
 /**
- * Get cache contents for this resource's HREF.
- * @return {*}
- * @private
- */
-tatu.loaders.html.HTMLResource.prototype.getContents_ = function() {
-    if (!goog.isDef(this.cache_[this.href_])) {
-        this.cache_[this.href_] = {};
-    }
-    return this.cache_[this.href_];
-};
-
-
-/**
  * Load required contents.
  * @param {function} resolve Resolution callback.
  */
 tatu.loaders.html.HTMLResource.prototype.load = function(resolve) {
     var toFetch;
-    var contents = this.getContents_();
 
     if (this.reload_) {
         toFetch = goog.object.getKeys(this.selectors_);
     } else {
-        if (goog.object.isEmpty(contents)) {
-            toFetch = goog.object.getKeys(this.selectors_);
-        } else {
+        if (this.cache_.hasContentsFor(this.href_)) {
             toFetch = [];
             for (var source in this.selectors_) {
-                if (!goog.object.containsKey(this.cache_[this.href_], source)) {
+                if (!this.cache_.hasContentsFor(this.href_, source)) {
                     toFetch.push(source);
                 }
             }
+        } else {
+            toFetch = goog.object.getKeys(this.selectors_);
         }
     }
 
@@ -132,9 +118,9 @@ tatu.loaders.html.HTMLResource.prototype.load = function(resolve) {
             // Inspect content
             for (var source in fetchedContents) {
                 this.loaderManager_.inspect(fetchedContents[source]);
+                this.cache_.store(this.href_, source, fetchedContents[source]);
             }
 
-            goog.object.extend(contents, fetchedContents);
             resolve();
         }, this));
     }
@@ -157,11 +143,13 @@ tatu.loaders.html.HTMLResource.prototype.handle = function() {
 
     this.load(goog.bind(function() {
         goog.array.forEach(this.handlers_, function(handler) {
-            handlers.get(handler).handle(this.selectors_, this.getContents_(), this.href_, this.handlers_);
+            handlers.get(handler).handle(
+                this.selectors_, this.cache_.getContentsFor(this.href_, goog.object.getKeys(this.selectors_)),
+                this.href_, this.handlers_);
         }, this);
     }, this));
 
-    if (this.goToId_) {
+    if (goog.isDef(this.goToId_)) {
         location.href = '#' + this.goToId_;
     }
 };

@@ -28,9 +28,7 @@ tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
         this.video_.appendChild(source);
     }
 
-    this.video_.addEventListener('loadeddata', function() {
-        resolve();
-    }, false);
+    resolve();
 };
 
 
