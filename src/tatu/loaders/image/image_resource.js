@@ -21,9 +21,9 @@ tatu.loaders.image.ImageResource.prototype.load = function(resolve) {
     // TODO: Check with timeout
     this.image_ = document.createElement('img');
     this.image_.setAttribute('src', this.source_);
-    this.image_.onload = function() {
-        resolve();
-    };
+
+    // TODO: Resolution
+    resolve();
 };
 
 

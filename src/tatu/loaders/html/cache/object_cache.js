@@ -3,10 +3,24 @@ goog.provide('tatu.loaders.html.cache.ObjectCache');
 
 /**
  * Cache using an object as storage.
+ * @param {(object)=} object Object to use as cache.
  * @constructor
  */
-tatu.loaders.html.cache.ObjectCache = function() {
-    this.cache_ = {};
+tatu.loaders.html.cache.ObjectCache = function(object) {
+    if (goog.isDef(object)) {
+        this.cache_ = object;
+    } else {
+        this.cache_ = {};
+    }
+};
+
+
+/**
+ * Get cache object.
+ * @return {(object)=} Cache object.
+ */
+tatu.loaders.html.cache.ObjectCache.prototype.getCache = function() {
+    return this.cache_;
 };
 
 

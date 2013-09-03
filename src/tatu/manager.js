@@ -186,7 +186,7 @@ tatu.configuration = {
     // Cache
     'cache': {
         'object': new tatu.loaders.html.cache.ObjectCache(),
-        'storage': new tatu.loaders.html.cache.LocalStorageCache()
+        'local': new tatu.loaders.html.cache.LocalStorageCache('cache')
     },
 
     // Sources
@@ -239,7 +239,7 @@ tatu.configuration = {
 
             'targetSymbol': '>>',
 
-            'cache': 'object',
+            'cache': 'local',
 
             /*
             'method': 'GET',

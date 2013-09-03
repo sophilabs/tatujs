@@ -28,6 +28,7 @@ tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
         this.video_.appendChild(source);
     }
 
+    // TODO: Resolution
     resolve();
 };
 

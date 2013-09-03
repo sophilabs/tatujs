@@ -8,7 +8,7 @@ goog.addDependency('../../../../src/tatu/loaders/dummy/dummy_loader.js', ['tatu.
 goog.addDependency('../../../../src/tatu/loaders/dummy/dummy_resource.js', ['tatu.loaders.dummy.DummyResource'], ['tatu.loaders.IResource']);
 goog.addDependency('../../../../src/tatu/loaders/html/cache/cache_manager.js', ['tatu.loaders.html.cache.CacheManager'], ['tatu.Registry']);
 goog.addDependency('../../../../src/tatu/loaders/html/cache/icache.js', ['tatu.loaders.html.cache.ICache'], []);
-goog.addDependency('../../../../src/tatu/loaders/html/cache/local_storage_cache.js', ['tatu.loaders.html.cache.LocalStorageCache'], []);
+goog.addDependency('../../../../src/tatu/loaders/html/cache/local_storage_cache.js', ['tatu.loaders.html.cache.LocalStorageCache'], ['tatu.loaders.html.cache.ObjectCache']);
 goog.addDependency('../../../../src/tatu/loaders/html/cache/object_cache.js', ['tatu.loaders.html.cache.ObjectCache'], []);
 goog.addDependency('../../../../src/tatu/loaders/html/extractors/dojo_extractor.js', ['tatu.loaders.html.extractors.DojoExtractor'], ['goog.array', 'goog.dom', 'tatu.utils']);
 goog.addDependency('../../../../src/tatu/loaders/html/extractors/extractor_manager.js', ['tatu.loaders.html.extractors.ExtractorManager'], ['tatu.Registry']);
