@@ -66,22 +66,22 @@ tatu.utils.onDOMLoaded = function(callback) {
      */
     if (document.addEventListener) {
         document.addEventListener('DOMContentLoaded', callback, false);
-    }
 
     /*
      * Safari, iCab, Konqueror
      */
-    if (/KHTML|WebKit|iCab/i.test(navigator.userAgent)) {
+    } else if (/KHTML|WebKit|iCab/i.test(navigator.userAgent)) {
         var DOMLoadTimer = setInterval(function () {
             if (/loaded|complete/i.test(document.readyState)) {
                 callback();
                 clearInterval(DOMLoadTimer);
             }
         }, 10);
-    }
 
     /*
      * Other
      */
-    window.onload = callback;
+    } else {
+        window.onload = callback;
+    }
 };

@@ -200,7 +200,7 @@ tatu.configuration = {
             'max_priority': 2,
             'max_timeout': 1000,
 
-            'style': {
+            'initStyle': {
                 'background-color': 'gray'
             },
             'onLoadStyle': {

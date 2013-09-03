@@ -56,7 +56,7 @@ tatu.loaders.dummy.DummyLoader.prototype.setup = function(element) {
     /*
      * Setup styles.
      */
-    goog.style.setStyle(element, settings.get('style'));
+    goog.style.setStyle(element, settings.get('initStyle'));
     goog.events.listen(entry, tatu.queue.EntryEvent.LOAD, function(event) {
         goog.style.setStyle(element, settings.get('onLoadStyle'));
     });
