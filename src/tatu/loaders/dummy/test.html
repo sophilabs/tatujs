@@ -75,27 +75,29 @@
              * Test fake Resource ID.
              */
             function testEntryId() {
-                assertTrue(parseInt(entry.getId().replace('dummy', '')) < LOADER_COUNT);
+                assertTrue(parseInt(entry.getId().replace('dummy', '')) <= LOADER_COUNT);
             }
 
             /**
              * Test fake priority.
              */
             function testEntryPriority() {
-                assertTrue(entry.getPriority() < LOADER_MAX_PRIORITY);
+                assertTrue(entry.getPriority() <= LOADER_MAX_PRIORITY);
             }
 
             /**
              * Test fake timeout.
              */
             function testResourceTimeout() {
-                assertTrue(resource.timeout_ < LOADER_MAX_TIMEOUT);
+                assertTrue(resource.timeout_ <= LOADER_MAX_TIMEOUT);
             }
 
             /**
              * Test styles.
              */
             function testStyles() {
+                loader.setup(element);
+
                 // initStyle
                 assertBackgroundColor(INIT_BG);
 
@@ -121,7 +123,7 @@
                 goog.array.forEach(goog.dom.query('.dummy'), function(element) {
                     loader.setup(element);
                 });
-                assertTrue(loader.getResourceCount() < LOADER_COUNT);
+                assertTrue(loader.getResourceCount() <= LOADER_COUNT);
             };
         </script>
     </body>
