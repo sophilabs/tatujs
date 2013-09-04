@@ -6,6 +6,7 @@ goog.require('tatu.queue.EntryEvent');
 goog.require('tatu.utils');
 goog.require('tatu.loaders.BaseLoader');
 goog.require('tatu.loaders.dummy.DummyResource');
+goog.require('tatu.loaders.LoaderManager');
 goog.require('goog.math');
 goog.require('goog.style');
 goog.require('goog.events');
