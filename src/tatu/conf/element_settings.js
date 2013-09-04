@@ -1,6 +1,7 @@
 goog.provide('tatu.conf.ElementSettings');
 
 goog.require('tatu.conf.Settings');
+goog.require('goog.string');
 
 
 /**
@@ -22,7 +23,7 @@ goog.inherits(tatu.conf.ElementSettings, tatu.conf.Settings);
  * @define {string}
  * @private
  */
-tatu.conf.ElementSettings.DATA_PREFIX_ = 'data-tatu-';
+tatu.conf.ElementSettings.DATA_PREFIX_ = 'tatu-';
 
 
 /**
@@ -35,7 +36,8 @@ tatu.conf.ElementSettings.prototype.get = function(name, def) {
     var value = undefined;
     if (this.element_ && goog.isDef(value = this.element_[name])) {
         return value;
-    } else if (this.element_ && goog.isDef(value = this.element_[tatu.conf.ElementSettings.DATA_PREFIX_ + name])) {
+    } else if (this.element_ && goog.isDef(value = this.element_['dataset'][goog.string.toCamelCase(
+                                                   tatu.conf.ElementSettings.DATA_PREFIX_ + name)])) {
         return value;
     }
     return tatu.conf.ElementSettings.superClass_.get.call(this, name, def);
