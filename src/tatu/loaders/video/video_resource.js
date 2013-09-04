@@ -1,13 +1,19 @@
 goog.provide('tatu.loaders.video.VideoResource');
 
+goog.require('tatu.utils');
+
 
 /**
  * Video resource.
  * @param {object.<string, string>} sources Sources
+ * @param {number} minBuffered Minimum buffered percent to consider the video loaded.
  * @constructor
  */
-tatu.loaders.video.VideoResource = function(sources) {
+tatu.loaders.video.VideoResource = function(sources, minBuffered) {
     this.sources_ = sources;
+    this.minBuffered_ = minBuffered;
+
+    this.INTERVAL = 100;
 };
 
 
@@ -28,8 +34,17 @@ tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
         this.video_.appendChild(source);
     }
 
-    // TODO: Resolution
-    resolve();
+    this.video_.volume = 0;
+    this.video_.load();
+
+    var step = goog.bind(function() {
+        var buffered = tatu.utils.getBufferedPercent(this.video_);
+        if (buffered >= this.minBuffered_) {
+            resolve();
+        }
+        setTimeout(goog.bind(step, this), this.INTERVAL);
+    }, this);
+    step();
 };
 
 
@@ -38,4 +53,5 @@ tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
  */
 tatu.loaders.video.VideoResource.prototype.abort = function() {
     this.video_.innerHTML = '';
+    delete this.video_;
 };

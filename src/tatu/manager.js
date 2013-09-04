@@ -254,7 +254,8 @@ tatu.configuration = {
                     'loader': 'image'
                 },
                 'video': {
-                    'loader': 'video'
+                    'loader': 'video',
+                    'minBuffered': 10
                 }
             }
         }

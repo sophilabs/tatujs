@@ -49,7 +49,7 @@ tatu.loaders.video.VideoLoader.prototype.setup = function(element) {
      */
     var resource = this.resources_.get(id);
     if (!goog.isDef(resource)) {
-        resource = new tatu.loaders.video.VideoResource(sources);
+        resource = new tatu.loaders.video.VideoResource(sources, settings.get('minBuffered'));
         this.resources_.register(id, resource);
     }
 

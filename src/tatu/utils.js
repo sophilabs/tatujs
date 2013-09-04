@@ -44,6 +44,20 @@ tatu.utils.replaceAll = function(find, replace, str) {
 
 
 /**
+ * Get a video's buffered percent.
+ * @param {element} video Video element.
+ * @return {number} Buffered percent.
+ */
+tatu.utils.getBufferedPercent = function(video) {
+    try {
+        return (video.buffered.end(0) / video.duration) * 100;
+    } catch (e) {
+        return 0;
+    }
+};
+
+
+/**
  * Add listener to DOM load.
  * @param {function} callback
  */
