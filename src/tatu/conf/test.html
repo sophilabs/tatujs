@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tatu Unit Tests - Settings</title>
+
+        <script src="../../../closure/library/closure/goog/base.js"></script>
+        <script src="../deps.js"></script>
+
+        <script>
+            goog.require('tatu.conf.Settings');
+            goog.require('tatu.conf.LoaderSettings');
+            goog.require('tatu.conf.ElementSettings');
+
+            goog.require('goog.testing.jsunit');
+        </script>
+    </head>
+
+    <body>
+        <a id="element" href="http://abcd.com/" data-tatu-d="abc2" data-tatu-g="qwerty"></a>
+
+        <script>
+            var baseSettings = new tatu.conf.Settings({
+                'a': true,
+                'b': false,
+                'c': 1,
+                'd': 'abc'
+            });
+
+            var loaderSettings = new tatu.conf.LoaderSettings({
+                'sources': {'a': 'b'}
+            }, baseSettings);
+
+            var childSettings = new tatu.conf.Settings({
+                'e': true,
+                'f': false
+            }, baseSettings);
+
+            var element = document.getElementById('element');
+            var elementSettings = new tatu.conf.ElementSettings(element, childSettings);
+
+            function assertABCD(settings) {
+                assertEquals(true, settings.get('a'));
+                assertEquals(false, settings.get('b'));
+                assertEquals(1, settings.get('c'));
+                assertEquals('abc', settings.get('d'));
+            }
+
+            function assertOwnABCD(settings) {
+                assertEquals(true, settings.getOwn('a'));
+                assertEquals(false, settings.getOwn('b'));
+                assertEquals(1, settings.getOwn('c'));
+                assertEquals('abc', settings.getOwn('d'));
+            }
+
+            function assertNotOwnABCD(settings) {
+                assertFalse(goog.isDef(settings.getOwn('a')));
+                assertFalse(goog.isDef(settings.getOwn('b')));
+                assertFalse(goog.isDef(settings.getOwn('c')));
+                assertFalse(goog.isDef(settings.getOwn('d')));
+            }
+
+            function assertEF(settings) {
+                assertEquals(true, settings.get('e'));
+                assertEquals(false, settings.get('f'));
+            }
+
+            function assertOwnEF(settings) {
+                assertEquals(true, settings.getOwn('e'));
+                assertEquals(false, settings.getOwn('f'));
+            }
+
+            function assertNotOwnEF(settings) {
+                assertFalse(goog.isDef(settings.getOwn('e')));
+                assertFalse(goog.isDef(settings.getOwn('f')));
+            }
+
+            /**
+             * Test base settings.
+             */
+            function testSettings() {
+                assertABCD(baseSettings);
+                assertOwnABCD(baseSettings);
+            }
+
+            /**
+             * Test loader settings.
+             */
+            function testLoaderSettings() {
+                assertABCD(loaderSettings);
+                assertNotOwnABCD(loaderSettings);
+
+                assertObjectEquals(loaderSettings.get('sources'), {'a': 'b'});
+            }
+
+            /**
+             * Test child settings.
+             */
+            function testChildSettings() {
+                assertABCD(childSettings);
+                assertNotOwnABCD(childSettings);
+
+                assertEF(childSettings);
+                assertOwnEF(childSettings);
+            }
+
+            /**
+             * Test element settings.
+             */
+            function testElementSettings() {
+                assertEF(elementSettings);
+                assertNotOwnEF(elementSettings);
+
+                // Own element settings
+                assertEquals('http://abcd.com/', elementSettings.get('href'));
+                assertEquals('abc2', elementSettings.get('d'));
+                assertEquals('qwerty', elementSettings.get('g'));
+            }
+        </script>
+    </body>
+</html>
