@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tatu Unit Tests - Dummy Loader</title>
+
+        <script src="../../../../closure/library/closure/goog/base.js"></script>
+        <script src="../../deps.js"></script>
+
+        <script>
+            goog.require('tatu.conf.LoaderSettings');
+
+            goog.require('tatu.loaders.dummy.DummyLoader');
+            goog.require('tatu.loaders.dummy.DummyResource');
+
+            goog.require('goog.dom.query');
+            goog.require('goog.array');
+            goog.require('goog.testing.jsunit');
+        </script>
+    </head>
+
+    <body>
+        <!-- For style test -->
+        <div id="dummy"></div>
+
+        <!-- For resource count test -->
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+        <div class="dummy"></div>
+
+        <script>
+            var LOADER_COUNT = 10;
+            var LOADER_MAX_PRIORITY = 2;
+            var LOADER_MAX_TIMEOUT = 1000;
+
+            var INIT_BG = 'gray';
+            var ON_LOAD_BG = 'yellow';
+            var ON_ABORT_BG = 'red';
+            var ON_RESOLVE_BG = 'green';
+
+            var loader = new tatu.loaders.dummy.DummyLoader(new tatu.conf.LoaderSettings({
+                'count': LOADER_COUNT,
+                'max_priority': LOADER_MAX_PRIORITY,
+                'max_timeout': LOADER_MAX_TIMEOUT,
+
+                'initStyle': {
+                    'background-color': INIT_BG
+                },
+                'onLoadStyle': {
+                    'background-color': ON_LOAD_BG
+                },
+                'onAbortStyle': {
+                    'background-color': ON_ABORT_BG
+                },
+                'onResolveStyle': {
+                    'background-color': ON_RESOLVE_BG
+                }
+            }));
+
+            var element = document.getElementById('dummy');
+            var entry = loader.setup(element);
+            var resource = loader.resources_.get(entry.getId());
+
+            function assertBackgroundColor(color) {
+                assertEquals(color, goog.style.getStyle(element, 'background-color'));
+            }
+
+            /**
+             * Test fake Resource ID.
+             */
+            function testEntryId() {
+                assertTrue(parseInt(entry.getId().replace('dummy', '')) < LOADER_COUNT);
+            }
+
+            /**
+             * Test fake priority.
+             */
+            function testEntryPriority() {
+                assertTrue(entry.getPriority() < LOADER_MAX_PRIORITY);
+            }
+
+            /**
+             * Test fake timeout.
+             */
+            function testResourceTimeout() {
+                assertTrue(resource.timeout_ < LOADER_MAX_TIMEOUT);
+            }
+
+            /**
+             * Test styles.
+             */
+            function testStyles() {
+                // initStyle
+                assertBackgroundColor(INIT_BG);
+
+                // onAbortStyle
+                entry.abort();
+                assertBackgroundColor(ON_ABORT_BG);
+
+                entry.load(function() {
+                    setTimeout(function() {
+                        // onResolveStyle
+                        assertBackgroundColor(ON_RESOLVE_BG);
+                    }, 0);
+                });
+
+                // onLoadStyle
+                assertBackgroundColor(ON_LOAD_BG);
+            }
+
+            /**
+             * Test resource count.
+             */
+            function testResourceCount() {
+                goog.array.forEach(goog.dom.query('.dummy'), function(element) {
+                    loader.setup(element);
+                });
+                assertTrue(loader.getResourceCount() < LOADER_COUNT);
+            };
+        </script>
+    </body>
+</html>
