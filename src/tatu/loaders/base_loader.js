@@ -74,4 +74,13 @@ tatu.loaders.BaseLoader.prototype.abort = function(id) {
 };
 
 
+/**
+ * Get resource count.
+ * @return {number} Resource count.
+ */
+tatu.loaders.BaseLoader.prototype.getResourceCount = function() {
+    return this.resources_.count();
+};
+
+
 goog.exportSymbol('tatu.loaders.BaseLoader', tatu.loaders.BaseLoader);

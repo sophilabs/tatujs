@@ -41,4 +41,11 @@ tatu.loaders.ILoader.prototype.load;
 tatu.loaders.ILoader.prototype.abort;
 
 
+/**
+ * Get resource count.
+ * @return {number} Resource count.
+ */
+tatu.loaders.ILoader.prototype.getResourceCount;
+
+
 goog.exportSymbol('tatu.loaders.ILoader', tatu.loaders.ILoader);

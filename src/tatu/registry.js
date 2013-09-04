@@ -1,5 +1,7 @@
 goog.provide('tatu.Registry');
 
+goog.require('goog.object');
+
 
 /**
  * Generic registry.
@@ -53,4 +55,13 @@ tatu.Registry.prototype.get = function(key) {
  */
 tatu.Registry.prototype.all = function() {
     return this.registry_;
+};
+
+
+/**
+ * Get count.
+ * @return {number} Count.
+ */
+tatu.Registry.prototype.count = function() {
+    return goog.object.getCount(this.registry_);
 };
