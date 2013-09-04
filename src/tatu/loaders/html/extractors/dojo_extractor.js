@@ -3,6 +3,7 @@ goog.provide('tatu.loaders.html.extractors.DojoExtractor');
 goog.require('tatu.utils');
 goog.require('goog.array');
 goog.require('goog.dom');
+goog.require('goog.dom.query');
 
 
 /**

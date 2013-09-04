@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tatu Unit Tests - HTML extractors</title>
+
+        <script src="../../../../../closure/library/closure/goog/base.js"></script>
+        <script src="../../../deps.js"></script>
+
+        <script>
+            goog.require('tatu.loaders.html.extractors.DojoExtractor');
+            goog.require('tatu.loaders.html.extractors.SilentDojoExtractor');
+
+            goog.require('goog.testing.jsunit');
+        </script>
+    </head>
+
+    <body>
+        <script>
+            var HTML_PART_A_A = '<div class="klass">KlassContent</div>';
+            var HTML_PART_A_B = '<div class="glass">Water</div>';
+
+            var HTML_PART_A = '<div id="element0">' +
+                              HTML_PART_A_A +
+                              HTML_PART_A_B +
+                              '</div>';
+
+            var HTML_PART_B_A = '<a href="http://domain.com/">Link</a>';
+            var HTML_PART_B_B = '<span>Content</span>';
+
+            var HTML_PART_B = '<div id="element1">' +
+                              HTML_PART_B_A +
+                              HTML_PART_B_B +
+                              '</div>';
+
+            var HTML_PART_TITLE = '<title>Title</title>';
+
+            var HTML = '<html>' +
+                       '<head>' +
+                       HTML_PART_TITLE +
+                       '</head>' +
+                       '<body>' +
+                       HTML_PART_A +
+                       HTML_PART_B +
+                       '</body>' +
+                       '</html>';
+
+            function performExtractorTest(extractor) {
+                assertEquals(HTML_PART_A_A, extractor.extract(HTML, ['.klass'])['.klass']);
+                assertEquals(HTML_PART_A, extractor.extract(HTML, ['div'])['div']);
+                assertEquals(HTML_PART_A_B, extractor.extract(HTML, ['.glass'])['.glass']);
+                assertEquals(HTML_PART_A, extractor.extract(HTML, '#element0')['#element0']);
+            }
+
+            /**
+             * Test DojoExtractor.
+             */
+            function testDojoExtractor() {
+                performExtractorTest(new tatu.loaders.html.extractors.DojoExtractor());
+            }
+
+            /**
+             * Test SilentDojoExtractor.
+             */
+            function testSilentDojoExtractor() {
+                performExtractorTest(new tatu.loaders.html.extractors.SilentDojoExtractor());
+            }
+        </script>
+    </body>
+</html>
