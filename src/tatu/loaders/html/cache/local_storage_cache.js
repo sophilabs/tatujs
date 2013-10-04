@@ -6,6 +6,7 @@ goog.require('tatu.loaders.html.cache.ObjectCache');
 /**
  * Cache using local storage.
  * @param {string} name Name for local storage.
+ * @implements {tatu.loaders.html.cache.ICache}
  * @constructor
  */
 tatu.loaders.html.cache.LocalStorageCache = function(name) {
@@ -50,4 +51,9 @@ tatu.loaders.html.cache.LocalStorageCache.prototype.store = function(href, sourc
 
 tatu.loaders.html.cache.LocalStorageCache.prototype.obtain = function(href, source) {
     return this.asObjectCache().obtain(href, source);
+};
+
+
+tatu.loaders.html.cache.LocalStorageCache.prototype.clean = function() {
+    localStorage[this.name_] = '{}';
 };

@@ -41,3 +41,9 @@ tatu.loaders.html.cache.ICache.prototype.store;
  * @return {string} Contents.
  */
 tatu.loaders.html.cache.ICache.prototype.obtain;
+
+
+/**
+ * Clean the cache.
+ */
+tatu.loaders.html.cache.ICache.prototype.clean;

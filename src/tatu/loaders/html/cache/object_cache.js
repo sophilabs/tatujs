@@ -1,9 +1,12 @@
 goog.provide('tatu.loaders.html.cache.ObjectCache');
 
+goog.require('goog.array');
+
 
 /**
  * Cache using an object as storage.
  * @param {(object)=} object Object to use as cache.
+ * @implements {tatu.loaders.html.cache.ICache}
  * @constructor
  */
 tatu.loaders.html.cache.ObjectCache = function(object) {
@@ -63,4 +66,11 @@ tatu.loaders.html.cache.ObjectCache.prototype.store = function(href, source, con
 
 tatu.loaders.html.cache.ObjectCache.prototype.obtain = function(href, source) {
     return this.cache_[href][source];
+};
+
+
+tatu.loaders.html.cache.ObjectCache.prototype.clean = function() {
+    for (var href in this.cache_) {
+        delete this.cache_[href];
+    }
 };

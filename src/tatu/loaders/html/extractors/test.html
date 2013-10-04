@@ -44,11 +44,14 @@
                        '</body>' +
                        '</html>';
 
+            /**
+             * Test a certain extractor.
+             * @param {tatu.loaders.html.extractors.IExtractor} extractor Extractor to test.
+             */
             function performExtractorTest(extractor) {
                 assertEquals(HTML_PART_A_A, extractor.extract(HTML, ['.klass'])['.klass']);
                 assertEquals(HTML_PART_A, extractor.extract(HTML, ['div'])['div']);
                 assertEquals(HTML_PART_A_B, extractor.extract(HTML, ['.glass'])['.glass']);
-                assertEquals(HTML_PART_A, extractor.extract(HTML, '#element0')['#element0']);
             }
 
             /**
