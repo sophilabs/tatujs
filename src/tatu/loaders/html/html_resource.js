@@ -12,19 +12,25 @@ goog.require('goog.Uri');
  * @param {number} timeout Timeout.
  * @param {tatu.loaders.html.cache.ICache} cache Cache.
  * @param {string} href Anchor HREF.
+ *
  * @param {Array.<Object.<string, string>>} selectors Selectors to handle.
- * @param {boolean} reload Whether to reload.
  * @param {Array.<string>} handlers Handlers to use.
  * @param {string} extractor Extractor to use for client-side extraction.
+ *
+ * @param {boolean} reload Whether to reload.
  * @param {string} method HTTP method.
  * @param {string} headerName Header name.
  * @param {string} parameterName Parameter name.
+ *
  * @param {tatu.loaders.LoaderManager} loaderManager Nested loaders.
+ *
  * @constructor
  * @implements {tatu.loaders.IResource}
  */
-tatu.loaders.html.HTMLResource = function(timeout, cache, href, selectors, reload, handlers, extractor, method,
-                                          headerName, parameterName, loaderManager) {
+tatu.loaders.html.HTMLResource = function(timeout, cache, href,
+                                          selectors, handlers, extractor,
+                                          reload, method, headerName, parameterName,
+                                          loaderManager) {
     this.timeout_ = timeout;
     this.cache_ = cache;
 
@@ -33,12 +39,14 @@ tatu.loaders.html.HTMLResource = function(timeout, cache, href, selectors, reloa
     this.goToId_ = href[1];
 
     this.selectors_ = selectors;
-    this.reload_ = reload;
     this.handlers_ = handlers;
     this.extractor_ = extractor;
+
+    this.reload_ = reload;
     this.method_ = method;
     this.headerName_ = headerName;
     this.parameterName_ = parameterName;
+
     this.loaderManager_ = loaderManager;
 };
 

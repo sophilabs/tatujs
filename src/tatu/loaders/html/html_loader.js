@@ -80,8 +80,10 @@ tatu.loaders.html.HTMLLoader.prototype.setup = function(element) {
         if (!goog.isDef(resource)) {
             resource = new tatu.loaders.html.HTMLResource(
                 settings.get('timeout'), this.cache_, absoluteUri,
-                selectors, settings.get('reload'), handlers, settings.get('extractor'), settings.get('method'),
-                settings.get('headerName'), settings.get('parameterName'), this.loaderManager_);
+                selectors, handlers, settings.get('extractor'),
+                settings.get('reload'), settings.get('method'),
+                settings.get('headerName'), settings.get('parameterName'),
+                this.loaderManager_);
             this.resources_.register(id, resource);
         }
 

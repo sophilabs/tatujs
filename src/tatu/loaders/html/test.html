@@ -10,6 +10,12 @@
             goog.require('tatu.loaders.html.HTMLLoader');
             goog.require('tatu.loaders.html.HTMLResource');
 
+            goog.require('tatu.loaders.html.extractors.DojoExtractor');
+            goog.require('tatu.loaders.html.extractors.SilentDojoExtractor');
+
+            goog.require('tatu.loaders.html.cache.ObjectCache');
+            goog.require('tatu.loaders.html.cache.LocalStorageCache');
+
             goog.require('goog.dom.query');
             goog.require('goog.array');
             goog.require('goog.testing.jsunit');
@@ -17,9 +23,117 @@
     </head>
 
     <body>
-        <!-- HTML here -->
-
+        <!-- Extractors -->
         <script>
+            var HTML_PART_A_A = '<div class="klass">KlassContent</div>';
+            var HTML_PART_A_B = '<div class="glass">Water</div>';
+
+            var HTML_PART_A = '<div id="element0">' +
+                              HTML_PART_A_A +
+                              HTML_PART_A_B +
+                              '</div>';
+
+            var HTML_PART_B_A = '<a href="http://domain.com/">Link</a>';
+            var HTML_PART_B_B = '<span>Content</span>';
+
+            var HTML_PART_B = '<div id="element1">' +
+                              HTML_PART_B_A +
+                              HTML_PART_B_B +
+                              '</div>';
+
+            var HTML_PART_TITLE = '<title>Title</title>';
+
+            var HTML = '<html>' +
+                       '<head>' +
+                       HTML_PART_TITLE +
+                       '</head>' +
+                       '<body>' +
+                       HTML_PART_A +
+                       HTML_PART_B +
+                       '</body>' +
+                       '</html>';
+
+            /**
+             * Test a certain extractor.
+             * @param {tatu.loaders.html.extractors.IExtractor} extractor Extractor to test.
+             */
+            function performExtractorTest(extractor) {
+                assertEquals(HTML_PART_A_A, extractor.extract(HTML, ['.klass'])['.klass']);
+                assertEquals(HTML_PART_A, extractor.extract(HTML, ['div'])['div']);
+                assertEquals(HTML_PART_A_B, extractor.extract(HTML, ['.glass'])['.glass']);
+            }
+
+            /**
+             * Test DojoExtractor.
+             */
+            function testDojoExtractor() {
+                performExtractorTest(new tatu.loaders.html.extractors.DojoExtractor());
+            }
+
+            /**
+             * Test SilentDojoExtractor.
+             */
+            function testSilentDojoExtractor() {
+                performExtractorTest(new tatu.loaders.html.extractors.SilentDojoExtractor());
+            }
+        </script>
+
+        <!-- Cache -->
+        <script>
+            var PAGE_A_HREF = '/path/to/page.html';
+
+            var PAGE_A_OBJ_A_SOURCE = '.container';
+            var PAGE_A_OBJ_A_CONTENTS = '<div>This is my content.</div>';
+
+            var PAGE_A_OBJ_B_SOURCE = '.navbar';
+            var PAGE_A_OBJ_B_CONTENTS = '<div><span>This is the navbar.</span></div>';
+
+
+            /**
+             * Test a certain cache.
+             * @param {tatu.loaders.html.cache.ICache} cache Cache to test.
+             */
+            function performCacheTest(cache) {
+                cache.clean();
+
+                /*
+                 * Test store and hasContentsFor.
+                 */
+                assertFalse(cache.hasContentsFor(PAGE_A_HREF));
+
+                assertFalse(cache.hasContentsFor(PAGE_A_HREF, PAGE_A_OBJ_A_SOURCE));
+                cache.store(PAGE_A_HREF, PAGE_A_OBJ_A_SOURCE, PAGE_A_OBJ_A_CONTENTS);
+                assertTrue(cache.hasContentsFor(PAGE_A_HREF, PAGE_A_OBJ_A_SOURCE));
+
+                assertFalse(cache.hasContentsFor(PAGE_A_HREF, PAGE_A_OBJ_B_SOURCE));
+                cache.store(PAGE_A_HREF, PAGE_A_OBJ_B_SOURCE, PAGE_A_OBJ_B_CONTENTS);
+                assertTrue(cache.hasContentsFor(PAGE_A_HREF, PAGE_A_OBJ_B_SOURCE));
+
+                assertTrue(cache.hasContentsFor(PAGE_A_HREF));
+
+                /*
+                 * Test obtain and getContentsFor.
+                 */
+                var contents = cache.getContentsFor(PAGE_A_HREF, [PAGE_A_OBJ_A_SOURCE, PAGE_A_OBJ_B_SOURCE]);
+                assertEquals(contents[PAGE_A_OBJ_A_SOURCE], PAGE_A_OBJ_A_CONTENTS);
+                assertEquals(contents[PAGE_A_OBJ_B_SOURCE], PAGE_A_OBJ_B_CONTENTS);
+                assertEquals(cache.obtain(PAGE_A_HREF, PAGE_A_OBJ_A_SOURCE), PAGE_A_OBJ_A_CONTENTS);
+                assertEquals(cache.obtain(PAGE_A_HREF, PAGE_A_OBJ_B_SOURCE), PAGE_A_OBJ_B_CONTENTS);
+            }
+
+            /**
+             * Test ObjectCache.
+             */
+            function testObjectCache() {
+                performCacheTest(new tatu.loaders.html.cache.ObjectCache());
+            }
+
+            /**
+             * Test LocalStorageCache.
+             */
+            function testLocalStorageCache() {
+                performCacheTest(new tatu.loaders.html.cache.LocalStorageCache());
+            }
         </script>
     </body>
 </html>
