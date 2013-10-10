@@ -28,6 +28,11 @@ CLOSURE_MIN_FLAG="--compilation_level=ADVANCED_OPTIMIZATIONS"
 CLOSURE_JS_OUTPUT="build/tatu.js"
 CLOSURE_JS_OUTPUT_MIN="build/tatu.min.js"
 
+# Tests
+TEST_PHANTOM="phantomjs"
+TEST_PATH="./test/"
+TEST_FILE="test.js"
+
 
 get_closure_compiler() {
     url="$CLOSURE_COMPILER_SOURCE/compiler-$CLOSURE_COMPILER_REVISION.tar.gz"
@@ -85,6 +90,11 @@ build() {
     eval $command
 }
 
+test() {
+    cd $TEST_PATH
+    $TEST_PHANTOM $TEST_FILE
+}
+
 run() {
     if hash http-server 2> /dev/null; then
         echo "http://127.0.0.1:8080/example/"
@@ -102,6 +112,8 @@ elif [ "$1" = "configure" ]; then
 elif [ "$1" = "build" ]; then
     build
     build "min"
+elif [ "$1" = "test" ]; then
+    test
 elif [ "$1" = "run" ]; then
     run
 else
@@ -109,4 +121,5 @@ else
     configure
     build
     build "min"
+    test
 fi
