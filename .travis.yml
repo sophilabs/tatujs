@@ -3,4 +3,5 @@ install:
   - ./tatu.sh get
   - ./tatu.sh configure
 script:
+  - ./tatu.sh build
   - ./tatu.sh test
