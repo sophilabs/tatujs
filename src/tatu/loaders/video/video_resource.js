@@ -23,6 +23,7 @@ tatu.loaders.video.VideoResource = function(sources, minBuffered) {
  */
 tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
     this.video_ = document.createElement('video');
+    this.video_['preload'] = 'auto';
 
     for (var contentType in this.sources_) {
         var src = this.sources_[contentType];
