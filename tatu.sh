@@ -98,7 +98,7 @@ test() {
 run() {
     if hash http-server 2> /dev/null; then
         echo "http://127.0.0.1:8080/example/"
-        http-server
+        http-server -c 3600
     else
         echo "http://127.0.0.1:8000/example/"
         python -m SimpleHTTPServer

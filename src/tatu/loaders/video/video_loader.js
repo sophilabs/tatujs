@@ -25,7 +25,7 @@ goog.inherits(tatu.loaders.video.VideoLoader, tatu.loaders.BaseLoader);
  * @return {string} Resource ID
  */
 tatu.loaders.video.VideoLoader.prototype.identify = function(element) {
-    return goog.dom.query('source', element)[0]['src'];
+    return goog.dom.query('source', element)[0].getAttribute('src');
 };
 
 
@@ -41,7 +41,8 @@ tatu.loaders.video.VideoLoader.prototype.setup = function(element) {
     var sources = {};
 
     goog.array.forEach(goog.dom.query('source', element), function(element) {
-        sources[element['type']] = element['src'];
+        var settings = new tatu.conf.ElementSettings(element);
+        sources[settings.get('type')] = settings.get('src');
     });
 
     /*

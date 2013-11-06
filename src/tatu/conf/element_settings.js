@@ -34,11 +34,15 @@ tatu.conf.ElementSettings.DATA_PREFIX_ = 'tatu-';
  */
 tatu.conf.ElementSettings.prototype.get = function(name, def) {
     var value = undefined;
-    if (this.element_ && goog.isDef(value = this.element_[name])) {
-        return value;
-    } else if (this.element_ && goog.isDef(value = this.element_['dataset'][goog.string.toCamelCase(
-                                                   tatu.conf.ElementSettings.DATA_PREFIX_ + name)])) {
-        return value;
+    if (this.element_) {
+        if (value = this.element_[name]) {
+            return value;
+        } else if (value = this.element_['dataset'][goog.string.toCamelCase(
+                   tatu.conf.ElementSettings.DATA_PREFIX_ + name)]) {
+            return value;
+        } else if (value = this.element_.getAttribute(name)) {
+            return value;
+        }
     }
     return tatu.conf.ElementSettings.superClass_.get.call(this, name, def);
 };

@@ -1,6 +1,7 @@
 goog.provide('tatu.loaders.video.VideoResource');
 
 goog.require('tatu.utils');
+goog.require('goog.userAgent');
 
 
 /**
@@ -22,8 +23,17 @@ tatu.loaders.video.VideoResource = function(sources, minBuffered) {
  * @param {function} resolve Resolution callback.
  */
 tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
+
+    /**
+     * TODO Check this.
+     * Disable video loader for Chrome.
+     */
+    if (goog.userAgent.WEBKIT) {
+        resolve();
+        return;
+    }
+
     this.video_ = document.createElement('video');
-    this.video_['preload'] = 'auto';
 
     for (var contentType in this.sources_) {
         var src = this.sources_[contentType];
@@ -36,6 +46,7 @@ tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
     }
 
     this.video_.volume = 0;
+    this.video_['preload'] = 'auto';
     this.video_.load();
 
     var step = goog.bind(function() {
