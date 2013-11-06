@@ -42,8 +42,9 @@ tatu.loaders.video.VideoResource.prototype.load = function(resolve) {
         var buffered = tatu.utils.getBufferedPercent(this.video_);
         if (buffered >= this.minBuffered_) {
             resolve();
+        } else {
+            setTimeout(goog.bind(step, this), this.INTERVAL);
         }
-        setTimeout(goog.bind(step, this), this.INTERVAL);
     }, this);
     step();
 };
