@@ -1,6 +1,8 @@
-[![Build Status](https://travis-ci.org/sophilabs/tatujs.png?branch=master)](https://travis-ci.org/sophilabs/tatujs)
-
 # TatuJS
+
+[![Build Status](https://travis-ci.org/sophilabs/tatujs.png?branch=master)](https://travis-ci.org/sophilabs/tatujs)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 Convert your simple static site into a single-page application with a resource queue, history handling,
 content pre-loading and local storage cache, using this configurable and extensible Javascript library.
 
